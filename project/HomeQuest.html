@@ -3173,12 +3173,35 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
+  function collectFormData() {
+    const data = { mode: getMode() };
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(el => {
+      if (!el.name) return;
+      if (el.type === 'radio' || el.type === 'checkbox') {
+        if (el.checked) data[el.name] = el.value;
+      } else if (el.value) {
+        data[el.name] = el.value;
+      }
+    });
+    return data;
+  }
+
+  function submitToWebhook(payload) {
+    fetch('https://n8n.srv1037212.hstgr.cloud/webhook/homequest-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(() => {}); // fire-and-forget; don't block the thank-you screen
+  }
+
   btnNext.addEventListener('click', () => {
     if (!validateStep()) return;
     const total = totalStepsNow();
     if (step < total) {
       formShowStep(step + 1);
     } else {
+      submitToWebhook(collectFormData());
       form.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
       modalDone.classList.add('show');
       modalFoot.style.display = 'none';
