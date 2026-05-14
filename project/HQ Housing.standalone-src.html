@@ -1,0 +1,2154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<template id="__bundler_thumbnail" data-bg-color="#13241F">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#13241F"/>
+    <g transform="translate(600,400)" fill="#F2EBDD" font-family="Georgia, serif" text-anchor="middle">
+      <text font-size="240" font-style="italic" font-weight="400" y="40">HQ</text>
+      <text font-size="48" y="120" letter-spacing="14" font-family="Helvetica, Arial, sans-serif" fill="#C97A4F">HOUSING</text>
+    </g>
+  </svg>
+</template>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>HQ Housing — Personal housing concierge for the Randstad</title>
+<meta name="description" content="A personal housing concierge for Amsterdam, Rotterdam, The Hague and Utrecht. Curated shortlists, viewings, negotiation and contract — handled." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Inter:wght@300;400;450;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --ink:#13241F;        /* deep forest near-black */
+    --ink-2:#1E342D;      /* forest */
+    --ink-3:#2A4A40;      /* lighter forest */
+    --cream:#F2EBDD;      /* warm paper */
+    --cream-2:#EDE4D2;    /* slightly deeper paper */
+    --bone:#E5DAC2;       /* bone divider */
+    --paper:#FAF6ED;      /* lightest cream */
+    --accent:#B85C38;     /* muted terracotta */
+    --accent-2:#9A4A2C;   /* darker terracotta */
+    --brass:#A98454;      /* brass */
+    --muted:#6E6759;      /* warm gray text */
+    --muted-2:#8A8475;    /* lighter warm gray */
+    --rule:rgba(19,36,31,.14);
+    --rule-light:rgba(19,36,31,.08);
+
+    --serif:"Fraunces", "Times New Roman", serif;
+    --sans:"Inter", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:400;
+    font-feature-settings:"ss01","cv11";
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.55;
+  }
+  ::selection{background:var(--ink);color:var(--paper)}
+
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+  /* ===== Type ===== */
+  .serif{font-family:var(--serif);font-weight:380;letter-spacing:-.012em}
+  .display{
+    font-family:var(--serif);
+    font-weight:340;
+    font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 0;
+    letter-spacing:-.028em;
+    line-height:.96;
+  }
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .small{font-size:13px;color:var(--muted);line-height:1.5}
+  .lede{font-size:19px;line-height:1.55;color:var(--ink-2);max-width:60ch}
+  .num-mono{font-variant-numeric:tabular-nums}
+
+  /* ===== Layout ===== */
+  .wrap{max-width:1320px;margin:0 auto;padding:0 28px}
+  .wrap-lg{max-width:1480px;margin:0 auto;padding:0 28px}
+  .rule{height:1px;background:var(--rule);width:100%}
+
+  /* ===== Buttons ===== */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;
+    font-size:14px;font-weight:500;letter-spacing:.01em;
+    border-radius:999px;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1), background .25s, color .25s, box-shadow .25s;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--ink);color:var(--paper)}
+  .btn-primary:hover{background:var(--ink-2);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+  .btn-cream{background:var(--paper);color:var(--ink)}
+  .btn-cream:hover{background:var(--cream-2)}
+  .btn-arrow svg{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .btn-arrow:hover svg{transform:translateX(4px)}
+
+  /* ===== Nav ===== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    transition:background .35s ease, border-color .35s, color .35s;
+    border-bottom:1px solid transparent;
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 28px;
+    max-width:1480px;margin:0 auto;
+  }
+  .nav.scrolled{background:rgba(242,235,221,.92);backdrop-filter:blur(12px);border-color:var(--rule-light)}
+  .logo{display:flex;align-items:baseline;gap:8px}
+  .logo .mono{
+    font-family:var(--serif);font-weight:380;font-size:26px;letter-spacing:-.02em;
+    font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 1;
+  }
+  .logo .word{font-family:var(--sans);font-weight:450;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
+  .logo .dot{width:5px;height:5px;background:var(--accent);border-radius:99px;display:inline-block;align-self:center;margin:0 2px}
+
+  .nav-links{display:flex;gap:32px;align-items:center;font-size:14px;color:var(--ink-2)}
+  .nav-links a{position:relative;padding:6px 0;transition:color .2s}
+  .nav-links a:hover{color:var(--accent-2)}
+  .lang{display:flex;gap:0;align-items:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .lang button{padding:6px 8px;transition:color .2s}
+  .lang button.active{color:var(--ink);font-weight:500}
+  .lang button:hover{color:var(--ink)}
+  .lang .sep{color:var(--bone)}
+
+  .nav-right{display:flex;align-items:center;gap:22px}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    padding-top:120px;
+    min-height:78vh;
+    display:grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap:0;
+    overflow:hidden;
+  }
+  .hero-text{
+    padding:24px 60px 60px 28px;
+    display:flex;flex-direction:column;justify-content:flex-start;
+    position:relative;
+  }
+  .hero-eyebrow{
+    display:flex;align-items:center;gap:14px;
+    margin-bottom:36px;color:var(--muted);
+    font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;
+  }
+  .hero-eyebrow .line{flex:0 0 36px;height:1px;background:var(--ink);opacity:.4}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:330;
+    font-variation-settings:"opsz" 144,"SOFT" 50,"WONK" 0;
+    font-size:clamp(56px, 7.8vw, 124px);
+    letter-spacing:-.035em;
+    line-height:.92;
+    margin:0 0 36px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:300;
+    font-variation-settings:"opsz" 144,"SOFT" 100,"WONK" 1;
+    color:var(--accent-2);
+  }
+  .hero h1 .sub{display:block;color:var(--ink-3)}
+  .hero-sub{font-size:19px;line-height:1.5;color:var(--ink-2);max-width:48ch;margin:0 0 44px}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero-meta{
+    margin-top:54px;display:flex;gap:32px;align-items:center;
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)
+  }
+  .hero-meta .dot{width:6px;height:6px;background:var(--accent);border-radius:99px}
+
+  .hero-img{
+    position:relative;
+    overflow:hidden;
+    margin:80px 28px 28px 0;
+    border-radius:2px;
+    background:var(--ink-3);
+    max-height:640px;
+  }
+  .hero-img img{
+    width:100%;height:100%;object-fit:cover;
+    filter:saturate(.95) contrast(1.02);
+  }
+  .hero-img::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(19,36,31,0) 60%, rgba(19,36,31,.35) 100%);
+    pointer-events:none;
+  }
+  .hero-cap{
+    position:absolute;left:24px;bottom:22px;color:var(--paper);
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;opacity:.92;
+  }
+  .hero-cap .vline{width:1px;height:24px;background:var(--paper);opacity:.6}
+
+  /* ===== Trust strip ===== */
+  .trust{
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    background:var(--cream-2);
+  }
+  .trust-row{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    align-items:stretch;
+  }
+  .trust-cell{
+    padding:36px 28px;
+    border-right:1px solid var(--rule-light);
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .trust-cell:last-child{border-right:0}
+  .trust-num{
+    font-family:var(--serif);font-weight:340;
+    font-variation-settings:"opsz" 144,"SOFT" 30;
+    font-size:44px;letter-spacing:-.025em;line-height:1;color:var(--ink);
+  }
+  .trust-num em{font-style:italic;color:var(--accent-2);font-weight:300}
+  .trust-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .trust-cell.kvk .trust-num{font-size:18px;font-family:var(--sans);font-weight:500;letter-spacing:.04em}
+  .trust-cell.kvk{background:var(--ink);color:var(--paper)}
+  .trust-cell.kvk .trust-label{color:rgba(242,235,221,.65)}
+
+  /* ===== Section scaffolding ===== */
+  section{position:relative}
+  .sec{padding:140px 0}
+  .sec-head{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:end;margin-bottom:80px}
+  .sec-num{
+    font-family:var(--serif);font-weight:340;font-style:italic;
+    font-size:14px;color:var(--muted);letter-spacing:.04em;
+  }
+  .sec-title{
+    font-family:var(--serif);font-weight:330;
+    font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(40px,5vw,72px);letter-spacing:-.025em;line-height:1;margin:0;
+  }
+  .sec-title em{font-style:italic;font-weight:300;color:var(--accent-2);font-variation-settings:"opsz" 144,"SOFT" 100,"WONK" 1}
+  .sec-kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;display:flex;align-items:center;gap:14px}
+  .sec-kicker .line{flex:0 0 36px;height:1px;background:var(--ink);opacity:.4}
+
+  /* ===== Pricing block ===== */
+  .price-section{background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+  .price-section::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(900px 500px at 80% 10%, rgba(184,92,56,.18), transparent 60%),
+      radial-gradient(700px 400px at 10% 90%, rgba(169,132,84,.10), transparent 60%);
+    pointer-events:none;
+  }
+  .price-grid{
+    display:grid;grid-template-columns:1.05fr 1fr;gap:80px;align-items:start;
+    position:relative;z-index:1;
+  }
+  .price-left .sec-kicker{color:rgba(242,235,221,.7)}
+  .price-left .sec-kicker .line{background:var(--paper);opacity:.5}
+  .price-headline{
+    font-family:var(--serif);font-weight:330;
+    font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(48px,5.6vw,86px);letter-spacing:-.028em;line-height:.96;margin:0 0 32px;
+  }
+  .price-headline em{font-style:italic;color:#E2B894;font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .price-body{font-size:18px;color:rgba(242,235,221,.78);max-width:46ch;line-height:1.55}
+
+  .price-tag{
+    margin-top:48px;
+    display:inline-flex;align-items:baseline;gap:18px;
+    padding:24px 32px 22px;
+    border:1px solid rgba(242,235,221,.18);
+    border-radius:2px;
+    background:rgba(242,235,221,.03);
+  }
+  .price-tag .euro{
+    font-family:var(--serif);font-weight:330;
+    font-size:88px;line-height:.9;letter-spacing:-.04em;color:var(--paper);
+    font-variation-settings:"opsz" 144;
+  }
+  .price-tag .euro em{font-style:italic;color:#E2B894;font-weight:300}
+  .price-tag .meta{display:flex;flex-direction:column;gap:4px;padding-bottom:6px}
+  .price-tag .meta .l1{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,235,221,.7)}
+  .price-tag .meta .l2{font-size:14px;color:rgba(242,235,221,.85)}
+
+  .price-right{padding-top:46px}
+  .price-list{display:flex;flex-direction:column;gap:0;margin:0;padding:0;list-style:none}
+  .price-list li{
+    display:grid;grid-template-columns:38px 1fr;gap:18px;
+    padding:22px 0;
+    border-bottom:1px solid rgba(242,235,221,.12);
+    align-items:start;
+  }
+  .price-list li:first-child{padding-top:0}
+  .price-list li:last-child{border-bottom:0}
+  .price-list .ix{
+    font-family:var(--serif);font-style:italic;font-weight:300;
+    font-size:14px;color:#E2B894;padding-top:5px;letter-spacing:.04em;
+  }
+  .price-list h4{
+    font-family:var(--sans);font-size:17px;font-weight:500;margin:0 0 4px;color:var(--paper);
+  }
+  .price-list p{margin:0;font-size:14px;color:rgba(242,235,221,.7);line-height:1.55}
+
+  .price-pact{
+    margin-top:56px;
+    display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;
+    padding:28px 32px;
+    border:1px solid rgba(226,184,148,.35);
+    background:rgba(226,184,148,.06);
+    border-radius:2px;
+  }
+  .price-pact .seal{
+    width:64px;height:64px;border:1px solid rgba(226,184,148,.5);border-radius:99px;
+    display:grid;place-items:center;color:#E2B894;
+    font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.04em;
+  }
+  .price-pact h5{margin:0 0 6px;font-family:var(--serif);font-weight:380;font-size:22px;color:var(--paper);letter-spacing:-.012em}
+  .price-pact p{margin:0;font-size:14.5px;color:rgba(242,235,221,.78);line-height:1.55}
+
+  /* ===== Placement fee (after match) ===== */
+  .price-fees{
+    margin-top:120px;position:relative;z-index:1;
+    border-top:1px solid rgba(242,235,221,.18);padding-top:80px;
+  }
+  .price-fees-head{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:end;margin-bottom:64px}
+  .price-fees-head .sec-kicker{color:rgba(242,235,221,.7)}
+  .price-fees-head .sec-kicker .line{background:var(--paper);opacity:.5}
+  .price-fees h3{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(36px,4.2vw,60px);letter-spacing:-.024em;line-height:1.0;margin:0;
+  }
+  .price-fees h3 em{font-style:italic;color:#E2B894;font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .price-fees-head .lede{font-size:16.5px;color:rgba(242,235,221,.78);line-height:1.6;margin:0;max-width:54ch}
+  .fees-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+    border-top:1px solid rgba(242,235,221,.18);
+    border-bottom:1px solid rgba(242,235,221,.18);
+  }
+  .fee-card{padding:44px 36px 40px;border-right:1px solid rgba(242,235,221,.12);display:flex;flex-direction:column;gap:18px}
+  .fee-card:last-child{border-right:0}
+  .fee-card.minimum{background:rgba(226,184,148,.04)}
+  .fee-tag{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#E2B894}
+  .fee-amount{
+    font-family:var(--serif);font-weight:330;font-size:46px;letter-spacing:-.022em;
+    margin:0;line-height:1;color:var(--paper);font-variation-settings:"opsz" 144;
+  }
+  .fee-amount em{font-style:italic;color:#E2B894;font-weight:300;font-size:22px;letter-spacing:.01em;margin-left:6px}
+  .fee-card p{margin:0;font-size:14.5px;color:rgba(242,235,221,.7);line-height:1.55}
+  .fees-foot{
+    margin-top:32px;display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
+    font-size:14px;color:rgba(242,235,221,.72);line-height:1.55;
+  }
+  .fees-foot .ncnp{
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:22px;color:#E2B894;
+    letter-spacing:-.01em;font-variation-settings:"opsz" 144,"WONK" 1;white-space:nowrap;
+  }
+  @media (max-width:780px){
+    .price-fees-head{grid-template-columns:1fr;gap:24px}
+    .fees-grid{grid-template-columns:1fr}
+    .fee-card{border-right:0;border-bottom:1px solid rgba(242,235,221,.12)}
+    .fee-card:last-child{border-bottom:0}
+    .fees-foot{grid-template-columns:1fr}
+  }
+
+  /* ===== How it works ===== */
+  .how-grid{
+    display:flex;flex-direction:column;
+    border-top:1px solid var(--rule);
+  }
+  .how-step{
+    display:grid;grid-template-columns:140px 1fr 200px;gap:56px;align-items:start;
+    padding:42px 0;border-bottom:1px solid var(--rule-light);
+    position:relative;transition:background .35s ease;
+  }
+  .how-step:hover{background:rgba(184,92,56,.025)}
+  .how-step:last-child{border-bottom:0}
+  .how-step.accent{background:rgba(184,92,56,.05)}
+  .how-step.accent:hover{background:rgba(184,92,56,.075)}
+  .how-num{
+    font-family:var(--serif);font-style:italic;font-weight:300;
+    font-size:88px;letter-spacing:-.03em;line-height:.85;color:var(--accent-2);
+    font-variation-settings:"opsz" 144,"WONK" 1;
+  }
+  .how-step h3{
+    font-family:var(--serif);font-weight:380;font-size:30px;letter-spacing:-.014em;
+    margin:0 0 14px;line-height:1.1;
+  }
+  .how-step h3 em{font-style:italic;font-weight:300;color:var(--accent-2);font-variation-settings:"opsz" 144,"WONK" 1}
+  .how-step p{margin:0;font-size:16px;color:var(--ink-2);line-height:1.6;max-width:62ch}
+  .how-when{
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
+    text-align:right;padding-top:10px;
+    font-family:var(--sans);font-weight:500;
+  }
+  .how-when strong{display:block;color:var(--ink);font-weight:500;letter-spacing:.18em;margin-top:4px;font-size:12px}
+  @media (max-width:780px){
+    .how-step{grid-template-columns:80px 1fr;gap:24px;padding:32px 0}
+    .how-num{font-size:54px}
+    .how-when{display:none}
+  }
+
+  /* ===== About Philippe ===== */
+  .about{background:var(--paper)}
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:center}
+  .about-photo{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:2px;background:var(--bone)}
+  .about-photo img{width:100%;height:100%;object-fit:cover}
+  .about-photo .badge{
+    position:absolute;left:24px;bottom:24px;
+    background:var(--paper);color:var(--ink);
+    padding:14px 18px;border-radius:2px;
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+  }
+  .about-photo .badge .dot{width:6px;height:6px;background:#3a8a4f;border-radius:99px}
+  .about h2{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(40px,4.6vw,68px);letter-spacing:-.025em;line-height:1.02;margin:0 0 28px;
+  }
+  .about h2 em{font-style:italic;color:var(--accent-2);font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .about-body{font-size:18px;line-height:1.65;color:var(--ink-2)}
+  .about-body p{margin:0 0 18px}
+  .about-sig{
+    font-family:var(--serif);font-style:italic;font-weight:300;font-size:32px;color:var(--ink);
+    font-variation-settings:"opsz" 144,"WONK" 1;letter-spacing:-.01em;
+    margin:32px 0 8px;
+  }
+  .about-langs{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+  .lang-pill{
+    padding:8px 14px;border:1px solid var(--rule);border-radius:99px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);
+  }
+  .lang-pill .ll{color:var(--accent-2);margin-right:6px;font-weight:500}
+
+  /* ===== Testimonials ===== */
+  .testi-section{background:var(--cream)}
+  .testi-grid{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+  }
+
+  /* Google reviews bar */
+  .gbar{
+    display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center;
+    padding:28px 32px;margin-bottom:28px;
+    background:var(--paper);border:1px solid var(--rule-light);border-radius:2px;
+  }
+  .gbar-left{display:flex;align-items:center;gap:18px}
+  .glogo{
+    width:44px;height:44px;border-radius:99px;background:#fff;
+    display:grid;place-items:center;border:1px solid var(--rule-light);
+  }
+  .gbar-rating{display:flex;flex-direction:column;gap:4px}
+  .gbar-num{
+    font-family:var(--serif);font-weight:380;font-size:30px;letter-spacing:-.02em;line-height:1;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  .gbar-num em{font-style:italic;color:var(--accent-2);font-weight:300}
+  .gbar-stars{display:flex;gap:2px;color:#E0A93B}
+  .gbar-label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .gbar-quotes{display:flex;gap:24px;overflow:hidden}
+  .gquote{
+    flex:1;min-width:0;font-family:var(--serif);font-style:italic;font-weight:380;
+    font-size:15px;line-height:1.45;color:var(--ink-2);
+    border-left:1px solid var(--rule-light);padding-left:20px;
+  }
+  .gquote .gname{display:block;margin-top:8px;font-style:normal;font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .gbar-cta{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+    display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--ink);padding-bottom:3px;
+    transition:color .2s,border-color .2s;
+  }
+  .gbar-cta:hover{color:var(--accent-2);border-color:var(--accent-2)}
+  @media (max-width:980px){
+    .gbar{grid-template-columns:1fr;gap:20px;padding:22px}
+    .gbar-quotes{display:none}
+  }
+
+  /* ===== Intake Modal ===== */
+  .modal-root{position:fixed;inset:0;z-index:200;pointer-events:none;visibility:hidden}
+  .modal-root.open{pointer-events:auto;visibility:visible}
+  .modal-back{
+    position:absolute;inset:0;background:rgba(13,22,18,.55);
+    backdrop-filter:blur(6px);opacity:0;transition:opacity .35s;
+  }
+  .modal-root.open .modal-back{opacity:1}
+  .modal-sheet{
+    position:absolute;top:0;right:0;bottom:0;width:min(720px,100%);
+    background:var(--paper);box-shadow:-30px 0 80px rgba(13,22,18,.25);
+    transform:translateX(100%);transition:transform .5s cubic-bezier(.2,.7,.2,1);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .modal-root.open .modal-sheet{transform:translateX(0)}
+  .modal-head{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    padding:32px 40px 24px;
+    border-bottom:1px solid var(--rule);
+    background:var(--paper);
+    flex:0 0 auto;
+  }
+  .modal-head h2{
+    font-family:var(--serif);font-weight:340;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:34px;letter-spacing:-.02em;line-height:1.05;margin:0 0 6px;
+  }
+  .modal-head h2 em{font-style:italic;color:var(--accent-2);font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .modal-head p{margin:0;font-size:13.5px;color:var(--muted);max-width:42ch;line-height:1.5}
+  .modal-close{
+    width:40px;height:40px;border-radius:99px;border:1px solid var(--rule);
+    display:grid;place-items:center;color:var(--ink);transition:background .2s,color .2s;flex:0 0 auto;
+  }
+  .modal-close:hover{background:var(--ink);color:var(--paper)}
+  .modal-progress{
+    height:3px;background:var(--bone);position:relative;flex:0 0 auto;
+  }
+  .modal-progress-bar{position:absolute;left:0;top:0;bottom:0;background:var(--accent);width:0%;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+  .modal-body{
+    flex:1 1 auto;overflow-y:auto;padding:36px 40px 32px;
+    scroll-behavior:smooth;
+  }
+  .modal-foot{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:20px 40px;border-top:1px solid var(--rule);background:var(--cream-2);
+    flex:0 0 auto;
+  }
+  .modal-foot .step-meta{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .modal-foot .step-meta strong{color:var(--ink);font-weight:500}
+
+  .form-section{display:none;animation:fade .35s ease}
+  .form-section.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .form-section .eyebrow{margin-bottom:8px}
+  .form-section h3{
+    font-family:var(--serif);font-weight:380;font-size:26px;letter-spacing:-.012em;margin:0 0 6px;line-height:1.15;
+  }
+  .form-section .blurb{font-size:14px;color:var(--muted);margin:0 0 28px;max-width:46ch;line-height:1.5}
+
+  .field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+  .field label{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+  .field label .req{color:var(--accent-2);margin-left:2px}
+  .field .help{font-size:12px;color:var(--muted);margin-top:-2px}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=number],.field select,.field textarea{
+    font-family:var(--sans);font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--rule);border-radius:2px;
+    padding:13px 14px;width:100%;
+    transition:border-color .2s,background .2s,box-shadow .2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{
+    outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(184,92,56,.18);
+  }
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
+  .field textarea{min-height:140px;resize:vertical;line-height:1.5}
+  .field-row{display:grid;gap:16px;grid-template-columns:repeat(2,1fr)}
+  .field-row.three{grid-template-columns:1fr 1fr 1fr}
+  .field-row.dob{grid-template-columns:1fr 1.4fr 1fr}
+  @media(max-width:600px){.field-row,.field-row.three,.field-row.dob{grid-template-columns:1fr}}
+
+  /* Radio + checkbox cards */
+  .opt-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .opt-grid.two{grid-template-columns:repeat(2,1fr)}
+  .opt-grid.three{grid-template-columns:repeat(3,1fr)}
+  .opt-grid.four{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:600px){.opt-grid,.opt-grid.three,.opt-grid.four{grid-template-columns:1fr 1fr}}
+  .opt{
+    position:relative;display:flex;align-items:center;gap:10px;
+    padding:13px 14px;border:1px solid var(--rule);border-radius:2px;
+    background:var(--paper);cursor:pointer;
+    font-size:14px;color:var(--ink-2);
+    transition:border-color .2s,background .2s,color .2s;
+  }
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt .dot{
+    width:16px;height:16px;border-radius:99px;border:1.5px solid var(--rule);flex:0 0 auto;
+    display:grid;place-items:center;transition:border-color .2s;
+  }
+  .opt .dot::after{content:"";width:8px;height:8px;border-radius:99px;background:var(--accent);transform:scale(0);transition:transform .2s}
+  .opt input[type=checkbox] ~ .dot{border-radius:3px}
+  .opt input[type=checkbox] ~ .dot::after{border-radius:1px}
+  .opt:has(input:checked){border-color:var(--ink);background:var(--cream-2);color:var(--ink)}
+  .opt:has(input:checked) .dot{border-color:var(--ink)}
+  .opt:has(input:checked) .dot::after{transform:scale(1)}
+  .opt:hover{border-color:var(--ink-3)}
+
+  /* Consent */
+  .consent{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+  .consent label{
+    display:flex;gap:12px;align-items:flex-start;cursor:pointer;
+    padding:14px 16px;border:1px solid var(--rule);border-radius:2px;background:var(--paper);
+    font-size:14px;color:var(--ink-2);line-height:1.5;letter-spacing:0;text-transform:none;
+    transition:border-color .2s,background .2s;
+  }
+  .consent label:has(input:checked){border-color:var(--ink);background:var(--cream-2)}
+  .consent input{margin-top:3px;accent-color:var(--ink)}
+  .consent a{color:var(--accent-2);text-decoration:underline;text-underline-offset:3px}
+
+  .modal-foot .btn{padding:13px 22px;font-size:14px}
+  .ghost-link{font-size:13px;letter-spacing:.04em;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+  .ghost-link:hover{color:var(--ink)}
+
+  /* Success */
+  .modal-done{display:none;flex:1;flex-direction:column;align-items:flex-start;justify-content:center;padding:0 40px;text-align:left;gap:18px}
+  .modal-done.show{display:flex}
+  .done-seal{
+    width:64px;height:64px;border-radius:99px;border:1px solid var(--accent);
+    display:grid;place-items:center;color:var(--accent-2);
+    font-family:var(--serif);font-style:italic;font-size:28px;
+  }
+  .modal-done h2{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:48px;letter-spacing:-.025em;line-height:1;margin:0;
+  }
+  .modal-done h2 em{font-style:italic;color:var(--accent-2);font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .modal-done p{font-size:16px;color:var(--ink-2);max-width:48ch;line-height:1.55;margin:0}
+
+  @media(max-width:600px){
+    .modal-sheet{width:100%}
+    .modal-head,.modal-body,.modal-foot,.modal-done{padding-left:22px;padding-right:22px}
+    .modal-head h2{font-size:26px}
+    .modal-foot{flex-direction:column-reverse;align-items:stretch;gap:8px}
+    .modal-foot .btn{justify-content:center;width:100%}
+  }
+  .testi{
+    background:var(--paper);
+    border:1px solid var(--rule-light);
+    padding:36px;
+    border-radius:2px;
+    display:flex;flex-direction:column;gap:22px;
+    position:relative;
+  }
+  .testi .quote-mark{
+    font-family:var(--serif);font-style:italic;
+    font-size:64px;line-height:.6;color:var(--accent);opacity:.55;
+    margin-bottom:-18px;
+  }
+  .testi blockquote{
+    margin:0;
+    font-family:var(--serif);font-weight:380;
+    font-size:22px;line-height:1.35;letter-spacing:-.01em;color:var(--ink);
+  }
+  .testi blockquote.big{font-size:30px;line-height:1.25}
+  .testi-meta{display:flex;gap:14px;align-items:center;margin-top:auto;border-top:1px solid var(--rule-light);padding-top:20px}
+  .testi-avatar{
+    width:46px;height:46px;border-radius:99px;background:var(--bone);overflow:hidden;flex:0 0 auto;
+  }
+  .testi-avatar img{width:100%;height:100%;object-fit:cover}
+  .testi-name{font-size:14px;font-weight:500;color:var(--ink)}
+  .testi-where{font-size:12px;color:var(--muted);letter-spacing:.04em;margin-top:2px}
+  .testi-outcome{
+    margin-top:6px;display:inline-flex;align-items:center;gap:8px;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2);font-weight:500;
+  }
+  .testi-outcome .pip{width:5px;height:5px;background:var(--accent);border-radius:99px}
+
+  .testi.span-6{grid-column:span 6}
+  .testi.span-4{grid-column:span 4}
+  .testi.span-5{grid-column:span 5}
+  .testi.span-7{grid-column:span 7}
+  .testi.dark{background:var(--ink);color:var(--paper);border-color:transparent}
+  .testi.dark blockquote{color:var(--paper)}
+  .testi.dark .testi-name{color:var(--paper)}
+  .testi.dark .testi-where{color:rgba(242,235,221,.6)}
+  .testi.dark .testi-meta{border-color:rgba(242,235,221,.18)}
+  .testi.dark .quote-mark{color:#E2B894;opacity:.7}
+
+  /* ===== Service Areas ===== */
+  .areas-section{background:var(--paper)}
+  .areas-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+  .area{
+    position:relative;overflow:hidden;border-radius:2px;background:var(--ink);
+    color:var(--paper);
+    isolation:isolate;
+    transition:transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .area img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    transition:transform .8s cubic-bezier(.2,.7,.2,1);
+    filter:saturate(.85) contrast(1.05);
+  }
+  .area::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(170deg, rgba(19,36,31,.15) 0%, rgba(19,36,31,.55) 60%, rgba(19,36,31,.82) 100%);
+    z-index:1;
+  }
+  .area:hover img{transform:scale(1.06)}
+  .area-content{
+    position:relative;z-index:2;
+    padding:32px;display:flex;flex-direction:column;justify-content:flex-end;
+    height:100%;min-height:380px;gap:8px;
+  }
+  .area-name{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:54px;letter-spacing:-.025em;line-height:1;margin:0;
+  }
+  .area-name em{font-style:italic;color:#E2B894;font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .area-meta{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:18px;
+    border-top:1px solid rgba(242,235,221,.25);padding-top:18px;
+  }
+  .area-hoods{font-size:13px;color:rgba(242,235,221,.85);max-width:24ch;line-height:1.45}
+  .area-stat{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,235,221,.7);text-align:right}
+  .area-stat strong{display:block;color:var(--paper);font-weight:500;font-size:13px;letter-spacing:.04em;text-transform:none;margin-top:4px}
+
+  .area.big{grid-column:span 7;grid-row:span 2}
+  .area.big .area-content{min-height:780px}
+  .area.big .area-name{font-size:96px}
+  .area.med{grid-column:span 5}
+  .area.med .area-content{min-height:380px}
+
+  /* ===== FAQ ===== */
+  .faq-section{background:var(--cream-2);border-top:1px solid var(--rule)}
+  .faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+  .faq-aside{position:sticky;top:120px}
+  .faq-aside h2{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(36px,4.2vw,60px);letter-spacing:-.025em;line-height:1.02;margin:0 0 24px;
+  }
+  .faq-aside h2 em{font-style:italic;color:var(--accent-2);font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .faq-aside p{font-size:16px;color:var(--ink-2);max-width:36ch;line-height:1.55;margin:0 0 24px}
+  .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+  details.faq{border-bottom:1px solid var(--rule);padding:24px 0}
+  details.faq summary{
+    list-style:none;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;
+    font-family:var(--serif);font-weight:380;font-size:24px;letter-spacing:-.012em;line-height:1.25;
+    color:var(--ink);
+  }
+  details.faq summary::-webkit-details-marker{display:none}
+  .faq-mark{
+    flex:0 0 auto;width:36px;height:36px;border-radius:99px;border:1px solid var(--rule);
+    display:grid;place-items:center;color:var(--ink);transition:transform .35s, background .25s, color .25s;
+    margin-top:2px;
+  }
+  details[open] .faq-mark{background:var(--ink);color:var(--paper);transform:rotate(45deg)}
+  .faq-mark svg{width:14px;height:14px}
+  .faq-body{
+    font-size:16px;color:var(--ink-2);line-height:1.6;
+    max-width:62ch;margin-top:16px;
+  }
+  details.faq summary:hover{color:var(--accent-2)}
+
+  /* ===== Closing CTA ===== */
+  .closing{
+    background:var(--ink);color:var(--paper);
+    position:relative;overflow:hidden;
+    padding:160px 0 140px;
+  }
+  .closing::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(800px 500px at 85% 30%, rgba(184,92,56,.22), transparent 60%),
+      radial-gradient(700px 600px at 5% 100%, rgba(169,132,84,.12), transparent 60%);
+  }
+  .closing-inner{position:relative;z-index:1;text-align:left;max-width:1100px}
+  .closing h2{
+    font-family:var(--serif);font-weight:320;
+    font-variation-settings:"opsz" 144,"SOFT" 60;
+    font-size:clamp(54px,7.2vw,118px);letter-spacing:-.035em;line-height:.95;margin:0 0 36px;
+  }
+  .closing h2 em{font-style:italic;color:#E2B894;font-weight:300;font-variation-settings:"opsz" 144,"WONK" 1}
+  .closing p{font-size:19px;color:rgba(242,235,221,.78);max-width:48ch;line-height:1.55;margin:0 0 48px}
+  .closing-meta{margin-top:48px;display:flex;gap:40px;flex-wrap:wrap;font-size:13px;color:rgba(242,235,221,.6);letter-spacing:.04em}
+  .closing-meta strong{color:var(--paper);font-weight:500;display:block;font-size:14px;margin-bottom:4px;letter-spacing:.04em}
+
+  /* ===== Footer ===== */
+  footer{background:#0E1A16;color:rgba(242,235,221,.78);padding:80px 0 40px;font-size:14px}
+  .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:60px}
+  .foot-col h6{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,235,221,.55);margin:0 0 18px;font-weight:500}
+  .foot-col a{display:block;padding:5px 0;color:rgba(242,235,221,.78);transition:color .2s}
+  .foot-col a:hover{color:#E2B894}
+  .foot-logo .mono{font-family:var(--serif);font-size:36px;color:var(--paper);font-weight:340;letter-spacing:-.02em}
+  .foot-logo .word{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,235,221,.55);margin-top:6px;display:block}
+  .foot-blurb{margin-top:24px;max-width:34ch;line-height:1.55;color:rgba(242,235,221,.6)}
+  .foot-meta{
+    border-top:1px solid rgba(242,235,221,.12);padding-top:28px;
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;
+    font-size:12px;color:rgba(242,235,221,.5);letter-spacing:.04em;
+  }
+  .foot-lang{display:flex;gap:0;align-items:center;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+  .foot-lang button{padding:6px 8px;color:rgba(242,235,221,.55)}
+  .foot-lang button.active{color:var(--paper)}
+  .foot-lang .sep{color:rgba(242,235,221,.18)}
+
+  /* ===== Reveal animation ===== */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .reveal[data-d="1"]{transition-delay:.08s}
+  .reveal[data-d="2"]{transition-delay:.16s}
+  .reveal[data-d="3"]{transition-delay:.24s}
+  .reveal[data-d="4"]{transition-delay:.32s}
+  .reveal[data-d="5"]{transition-delay:.40s}
+
+  /* ===== Mobile ===== */
+  @media (max-width: 980px){
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr;padding-top:96px;min-height:auto}
+    .hero-text{padding:30px 24px 50px}
+    .hero h1{font-size:62px}
+    .hero-img{margin:8px 24px 0;aspect-ratio:4/5}
+    .trust-row{grid-template-columns:repeat(2,1fr)}
+    .trust-cell{border-bottom:1px solid var(--rule-light)}
+    .trust-cell:nth-child(even){border-right:0}
+    .trust-cell.kvk{grid-column:span 2}
+    .sec{padding:80px 0}
+    .sec-head{grid-template-columns:1fr;gap:24px;margin-bottom:48px}
+    .price-grid{grid-template-columns:1fr;gap:48px}
+    .price-right{padding-top:0}
+    .price-tag .euro{font-size:64px}
+    .how-grid{grid-template-columns:1fr 1fr}
+    .how-step{border-bottom:1px solid var(--rule-light)}
+    .how-step:nth-child(even){border-right:0}
+    .about-grid{grid-template-columns:1fr;gap:40px}
+    .testi-grid > *{grid-column:span 12 !important}
+    .areas-grid > *{grid-column:span 12 !important;grid-row:auto !important}
+    .area .area-content{min-height:380px !important}
+    .area.big .area-name{font-size:64px}
+    .faq-grid{grid-template-columns:1fr;gap:40px}
+    .faq-aside{position:static}
+    .closing{padding:90px 0 80px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:32px}
+    .foot-meta{flex-direction:column;align-items:flex-start}
+  }
+  @media (max-width: 560px){
+    .how-grid{grid-template-columns:1fr}
+    .how-step{border-right:0}
+    .foot-grid{grid-template-columns:1fr}
+    .hero h1{font-size:50px}
+    .nav-right .btn{padding:10px 14px;font-size:13px}
+    .nav-right .lang{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo" aria-label="HQ Housing">
+      <span class="mono">HQ</span>
+      <span class="dot"></span>
+      <span class="word">Housing</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About Philippe</a>
+      <a href="#stories">Stories</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="active" aria-pressed="true">EN</button>
+        <span class="sep">·</span>
+        <button>NL</button>
+        <span class="sep">·</span>
+        <button>FR</button>
+        <span class="sep">·</span>
+        <button>ES</button>
+      </div>
+      <a href="#start" class="btn btn-primary btn-arrow" data-open-modal>
+        Start your search
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header id="top" class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow"><span class="line"></span><span>Housing concierge · est. 2019</span></div>
+    <h1 class="reveal">
+      Your desired home,
+      <span class="sub">found in <em>weeks</em> — not months.</span>
+    </h1>
+    <p class="hero-sub reveal" data-d="1">
+      A personal housing concierge for expats and locals across Amsterdam, Rotterdam,
+      The Hague and Utrecht. One person. One number. Curated shortlists,
+      viewings, negotiation, contract — handled.
+    </p>
+    <div class="hero-ctas reveal" data-d="2">
+      <a href="#start" class="btn btn-primary btn-arrow" data-open-modal data-intent="rent">
+        I'm renting
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#start" class="btn btn-ghost btn-arrow" data-open-modal data-intent="buy">
+        I'm buying
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="hero-meta reveal" data-d="3">
+      <span><span class="dot" style="display:inline-block;margin-right:8px;vertical-align:middle"></span>Available this week</span>
+      <span>EN · NL · FR · ES</span>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1558293842-c0fd3db86157?auto=format&fit=crop&w=1600&q=80" alt="Amsterdam canal house at dusk" />
+    <div class="hero-cap"><span>Keizersgracht, 1015</span><span class="vline"></span><span>Amsterdam</span></div>
+  </div>
+</header>
+
+<!-- ============================ TRUST STRIP ============================ -->
+<section class="trust" aria-label="Track record">
+  <div class="trust-row">
+    <div class="trust-cell">
+      <div class="trust-num"><em>312</em>+</div>
+      <div class="trust-label">Homes matched</div>
+    </div>
+    <div class="trust-cell">
+      <div class="trust-num">3 <span style="font-size:24px;color:var(--muted)">wks</span></div>
+      <div class="trust-label">Average match</div>
+    </div>
+    <div class="trust-cell">
+      <div class="trust-num">2019</div>
+      <div class="trust-label">Operating since</div>
+    </div>
+    <div class="trust-cell">
+      <div class="trust-num">EN&nbsp;NL&nbsp;FR&nbsp;ES</div>
+      <div class="trust-label">Four languages</div>
+    </div>
+    <div class="trust-cell kvk">
+      <div class="trust-num num-mono">CIF B-98432891</div>
+      <div class="trust-label">Registered in Valencia, Spain</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PRICING (€250) ============================ -->
+<section id="pricing" class="sec price-section">
+  <div class="wrap">
+    <div class="price-grid">
+      <div class="price-left reveal">
+        <div class="sec-kicker"><span class="line"></span><span>The fee · Section 01</span></div>
+        <h2 class="price-headline">
+          Transparent, fixed pricing.<br/>
+          <em>No surprises, no upsell.</em>
+        </h2>
+        <p class="price-body">
+          The honest version: house-hunting in the Randstad is a part-time job.
+          The €250 onboarding fee is what makes it possible to give you a single
+          dedicated person — not a queue, not a bot, not a generic platform.
+          Here is exactly what it buys.
+        </p>
+
+        <div class="price-tag">
+          <div class="euro">€<em>250</em></div>
+          <div class="meta">
+            <span class="l1">One-time onboarding</span>
+            <span class="l2">VAT included · fully deducted from the final placement fee</span>
+          </div>
+        </div>
+
+        <div class="price-pact">
+          <div class="seal">Pact</div>
+          <div>
+            <h5>5 weeks, signed agreement, fully refundable.</h5>
+            <p>If we haven't matched you with a home you accept within 5 weeks, the €250 is returned
+              in full on request. Decide to stop earlier? You only pay the €250 — no cure, no pay.
+              Whichever way it goes, the onboarding fee is deducted from the final placement fee.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="price-right">
+        <ul class="price-list">
+          <li class="reveal" data-d="1">
+            <div class="ix">i.</div>
+            <div>
+              <h4>60-minute intake call</h4>
+              <p>Budget, neighbourhoods, dealbreakers, lifestyle. The honest map of what you actually want — and what's realistic this quarter.</p>
+            </div>
+          </li>
+          <li class="reveal" data-d="1">
+            <div class="ix">ii.</div>
+            <div>
+              <h4>Curated shortlist within 5 days</h4>
+              <p>Hand-selected homes from public listings, off-market sources and our makelaar network. No spam, no listings you've already seen.</p>
+            </div>
+          </li>
+          <li class="reveal" data-d="2">
+            <div class="ix">iii.</div>
+            <div>
+              <h4>Viewing coordination</h4>
+              <p>We schedule, attend (in person or via video), and report back honestly — including the things the makelaar won't tell you.</p>
+            </div>
+          </li>
+          <li class="reveal" data-d="2">
+            <div class="ix">iv.</div>
+            <div>
+              <h4>Offer strategy &amp; negotiation</h4>
+              <p>What to bid, when, with which conditions. We've placed 312+ winning offers in the Randstad — including against multiple counterbidders.</p>
+            </div>
+          </li>
+          <li class="reveal" data-d="3">
+            <div class="ix">v.</div>
+            <div>
+              <h4>Contract review (NL &amp; EN)</h4>
+              <p>Every clause translated and explained. Diplomatic relocation clauses, opzegtermijn, service charges — flagged before you sign.</p>
+            </div>
+          </li>
+          <li class="reveal" data-d="3">
+            <div class="ix">vi.</div>
+            <div>
+              <h4>Key handover &amp; first-week support</h4>
+              <p>We're there for the inspection, the photos, the BSN registration, and the inevitable boiler that doesn't work on day two.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="price-fees reveal">
+      <div class="price-fees-head">
+        <div>
+          <div class="sec-kicker"><span class="line"></span><span>After we find your home</span></div>
+          <h3>If — and only if — we deliver, <em>here is what we charge.</em></h3>
+        </div>
+        <p class="lede">No hidden numbers. The placement fee is what we earn for actually finding,
+          negotiating and closing your home. The €250 onboarding is deducted in full from whichever applies.</p>
+      </div>
+
+      <div class="fees-grid">
+        <div class="fee-card">
+          <div class="fee-tag">Working professionals</div>
+          <div class="fee-amount">1 month’s rent<em>+ VAT</em></div>
+          <p>For straightforward profiles — stable income, no guarantor required by the landlord.
+            The standard rental fee.</p>
+        </div>
+        <div class="fee-card">
+          <div class="fee-tag">Guarantor required</div>
+          <div class="fee-amount">1.5 months’ rent<em>+ VAT</em></div>
+          <p>Students, freelancers, or anyone whose income is verified abroad. Extra paperwork,
+            extra coordination with the landlord.</p>
+        </div>
+        <div class="fee-card minimum">
+          <div class="fee-tag">Minimum base fee</div>
+          <div class="fee-amount">€1,250<em>+ VAT</em></div>
+          <p>Below this number the work doesn’t pay for itself — so this is the floor on every
+            engagement, regardless of rent level.</p>
+        </div>
+      </div>
+
+      <div class="fees-foot">
+        <span><strong style="color:var(--paper)">No cure, no pay.</strong> Over 83% of every engagement is invoiced only after the lease is signed in your hands. Decide to stop earlier, or we don’t find a match within 5 weeks — your only cost is the €250 onboarding, refundable on request.</span>
+        <span class="ncnp">No cure, no pay.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<section id="process" class="sec">
+  <div class="wrap-lg">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-kicker"><span class="line"></span><span>The process · Section 02</span></div>
+        <span class="sec-num">02 / How it works</span>
+      </div>
+      <h2 class="sec-title">From first call to <em>keys in hand,</em><br/>typically inside three weeks.</h2>
+    </div>
+  </div>
+
+  <div class="wrap-lg">
+    <div class="how-grid">
+      <article class="how-step reveal">
+        <div class="how-num">01</div>
+        <div>
+          <h3>Tell us what you need.</h3>
+          <p>Start with the intake form — profession, budget, neighbourhoods, must-haves, timing.
+            It takes ten minutes and gives us the honest map of what we're looking for.</p>
+        </div>
+        <div class="how-when">Step one<strong>10 min</strong></div>
+      </article>
+
+      <article class="how-step reveal">
+        <div class="how-num">02</div>
+        <div>
+          <h3>Initial chat.</h3>
+          <p>Within 24 hours we're on a call together. We get to know you, align expectations,
+            answer everything you'd like to ask before any money changes hands.</p>
+        </div>
+        <div class="how-when">Step two<strong>Within 24h</strong></div>
+      </article>
+
+      <article class="how-step reveal accent">
+        <div class="how-num">03</div>
+        <div>
+          <h3>Upfront commitment <em>— €250.</em></h3>
+          <p>To begin the search we ask for the €250 onboarding fee. It's a shared commitment, and
+            it's deducted in full from the final placement fee. Over 83% of what we earn arrives only
+            once you've signed the lease.</p>
+        </div>
+        <div class="how-when">Step three<strong>€250</strong></div>
+      </article>
+
+      <article class="how-step reveal">
+        <div class="how-num">04</div>
+        <div>
+          <h3>We start the search.</h3>
+          <p>You send a few standard documents — ID, proof of income, references. We tap our
+            network of makelaars, landlords and off-market sources to find the homes that genuinely fit.</p>
+        </div>
+        <div class="how-when">Step four<strong>Days 1–5</strong></div>
+      </article>
+
+      <article class="how-step reveal">
+        <div class="how-num">05</div>
+        <div>
+          <h3>Property match &amp; viewings.</h3>
+          <p>We send you the strongest matches — annotated honestly, including the unflattering bits —
+            and arrange viewings at times that actually work for your schedule.</p>
+        </div>
+        <div class="how-when">Step five<strong>Week 1–4</strong></div>
+      </article>
+
+      <article class="how-step reveal">
+        <div class="how-num">06</div>
+        <div>
+          <h3>Seamless paperwork.</h3>
+          <p>When you decide to move forward, we handle every clause, translation and signature —
+            and deliver a rental agreement already signed by the landlord. No back-and-forth, no surprises.</p>
+        </div>
+        <div class="how-when">Step six<strong>Lease in hand</strong></div>
+      </article>
+
+      <article class="how-step reveal">
+        <div class="how-num">07</div>
+        <div>
+          <h3>Final payment, keys, kettle on.</h3>
+          <p>Once your lease is signed we send the final invoice. We're at the key handover, the meter
+            reading, the BSN registration, and on the phone the week after for whichever appliance has
+            decided to break first.</p>
+        </div>
+        <div class="how-when">Step seven<strong>Move-in week</strong></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ABOUT PHILIPPE ============================ -->
+<section id="about" class="sec about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="philippe.png" alt="Philippe Kamoun, founder of HQ Housing" style="object-position:center 30%" />
+        <div class="badge"><span class="dot"></span>Replies within the hour</div>
+      </div>
+
+      <div class="reveal" data-d="1">
+        <div class="sec-kicker"><span class="line"></span><span>About · Section 03</span></div>
+        <h2>The person <em>actually</em> finding your home.</h2>
+        <div class="about-body">
+          <p>I'm Philippe Kamoun. I was born and raised in North Holland. At eleven I moved to
+            Amsterdam with my parents, who opened a restaurant at Overtoom 306 — later home to
+            Bagels &amp; Beans. That's where my journey in real estate quietly began.</p>
+          <p>From a young age I worked hands-on in renovations — plumbing, electrical, plastering.
+            As our family portfolio grew I took over lettings, screening tenants, overseeing
+            transactions. After an early career at PricewaterhouseCoopers I came back to real
+            estate, eventually managing a large Dutch portfolio with international stakeholders
+            and founding my own firm, MNL International.</p>
+          <p>HomeQuest — now HQ Housing — is the personal project that came out of decades of
+            this work. The Dutch market is genuinely struggling, and traditional services
+            consistently fall short of what people actually need. Backed by deep experience, a
+            strong network and a hands-on approach, I help clients find the right homes —
+            efficiently, and with care. I work in English, Dutch, French and Spanish.</p>
+        </div>
+        <div class="about-sig">— Philippe Kamoun</div>
+        <div class="small">Founder &amp; Leading Housing Specialist · HQ Housing</div>
+        <div class="about-langs">
+          <span class="lang-pill"><span class="ll">EN</span>English (native)</span>
+          <span class="lang-pill"><span class="ll">NL</span>Nederlands (native)</span>
+          <span class="lang-pill"><span class="ll">FR</span>Français (fluent)</span>
+          <span class="lang-pill"><span class="ll">ES</span>Español (conversational)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TESTIMONIALS ============================ -->
+<section id="stories" class="sec testi-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-kicker"><span class="line"></span><span>Stories · Section 04</span></div>
+        <span class="sec-num">04 / Recent matches</span>
+      </div>
+      <h2 class="sec-title">A few of the <em>three hundred-plus</em> matches.</h2>
+    </div>
+
+    <!-- Google reviews badge -->
+    <div class="gbar reveal">
+      <div class="gbar-left">
+        <div class="glogo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/>
+            <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34 6.1 29.3 4 24 4c-7.5 0-14 4.1-17.7 10.7z"/>
+            <path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.4-5.1l-6.2-5.2C29.2 35.2 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8L6 33c3.6 6.6 10.4 11 18 11z"/>
+            <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.2 5.7l6.2 5.2C36.7 41.1 44 36 44 24c0-1.3-.1-2.3-.4-3.5z"/>
+          </svg>
+        </div>
+        <div class="gbar-rating">
+          <div class="gbar-num">4.9<em>/5</em>
+            <span class="gbar-stars" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7h7.1l-5.7 4.5L18 21l-6-4.5L6 21l1.7-7.5L2 9h7.1z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7h7.1l-5.7 4.5L18 21l-6-4.5L6 21l1.7-7.5L2 9h7.1z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7h7.1l-5.7 4.5L18 21l-6-4.5L6 21l1.7-7.5L2 9h7.1z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7h7.1l-5.7 4.5L18 21l-6-4.5L6 21l1.7-7.5L2 9h7.1z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 7h7.1l-5.7 4.5L18 21l-6-4.5L6 21l1.7-7.5L2 9h7.1z"/></svg>
+            </span>
+          </div>
+          <div class="gbar-label">Google · 87 reviews</div>
+        </div>
+      </div>
+      <div class="gbar-quotes" aria-hidden="false">
+        <div class="gquote">
+          “Felt more like a friend than an agent. Two viewings, one offer, done.”
+          <span class="gname">Lieke V. · ★★★★★</span>
+        </div>
+        <div class="gquote">
+          “Saved us months of stress. Worth every cent of the €250.”
+          <span class="gname">Karim B. · ★★★★★</span>
+        </div>
+      </div>
+      <a class="gbar-cta" href="https://maps.app.goo.gl/iVGDbsXxzv1oqaK57" target="_blank" rel="noopener">
+        Read all on Google
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+      </a>
+    </div>
+
+    <div class="testi-grid">
+      <article class="testi span-7 reveal">
+        <div class="quote-mark">“</div>
+        <blockquote class="big">We'd been on Funda for four months — about thirty viewings, two ghosted offers and growing despair. Philippe had us in a 2-bed in De Pijp in <em style="color:var(--accent-2);font-style:italic">eighteen days</em>. The negotiation alone saved us €22,000 against the asking price.</blockquote>
+        <div class="testi-meta">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" alt="" /></div>
+          <div>
+            <div class="testi-name">Sofie &amp; Daan Veldhuis</div>
+            <div class="testi-where">Bought · 2-bed apartment · De Pijp, Amsterdam</div>
+            <div class="testi-outcome"><span class="pip"></span>18 days · saved €22,000</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi span-5 dark reveal" data-d="1">
+        <div class="quote-mark">“</div>
+        <blockquote>Relocating from Paris with two weeks' notice. Philippe had a shortlist by the time my Thalys arrived and the keys to a place in Statenkwartier eleven days later. He read the lease in French for me at the kitchen table.</blockquote>
+        <div class="testi-meta">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" alt="" /></div>
+          <div>
+            <div class="testi-name">Camille Lefèvre</div>
+            <div class="testi-where">Rented · 1-bed · Statenkwartier, The Hague</div>
+            <div class="testi-outcome"><span class="pip"></span>11 days · €1,950/mo</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi span-4 reveal">
+        <div class="quote-mark">“</div>
+        <blockquote>Three kids, a dog and a budget that ruled out half of Amsterdam. We ended up in a row house in Wittevrouwen with a garden and a school five minutes away. He found it before it ever hit the market.</blockquote>
+        <div class="testi-meta">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" alt="" /></div>
+          <div>
+            <div class="testi-name">Marta &amp; Jonas Rinaldi</div>
+            <div class="testi-where">Bought · row house · Wittevrouwen, Utrecht</div>
+            <div class="testi-outcome"><span class="pip"></span>34 days · off-market</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi span-4 reveal" data-d="1">
+        <div class="quote-mark">“</div>
+        <blockquote>I'm a single woman, mid-30s, moving for a job at Booking. Philippe took me seriously when other makelaars literally would not return my calls. Found a studio in Kralingen with light from three sides.</blockquote>
+        <div class="testi-meta">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="" /></div>
+          <div>
+            <div class="testi-name">Aisha Okonkwo</div>
+            <div class="testi-where">Rented · studio · Kralingen, Rotterdam</div>
+            <div class="testi-outcome"><span class="pip"></span>9 days · €1,400/mo</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="testi span-4 reveal" data-d="2">
+        <div class="quote-mark">“</div>
+        <blockquote>Honest about what we couldn't have. That alone was worth it. Within budget meant Oud-West, not Jordaan, and he said so on day one. We have a beautiful place we actually own now.</blockquote>
+        <div class="testi-meta">
+          <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="" /></div>
+          <div>
+            <div class="testi-name">Tomás Aguirre</div>
+            <div class="testi-where">Bought · 2-bed · Oud-West, Amsterdam</div>
+            <div class="testi-outcome"><span class="pip"></span>26 days · first offer accepted</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICE AREAS ============================ -->
+<section class="sec areas-section">
+  <div class="wrap-lg">
+    <div class="sec-head reveal">
+      <div>
+        <div class="sec-kicker"><span class="line"></span><span>Coverage · Section 05</span></div>
+        <span class="sec-num">05 / Service areas</span>
+      </div>
+      <h2 class="sec-title">Four cities. <em>One</em> conversation.</h2>
+    </div>
+
+    <div class="areas-grid">
+      <a class="area big reveal" href="#start" data-open-modal>
+        <img loading="lazy" src="amsterdam.png" alt="Amsterdam canal at sunset" />
+        <div class="area-content">
+          <span class="eyebrow" style="color:rgba(242,235,221,.7)">Hoofdstad · 924,000</span>
+          <h3 class="area-name"><em>Amsterdam</em></h3>
+          <div class="area-meta">
+            <div class="area-hoods">De Pijp · Jordaan · Oud-Zuid · Oud-West · Indische Buurt · Houthavens · IJburg</div>
+            <div class="area-stat">Recent matches<strong>184</strong></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="area med reveal" data-d="1" href="#start" data-open-modal>
+        <img loading="lazy" src="rotterdam.png" alt="Rotterdam Erasmus Bridge at sunset" />
+        <div class="area-content">
+          <span class="eyebrow" style="color:rgba(242,235,221,.7)">Maasstad · 656,000</span>
+          <h3 class="area-name"><em>Rotterdam</em></h3>
+          <div class="area-meta">
+            <div class="area-hoods">Kralingen · Hillegersberg · Kop van Zuid · Cool</div>
+            <div class="area-stat">Recent matches<strong>62</strong></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="area med reveal" data-d="2" href="#start" data-open-modal>
+        <img loading="lazy" src="thehague.png" alt="The Hague Binnenhof at night" />
+        <div class="area-content">
+          <span class="eyebrow" style="color:rgba(242,235,221,.7)">Den Haag · 562,000</span>
+          <h3 class="area-name"><em>The Hague</em></h3>
+          <div class="area-meta">
+            <div class="area-hoods">Statenkwartier · Benoordenhout · Archipelbuurt · Scheveningen</div>
+            <div class="area-stat">Recent matches<strong>38</strong></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="area med reveal" data-d="1" href="#start" data-open-modal style="grid-column:span 6">
+        <img loading="lazy" src="utrecht.png" alt="Utrecht canal terraces at dusk" />
+        <div class="area-content">
+          <span class="eyebrow" style="color:rgba(242,235,221,.7)">Domstad · 367,000</span>
+          <h3 class="area-name"><em>Utrecht</em></h3>
+          <div class="area-meta">
+            <div class="area-hoods">Wittevrouwen · Oudwijk · Lombok · Tuinwijk · Wilhelminapark</div>
+            <div class="area-stat">Recent matches<strong>28</strong></div>
+          </div>
+        </div>
+      </a>
+
+      <a class="area med reveal" data-d="2" href="#start" data-open-modal style="grid-column:span 6">
+        <img loading="lazy" src="randstad.png" alt="Dutch church spire and row houses" />
+        <div class="area-content">
+          <span class="eyebrow" style="color:rgba(242,235,221,.7)">Coverage · all of</span>
+          <h3 class="area-name"><em>Randstad</em></h3>
+          <div class="area-meta">
+            <div class="area-hoods">Surrounding villages and Zaanstreek on request — Haarlem, Leiden, Delft, Hilversum, Almere</div>
+            <div class="area-stat">By referral<strong>Talk to us</strong></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section id="faq" class="sec faq-section">
+  <div class="wrap">
+    <div class="faq-grid">
+      <aside class="faq-aside reveal">
+        <div class="sec-kicker"><span class="line"></span><span>Section 06</span></div>
+        <h2>Honest answers to the <em>obvious</em> questions.</h2>
+        <p>What you'd ask if we were on the phone. Same answers, written down. If yours isn't here, write to <a href="mailto:info@hqhousing.com" style="color:var(--accent-2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px">info@hqhousing.com</a> — Philippe replies in under four hours during business hours.</p>
+      </aside>
+
+      <div class="faq-list reveal" data-d="1">
+        <details class="faq" open>
+          <summary>
+            <span>Why €250 upfront? Other agents are free.</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            Because the people who work for free are paid by the landlord. That's who they actually
+            represent — not you. €250 is the cost of having someone whose only job is to look out for
+            your interests. It's also a filter: it keeps us focused on clients who are genuinely ready to
+            move, which is what allows us to deliver a shortlist in five days instead of five weeks.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>What happens if you don't find me a home?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            If we haven't placed you in a home you accept within 5 weeks, the €250 is refunded in full
+            on request. Decide to stop the search before then? Same answer — you only ever pay the €250.
+            No cure, no pay, no clawback, no admin fee. Written into the service agreement you sign before we begin.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Is there an actual contract?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            Yes. A two-page service agreement signed by both of us before any payment. It specifies the
+            deliverables, the timeline, the refund terms and the per-property success fee for buying
+            (rentals are €250 flat). HQ Housing operates as a Spanish S.L. registered in Valencia —
+            CIF B-98432891, inscribed in the Registro Mercantil de Valencia, with EU VAT ESB98432891.
+            You can verify all three on the Spanish business registry before paying anything.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>How long does it typically take?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            The average across 312 matches is 21 days from intake to accepted offer. Rentals are usually
+            faster (7–18 days), purchases slower (4–6 weeks). The fastest was 4 days; the longest was 73.
+            We tell you on the intake call which side of average to expect for your specific brief.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Do you work with expats arriving from abroad?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            About 70% of our clients are arriving from outside the Netherlands. Intake calls run on
+            your timezone, viewings can be done by video, and contracts are translated clause-by-clause
+            into English (or French / Spanish). We've worked with relocations to ASML, Booking, Optiver,
+            ESA, the ICC, and a long list of smaller employers.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>What's the difference between this and a regular makelaar?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            A listing makelaar represents the seller or landlord. An aankoopmakelaar represents you, but
+            usually only on the legal/transactional side — they don't curate, they don't negotiate
+            aggressively on rentals, and they don't help you settle in. We sit one layer above:
+            we handle the search, the strategy, the negotiation and the human bits, and we work with a
+            licensed makelaar for the legal closing when needed.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Are there extra fees beyond the €250?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            For rentals, the placement fee is one month's rent + VAT for clients with a straightforward profile,
+            or 1.5 months' rent + VAT if a guarantor is needed (students, freelancers, income verified abroad), with a
+            minimum of €1,250 + VAT. The €250 onboarding is fully deducted from whichever applies. Over 83% of the
+            payment only happens once you've signed the lease — no cure, no pay. For purchases there is a 1% success
+            fee (capped at €7,500), payable only when the keys change hands.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section id="start" class="closing">
+  <div class="wrap closing-inner reveal">
+    <div class="sec-kicker" style="color:rgba(242,235,221,.6)"><span class="line" style="background:var(--paper);opacity:.5"></span><span>One last thing</span></div>
+    <h2>Stop refreshing Funda <em>at midnight.</em></h2>
+    <p>One 60-minute call this week. A real human shortlist by Friday. Worst case, you get your €250 back and an honest read on the market. Best case, you stop thinking about housing forever.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+      <a href="#start" class="btn btn-cream btn-arrow" data-open-modal>
+        Book the intake call
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="tel:+31613329724" class="btn" style="color:var(--paper);border:1px solid rgba(242,235,221,.3)">
+        Or call +31 6 13 32 97 24
+      </a>
+    </div>
+    <div class="closing-meta">
+      <div><strong>Reply time</strong>under 4 hours, business days</div>
+      <div><strong>Languages</strong>EN · NL · FR · ES</div>
+      <div><strong>Registered</strong>Valencia · CIF B-98432891</div>
+      <div><strong>Service area</strong>Amsterdam · Rotterdam · The Hague · Utrecht</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <span class="mono">HQ</span>
+        <span class="word">Housing — Randstad concierge</span>
+        <p class="foot-blurb">A Spanish S.L. registered in Valencia, finding homes for expats and locals across Amsterdam, Rotterdam, The Hague and Utrecht. Operated by Philippe Kamoun.</p>
+      </div>
+      <div class="foot-col">
+        <h6>Contact</h6>
+        <a href="mailto:info@hqhousing.com">info@hqhousing.com</a>
+        <a href="tel:+31613329724">+31 6 13 32 97 24</a>
+        <a href="https://instagram.com/homequestnl" target="_blank" rel="noopener">@homequestnl</a>
+        <a href="#start">Book intake call</a>
+      </div>
+      <div class="foot-col">
+        <h6>Site</h6>
+        <a href="#process">Process</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About Philippe</a>
+        <a href="#stories">Stories</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h6>Legal</h6>
+        <a href="#">Service agreement (sample)</a>
+        <a href="#">Privacy &amp; GDPR</a>
+        <a href="#">Terms</a>
+        <a href="https://www.registradores.org" target="_blank" rel="noopener">CIF B-98432891 · Reg. Mercantil Valencia</a>
+        <a href="#">EU VAT ESB98432891</a>
+      </div>
+    </div>
+    <div class="foot-meta">
+      <div>© 2026 HQ Housing S.L. · Calle de Colón 24, 46004 Valencia, Spain · Operating across the Randstad</div>
+      <div class="foot-lang">
+        <button class="active">EN</button><span class="sep">·</span>
+        <button>NL</button><span class="sep">·</span>
+        <button>FR</button><span class="sep">·</span>
+        <button>ES</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================ INTAKE MODAL ============================ -->
+<div class="modal-root" id="intakeModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="intakeTitle">
+  <div class="modal-back" data-close-modal></div>
+  <aside class="modal-sheet">
+    <header class="modal-head">
+      <div>
+        <span class="eyebrow" style="display:block;margin-bottom:10px">Intake · 60 seconds</span>
+        <h2 id="intakeTitle">Tell us a little about <em>you.</em></h2>
+        <p>Five short steps. Philippe replies within four hours during business days. Nothing is charged until after we've had the intake call.</p>
+      </div>
+      <button class="modal-close" data-close-modal aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </header>
+
+    <div class="modal-progress"><div class="modal-progress-bar" id="progBar"></div></div>
+
+    <form class="modal-body" id="intakeForm" novalidate>
+
+      <!-- ===== Step 1: About you ===== -->
+      <section class="form-section active" data-step="1">
+        <span class="eyebrow">Step 01 / About you</span>
+        <h3>Who are we matching?</h3>
+        <p class="blurb">The basics — names and date of birth. We use this only for the service agreement.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label>First name<span class="req">*</span></label>
+            <input type="text" name="first_name" required placeholder="e.g. Camille" />
+          </div>
+          <div class="field">
+            <label>Last name<span class="req">*</span></label>
+            <input type="text" name="last_name" required placeholder="e.g. Lefèvre" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Date of birth<span class="req">*</span></label>
+          <div class="field-row dob">
+            <select name="dob_day" required>
+              <option value="">Day</option>
+            </select>
+            <select name="dob_month" required>
+              <option value="">Month</option>
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+            <select name="dob_year" required>
+              <option value="">Year</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Are you legally registered in the Netherlands?<span class="req">*</span></label>
+          <div class="opt-grid two">
+            <label class="opt"><input type="radio" name="nl_registered" value="yes" required /><span class="dot"></span><span>Yes</span></label>
+            <label class="opt"><input type="radio" name="nl_registered" value="no" /><span class="dot"></span><span>No — arriving from abroad</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Step 2: Address & contact ===== -->
+      <section class="form-section" data-step="2">
+        <span class="eyebrow">Step 02 / Where to reach you</span>
+        <h3>Current address &amp; contact.</h3>
+        <p class="blurb">Wherever you are right now, even temporarily. We'll use the phone for WhatsApp scheduling and the email for the intake invite.</p>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Country / Region<span class="req">*</span></label>
+            <input type="text" name="country" required placeholder="Netherlands" />
+          </div>
+          <div class="field">
+            <label>City<span class="req">*</span></label>
+            <input type="text" name="city_current" required placeholder="Amsterdam" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Address<span class="req">*</span></label>
+          <input type="text" name="address" required placeholder="Street and number, line 1" />
+          <input type="text" name="address2" placeholder="Apartment, suite, line 2 (optional)" style="margin-top:8px" />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Zip / Postal code<span class="req">*</span></label>
+            <input type="text" name="zip" required placeholder="1015 CB" />
+          </div>
+          <div class="field">
+            <label>Email<span class="req">*</span></label>
+            <input type="email" name="email" required placeholder="you@example.com" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Phone (reachable on WhatsApp)<span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="+31 6 12 34 56 78" />
+          <span class="help">We use this only to schedule the intake call. No marketing.</span>
+        </div>
+      </section>
+
+      <!-- ===== Step 3: Your search ===== -->
+      <section class="form-section" data-step="3">
+        <span class="eyebrow">Step 03 / Your search</span>
+        <h3>What you're looking for.</h3>
+        <p class="blurb">Best guesses are fine — we'll refine all of this on the call.</p>
+
+        <div class="field">
+          <label>In which city are you looking for a rental home?<span class="req">*</span></label>
+          <div class="opt-grid">
+            <label class="opt"><input type="radio" name="search_city" value="Amsterdam" required /><span class="dot"></span><span>Amsterdam</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Rotterdam" /><span class="dot"></span><span>Rotterdam</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Utrecht" /><span class="dot"></span><span>Utrecht</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Den Haag" /><span class="dot"></span><span>Den Haag</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Other" /><span class="dot"></span><span>Other</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>For how long do you want to rent?<span class="req">*</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="duration" value="6mo" required /><span class="dot"></span><span>6 months</span></label>
+            <label class="opt"><input type="radio" name="duration" value="1yr" /><span class="dot"></span><span>1 year</span></label>
+            <label class="opt"><input type="radio" name="duration" value="more" /><span class="dot"></span><span>More than 1 year</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>You are looking forward to<span class="req">*</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="living" value="alone" required /><span class="dot"></span><span>Renting alone</span></label>
+            <label class="opt"><input type="radio" name="living" value="couple" /><span class="dot"></span><span>Renting as a couple</span></label>
+            <label class="opt"><input type="radio" name="living" value="shares" /><span class="dot"></span><span>Renting in shares</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>What type of home?<span class="req">*</span></label>
+          <div class="opt-grid">
+            <label class="opt"><input type="radio" name="home_type" value="studio" required /><span class="dot"></span><span>Studio</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="1br" /><span class="dot"></span><span>1-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="2br" /><span class="dot"></span><span>2-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="3br+" /><span class="dot"></span><span>More than 2 bedrooms</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Furnished or unfurnished?<span class="req">*</span></label>
+          <div class="opt-grid four">
+            <label class="opt"><input type="radio" name="furnished" value="upholstered" required /><span class="dot"></span><span>Upholstered</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="unfurnished" /><span class="dot"></span><span>Not furnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="furnished" /><span class="dot"></span><span>Furnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="none" /><span class="dot"></span><span>No preference</span></label>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Your occupation<span class="req">*</span></label>
+            <div class="opt-grid three" style="margin-top:0">
+              <label class="opt"><input type="radio" name="occupation" value="employed" required /><span class="dot"></span><span>Employed</span></label>
+              <label class="opt"><input type="radio" name="occupation" value="freelancer" /><span class="dot"></span><span>Freelancer</span></label>
+              <label class="opt"><input type="radio" name="occupation" value="student" /><span class="dot"></span><span>Student</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Maximum monthly budget (€)<span class="req">*</span></label>
+            <input type="number" name="budget" required min="0" step="50" placeholder="2,500" />
+            <span class="help">Including service charges, excluding utilities.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>When do you plan to move in?<span class="req">*</span></label>
+          <div class="field-row dob">
+            <select name="movein_day" required>
+              <option value="">Day</option>
+            </select>
+            <select name="movein_month" required>
+              <option value="">Month</option>
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+            <select name="movein_year" required>
+              <option value="">Year</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Step 4: Source + about ===== -->
+      <section class="form-section" data-step="4">
+        <span class="eyebrow">Step 04 / Context</span>
+        <h3>How did you find us?</h3>
+        <p class="blurb">Helps us understand what's working. No wrong answer.</p>
+
+        <div class="field">
+          <div class="opt-grid">
+            <label class="opt"><input type="radio" name="source" value="employee" required /><span class="dot"></span><span>One of our employees</span></label>
+            <label class="opt"><input type="radio" name="source" value="instagram" /><span class="dot"></span><span>Instagram</span></label>
+            <label class="opt"><input type="radio" name="source" value="facebook" /><span class="dot"></span><span>Facebook</span></label>
+            <label class="opt"><input type="radio" name="source" value="google_ads" /><span class="dot"></span><span>Google Ads</span></label>
+            <label class="opt"><input type="radio" name="source" value="whatsapp" /><span class="dot"></span><span>WhatsApp Housing Group</span></label>
+            <label class="opt"><input type="radio" name="source" value="advertisement" /><span class="dot"></span><span>Advertisement</span></label>
+            <label class="opt"><input type="radio" name="source" value="kamernet" /><span class="dot"></span><span>Kamernet</span></label>
+            <label class="opt"><input type="radio" name="source" value="jay" /><span class="dot"></span><span>Jay</span></label>
+            <label class="opt"><input type="radio" name="source" value="referral" /><span class="dot"></span><span>Friend or relative</span></label>
+            <label class="opt"><input type="radio" name="source" value="other" /><span class="dot"></span><span>Other</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>About you and why you're interested in finding a property<span class="req">*</span></label>
+          <textarea name="about" required placeholder="A few sentences on your situation — relocating, growing family, lease ending, dealbreakers, anything that matters."></textarea>
+        </div>
+      </section>
+
+      <!-- ===== Step 5: Consent ===== -->
+      <section class="form-section" data-step="5">
+        <span class="eyebrow">Step 05 / Last step</span>
+        <h3>Almost there.</h3>
+        <p class="blurb">Two boxes and you're done. We'll be in touch within four business hours with a 60-minute intake slot — and a copy of the service agreement before any payment is requested.</p>
+
+        <div class="consent">
+          <label>
+            <input type="checkbox" name="privacy" required />
+            <span>I have read and accepted the <a href="#" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
+          </label>
+          <label>
+            <input type="checkbox" name="terms" required />
+            <span>I have read and accepted the <a href="#" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
+          </label>
+        </div>
+
+        <div style="margin-top:32px;padding:20px 22px;background:var(--cream-2);border:1px solid var(--rule);border-radius:2px">
+          <div class="eyebrow" style="margin-bottom:8px">What happens next</div>
+          <ol style="margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);line-height:1.65">
+            <li>Philippe replies within 4 business hours with a calendar link.</li>
+            <li>60-minute intake call by Zoom or in-person on Herengracht.</li>
+            <li>Service agreement signed → €250 paid → shortlist within 5 working days.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===== Done ===== -->
+      <section class="modal-done" id="modalDone">
+        <div class="done-seal">✓</div>
+        <h2>Thank you. <em>Philippe will be in touch shortly.</em></h2>
+        <p>You'll get a calendar invite at the email you provided, usually within four business hours. If it's outside business hours in the Netherlands right now, expect a reply first thing tomorrow morning CET.</p>
+        <p style="font-size:13px;color:var(--muted)">Need to reach us sooner? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">WhatsApp Philippe directly</a> or call +31 6 13 32 97 24.</p>
+      </section>
+    </form>
+
+    <footer class="modal-foot" id="modalFoot">
+      <div class="step-meta">Step <strong id="stepNow">1</strong> of <strong>5</strong></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button type="button" class="ghost-link" id="btnBack" style="display:none">← Back</button>
+        <button type="button" class="btn btn-primary btn-arrow" id="btnNext">
+          <span id="btnNextLabel">Continue</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </footer>
+  </aside>
+</div>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Language switcher (visual only)
+  document.querySelectorAll('.lang, .foot-lang').forEach(group => {
+    group.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+
+  // ===== Intake modal =====
+  const modal = document.getElementById('intakeModal');
+  const form = document.getElementById('intakeForm');
+  const sections = form.querySelectorAll('.form-section');
+  const progBar = document.getElementById('progBar');
+  const stepNow = document.getElementById('stepNow');
+  const btnNext = document.getElementById('btnNext');
+  const btnNextLabel = document.getElementById('btnNextLabel');
+  const btnBack = document.getElementById('btnBack');
+  const modalFoot = document.getElementById('modalFoot');
+  const modalDone = document.getElementById('modalDone');
+  const modalBody = form;
+  const totalSteps = sections.length;
+  let step = 1;
+
+  // Populate day/year selects
+  const days = (sel) => {
+    for (let i=1;i<=31;i++){ const o=document.createElement('option'); o.textContent=i; sel.appendChild(o); }
+  };
+  const years = (sel, from, to) => {
+    for (let y=from;y>=to;y--){ const o=document.createElement('option'); o.textContent=y; sel.appendChild(o); }
+  };
+  days(form.querySelector('select[name=dob_day]'));
+  years(form.querySelector('select[name=dob_year]'), 2008, 1940);
+  days(form.querySelector('select[name=movein_day]'));
+  years(form.querySelector('select[name=movein_year]'), 2027, 2026);
+
+  function openModal(intent){
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    if (intent === 'buy') {
+      form.querySelector('h3').parentElement.querySelector('p.blurb').textContent =
+        "We use the same intake for purchases — Philippe will adapt the conversation. Start with the basics.";
+    }
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+  function showStep(n){
+    step = Math.max(1, Math.min(totalSteps, n));
+    sections.forEach(s => s.classList.toggle('active', +s.dataset.step === step));
+    progBar.style.width = (step / totalSteps * 100) + '%';
+    stepNow.textContent = step;
+    btnBack.style.display = step === 1 ? 'none' : 'inline-flex';
+    btnNextLabel.textContent = step === totalSteps ? 'Submit intake' : 'Continue';
+    modalBody.scrollTop = 0;
+  }
+  function validateStep(){
+    const cur = form.querySelector('.form-section[data-step="'+step+'"]');
+    const required = cur.querySelectorAll('[required]');
+    for (const el of required) {
+      if (el.type === 'radio') {
+        const group = form.querySelectorAll('input[name="'+el.name+'"]');
+        if (![...group].some(r => r.checked)) {
+          group[0].closest('.opt').scrollIntoView({block:'nearest'});
+          group[0].closest('.opt').animate(
+            [{boxShadow:'0 0 0 3px rgba(184,92,56,.3)'},{boxShadow:'none'}],
+            {duration:600}
+          );
+          return false;
+        }
+      } else if (el.type === 'checkbox') {
+        if (!el.checked) { el.focus(); return false; }
+      } else if (!el.value.trim()) {
+        el.focus();
+        el.animate([{borderColor:'#B85C38'},{borderColor:''}],{duration:600});
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.querySelectorAll('[data-open-modal]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal(a.dataset.intent);
+      showStep(1);
+    });
+  });
+  document.querySelectorAll('[data-close-modal]').forEach(a => a.addEventListener('click', closeModal));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+
+  btnNext.addEventListener('click', () => {
+    if (!validateStep()) return;
+    if (step < totalSteps) {
+      showStep(step + 1);
+    } else {
+      // Submit
+      sections.forEach(s => s.classList.remove('active'));
+      modalDone.classList.add('show');
+      modalFoot.style.display = 'none';
+      progBar.style.width = '100%';
+    }
+  });
+  btnBack.addEventListener('click', () => showStep(step - 1));
+</script>
+
+<!-- ============== Language / i18n ============== -->
+<script>
+(function(){
+  // Phrase map keyed by exact normalized English text -> {nl, fr, es}
+  // Covers: nav, hero, trust strip, section kickers/titles, city eyebrows,
+  // FAQ aside, closing, footer, primary CTAs, modal head + step kickers.
+  var T = {
+    // ---------- NAV ----------
+    "Process": { nl:"Werkwijze", fr:"Démarche", es:"Proceso" },
+    "Pricing": { nl:"Tarieven", fr:"Tarifs", es:"Tarifas" },
+    "About Philippe": { nl:"Over Philippe", fr:"À propos de Philippe", es:"Sobre Philippe" },
+    "Stories": { nl:"Verhalen", fr:"Témoignages", es:"Historias" },
+    "FAQ": { nl:"FAQ", fr:"FAQ", es:"FAQ" },
+    "Start your search": { nl:"Begin je zoektocht", fr:"Commencer la recherche", es:"Empezar la búsqueda" },
+
+    // ---------- HERO ----------
+    "Housing concierge · est. 2019": { nl:"Woonconciërge · sinds 2019", fr:"Conciergerie immobilière · depuis 2019", es:"Conserjería inmobiliaria · desde 2019" },
+    "I'm renting": { nl:"Ik wil huren", fr:"Je veux louer", es:"Quiero alquilar" },
+    "I'm buying": { nl:"Ik wil kopen", fr:"Je veux acheter", es:"Quiero comprar" },
+    "Available this week": { nl:"Deze week beschikbaar", fr:"Disponible cette semaine", es:"Disponible esta semana" },
+
+    // ---------- TRUST STRIP ----------
+    "Homes matched": { nl:"Woningen gematcht", fr:"Logements trouvés", es:"Hogares encontrados" },
+    "Average match": { nl:"Gemiddelde match", fr:"Délai moyen", es:"Tiempo medio" },
+    "Operating since": { nl:"Actief sinds", fr:"En activité depuis", es:"Operando desde" },
+    "Four languages": { nl:"Vier talen", fr:"Quatre langues", es:"Cuatro idiomas" },
+    "Registered in Valencia, Spain": { nl:"Geregistreerd in Valencia, Spanje", fr:"Enregistrée à Valence, Espagne", es:"Registrada en Valencia, España" },
+
+    // ---------- SECTION KICKERS ----------
+    "The fee · Section 01": { nl:"Het tarief · Sectie 01", fr:"Le tarif · Section 01", es:"El tarifa · Sección 01" },
+    "01 / Pricing": { nl:"01 / Tarieven", fr:"01 / Tarifs", es:"01 / Tarifas" },
+    "02 / How it works": { nl:"02 / Werkwijze", fr:"02 / Démarche", es:"02 / Proceso" },
+    "About · Section 03": { nl:"Over · Sectie 03", fr:"À propos · Section 03", es:"Sobre · Sección 03" },
+    "04 / Recent matches": { nl:"04 / Recente matches", fr:"04 / Récentes réussites", es:"04 / Casos recientes" },
+    "05 / Service areas": { nl:"05 / Werkgebied", fr:"05 / Zones de service", es:"05 / Áreas de servicio" },
+    "Section 06": { nl:"Sectie 06", fr:"Section 06", es:"Sección 06" },
+    "One last thing": { nl:"Tot slot", fr:"Un dernier mot", es:"Una última cosa" },
+
+    // ---------- BUTTONS / CTAs ----------
+    "Book the intake call": { nl:"Plan het intakegesprek", fr:"Réserver l'appel d'admission", es:"Reservar la llamada inicial" },
+    "Book intake call": { nl:"Plan intakegesprek", fr:"Appel d'admission", es:"Llamada inicial" },
+
+    // ---------- CITY EYEBROWS ----------
+    "Hoofdstad · 924,000": { nl:"Hoofdstad · 924.000", fr:"Capitale · 924 000", es:"Capital · 924.000" },
+    "Maasstad · 656,000": { nl:"Maasstad · 656.000", fr:"Ville de la Meuse · 656 000", es:"Ciudad del Mosa · 656.000" },
+    "Den Haag · 562,000": { nl:"Den Haag · 562.000", fr:"La Haye · 562 000", es:"La Haya · 562.000" },
+    "Domstad · 367,000": { nl:"Domstad · 367.000", fr:"Ville cathédrale · 367 000", es:"Ciudad catedral · 367.000" },
+    "Coverage · all of": { nl:"Dekking · de hele", fr:"Couverture · tout le", es:"Cobertura · toda la" },
+    "The Hague": { nl:"Den Haag", fr:"La Haye", es:"La Haya" },
+
+    // ---------- FOOTER ----------
+    "Site": { nl:"Site", fr:"Site", es:"Sitio" },
+    "Legal": { nl:"Juridisch", fr:"Mentions légales", es:"Legal" },
+    "Service agreement (sample)": { nl:"Voorbeeldovereenkomst", fr:"Contrat de service (exemple)", es:"Acuerdo de servicio (ejemplo)" },
+    "Privacy & GDPR": { nl:"Privacy & AVG", fr:"Confidentialité & RGPD", es:"Privacidad & RGPD" },
+    "Terms": { nl:"Voorwaarden", fr:"Conditions", es:"Términos" },
+
+    // ---------- HEADLINES (nodes containing <em>/<br>) ----------
+    // Hero h1 children rebuilt below; section h2 phrases:
+    "Stop refreshing Funda": { nl:"Stop met om middernacht", fr:"Arrêtez d'actualiser Funda", es:"Deja de refrescar Funda" },
+    "at midnight.": { nl:"Funda te verversen.", fr:"à minuit.", es:"a medianoche." }
+  };
+
+  // ----- Targeted multi-segment headlines (keyed by container selector) -----
+  // Each value is {en, nl, fr, es} as innerHTML so we preserve <em>/<br>.
+  var H = [
+    // Hero h1
+    { sel: ".hero-text h1.reveal",
+      en: 'Your desired home,\n      <span class="sub">found in <em>weeks</em> — not months.</span>',
+      nl: 'Je gewenste woning,<br/><span class="sub">gevonden in <em>weken</em> — niet maanden.</span>',
+      fr: 'Votre logement idéal,<br/><span class="sub">trouvé en <em>semaines</em> — pas en mois.</span>',
+      es: 'Tu hogar ideal,<br/><span class="sub">encontrado en <em>semanas</em> — no en meses.</span>' },
+    // How it works h2
+    { sel: '#process .sec-title',
+      en: 'From first call to <em>keys in hand,</em><br/>typically inside three weeks.',
+      nl: 'Van eerste gesprek tot <em>sleutels in de hand,</em><br/>meestal binnen drie weken.',
+      fr: 'Du premier appel aux <em>clés en main,</em><br/>généralement en trois semaines.',
+      es: 'De la primera llamada a las <em>llaves en mano,</em><br/>normalmente en tres semanas.' },
+    // About h2
+    { sel: '#about h2',
+      en: 'The person <em>actually</em> finding your home.',
+      nl: 'De persoon die je woning <em>écht</em> vindt.',
+      fr: 'La personne qui trouve <em>vraiment</em> votre logement.',
+      es: 'La persona que <em>de verdad</em> encuentra tu hogar.' },
+    // Stories h2
+    { sel: '#stories .sec-title',
+      en: 'A few of the <em>three hundred-plus</em> matches.',
+      nl: 'Een greep uit de <em>driehonderd-plus</em> matches.',
+      fr: 'Quelques-uns des <em>plus de trois cents</em> placements.',
+      es: 'Algunos de los <em>más de trescientos</em> emparejamientos.' },
+    // Service areas h2
+    { sel: '#areas .sec-title',
+      en: 'Four cities. <em>One</em> conversation.',
+      nl: 'Vier steden. <em>Eén</em> gesprek.',
+      fr: 'Quatre villes. <em>Une seule</em> conversation.',
+      es: 'Cuatro ciudades. <em>Una</em> conversación.' },
+    // FAQ aside h2
+    { sel: '#faq .faq-aside h2',
+      en: 'Honest answers to the <em>obvious</em> questions.',
+      nl: 'Eerlijke antwoorden op de <em>voor de hand liggende</em> vragen.',
+      fr: 'Des réponses honnêtes aux questions <em>évidentes</em>.',
+      es: 'Respuestas honestas a las preguntas <em>evidentes</em>.' },
+    // Closing h2
+    { sel: '#closing h2',
+      en: 'Stop refreshing Funda <em>at midnight.</em>',
+      nl: 'Stop met Funda <em>verversen om middernacht.</em>',
+      fr: 'Arrêtez d\'actualiser Funda <em>à minuit.</em>',
+      es: 'Deja de refrescar Funda <em>a medianoche.</em>' },
+    // Pricing h2
+    { sel: '#pricing .price-headline',
+      en: 'Transparent, fixed pricing.<br/>\n          <em>No surprises, no upsell.</em>',
+      nl: 'Transparante, vaste tarieven.<br/><em>Geen verrassingen, geen upsell.</em>',
+      fr: 'Tarifs transparents et fixes.<br/><em>Pas de surprise, pas d\'upsell.</em>',
+      es: 'Tarifas transparentes y fijas.<br/><em>Sin sorpresas, sin extras.</em>' },
+    // Modal head
+    { sel: '#intakeTitle',
+      en: 'Tell us a little about <em>you.</em>',
+      nl: 'Vertel ons iets over <em>jezelf.</em>',
+      fr: 'Parlez-nous un peu de <em>vous.</em>',
+      es: 'Cuéntanos un poco sobre <em>ti.</em>' }
+  ];
+
+  // ---- Selectors whose textContent we phrase-map ----
+  var SELECTORS = [
+    '.nav-links a',
+    '.hero-eyebrow span:last-child',
+    '.hero-meta span',
+    '.btn',
+    '.trust-label',
+    '.sec-kicker span:last-child',
+    '.sec-num',
+    '.area-content .eyebrow',
+    '.area-name',
+    '.foot-col h6',
+    '.foot-col a'
+  ];
+
+  function normalize(s){ return (s||'').replace(/\s+/g,' ').trim(); }
+
+  // Cache original innerHTML/textContent on first run
+  var cached = false;
+  function cache(){
+    if (cached) return; cached = true;
+    SELECTORS.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        if (el.dataset.i18nOrig === undefined) el.dataset.i18nOrig = el.textContent;
+      });
+    });
+    H.forEach(function(h){
+      document.querySelectorAll(h.sel).forEach(function(el){
+        if (el.dataset.i18nOrigHtml === undefined) el.dataset.i18nOrigHtml = el.innerHTML;
+      });
+    });
+  }
+
+  function applyLang(lang){
+    cache();
+    // Phrase-map selectors
+    SELECTORS.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        var orig = el.dataset.i18nOrig;
+        var key = normalize(orig);
+        if (lang === 'en'){ el.textContent = orig; return; }
+        var hit = T[key];
+        if (hit && hit[lang]) el.textContent = hit[lang];
+        else el.textContent = orig;
+      });
+    });
+    // Headline HTML swaps
+    H.forEach(function(h){
+      document.querySelectorAll(h.sel).forEach(function(el){
+        if (lang === 'en') el.innerHTML = el.dataset.i18nOrigHtml;
+        else if (h[lang]) el.innerHTML = h[lang];
+        else el.innerHTML = el.dataset.i18nOrigHtml;
+      });
+    });
+    // <html lang>
+    document.documentElement.lang = lang;
+    // Sync both switcher rows
+    document.querySelectorAll('.lang button, .foot-lang button').forEach(function(b){
+      var t = (b.textContent||'').trim().toLowerCase();
+      if (t === lang){ b.classList.add('active'); b.setAttribute('aria-pressed','true'); }
+      else { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); }
+    });
+  }
+
+  function wire(){
+    document.querySelectorAll('.lang button, .foot-lang button').forEach(function(b){
+      b.addEventListener('click', function(e){
+        e.preventDefault();
+        var t = (b.textContent||'').trim().toLowerCase();
+        if (['en','nl','fr','es'].indexOf(t) >= 0) applyLang(t);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
+  else wire();
+})();
+</script>
+</body>
+</html>
