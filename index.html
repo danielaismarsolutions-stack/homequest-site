@@ -1473,12 +1473,17 @@
   <div class="nav-inner">
     <a href="#top" class="logo" aria-label="HomeQuest.com">
       <svg class="logo-mark" viewBox="0 0 46 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <defs>
+          <mask id="hq-cut-nav" maskUnits="userSpaceOnUse" x="0" y="0" width="46" height="44">
+            <rect x="0" y="0" width="46" height="44" fill="white"/>
+            <circle cx="32" cy="23" r="5" fill="none" stroke="black" stroke-width="2.4"/>
+            <line x1="35.5" y1="26.5" x2="40" y2="31" stroke="black" stroke-width="2.4" stroke-linecap="round"/>
+          </mask>
+        </defs>
         <rect x="2.5" y="8" width="5" height="26" rx="0.6" fill="currentColor"/>
         <rect x="2.5" y="18.4" width="15" height="5" rx="0.6" fill="currentColor"/>
         <rect x="12.5" y="8" width="5" height="26" rx="0.6" fill="currentColor"/>
-        <path d="M24.5 34 H41.5 Q43 34 43 32.5 V19 L33 9.5 L23 19 V32.5 Q23 34 24.5 34 Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round" fill="none"/>
-        <circle cx="33" cy="24.3" r="5" stroke="currentColor" stroke-width="2.6" fill="none"/>
-        <line x1="36.6" y1="27.9" x2="42" y2="33.3" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+        <path d="M23 31.5 V18 L33 9 L43 18 V31.5 Q43 34 40.5 34 H25.5 Q23 34 23 31.5 Z" fill="currentColor" mask="url(#hq-cut-nav)"/>
       </svg>
       <span class="logo-word"><span class="lw-thin">Home</span><span class="lw-bold">Quest</span><span class="lw-io">.com</span></span>
     </a>
@@ -2506,12 +2511,17 @@
       <div class="foot-logo">
         <div class="foot-brand">
           <svg class="logo-mark" viewBox="0 0 46 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+              <mask id="hq-cut-foot" maskUnits="userSpaceOnUse" x="0" y="0" width="46" height="44">
+                <rect x="0" y="0" width="46" height="44" fill="white"/>
+                <circle cx="32" cy="23" r="5" fill="none" stroke="black" stroke-width="2.4"/>
+                <line x1="35.5" y1="26.5" x2="40" y2="31" stroke="black" stroke-width="2.4" stroke-linecap="round"/>
+              </mask>
+            </defs>
             <rect x="2.5" y="8" width="5" height="26" rx="0.6" fill="currentColor"/>
             <rect x="2.5" y="18.4" width="15" height="5" rx="0.6" fill="currentColor"/>
             <rect x="12.5" y="8" width="5" height="26" rx="0.6" fill="currentColor"/>
-            <path d="M24.5 34 H41.5 Q43 34 43 32.5 V19 L33 9.5 L23 19 V32.5 Q23 34 24.5 34 Z" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round" fill="none"/>
-            <circle cx="33" cy="24.3" r="5" stroke="currentColor" stroke-width="2.6" fill="none"/>
-            <line x1="36.6" y1="27.9" x2="42" y2="33.3" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>
+            <path d="M23 31.5 V18 L33 9 L43 18 V31.5 Q43 34 40.5 34 H25.5 Q23 34 23 31.5 Z" fill="currentColor" mask="url(#hq-cut-foot)"/>
           </svg>
           <span class="logo-word"><span class="lw-thin">Home</span><span class="lw-bold">Quest</span><span class="lw-io">.com</span></span>
         </div>
