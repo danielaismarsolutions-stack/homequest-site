@@ -39,7 +39,7 @@
     --ink:#13241F;        /* deep forest near-black */
     --ink-2:#1E342D;      /* forest */
     --ink-3:#2A4A40;      /* lighter forest */
-    --cream:#F2EBDD;      /* warm paper */
+    --cream:#F5F1E7;      /* warm paper */
     --cream-2:#EDE4D2;    /* slightly deeper paper */
     --bone:#E5DAC2;       /* bone divider */
     --paper:#FAF6ED;      /* lightest cream */
@@ -129,14 +129,16 @@
     padding:20px 28px;
     max-width:1480px;margin:0 auto;
   }
-  .nav.scrolled{background:rgba(242,235,221,.92);backdrop-filter:blur(12px);border-color:var(--rule-light)}
-  .logo{display:flex;align-items:baseline;gap:8px}
-  .logo .mono{
-    font-family:var(--serif);font-weight:380;font-size:26px;letter-spacing:-.02em;
-    font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 1;
+  .nav.scrolled{background:rgba(245,241,231,.92);backdrop-filter:blur(12px);border-color:var(--rule-light)}
+  .logo{display:flex;align-items:center;gap:10px;color:var(--ink)}
+  .logo-mark{height:30px;width:auto;flex:0 0 auto;color:inherit}
+  .logo-word{
+    font-family:var(--sans);font-size:18px;line-height:1;letter-spacing:.01em;
+    text-transform:uppercase;color:inherit;white-space:nowrap;
   }
-  .logo .word{font-family:var(--sans);font-weight:450;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
-  .logo .dot{width:5px;height:5px;background:var(--accent);border-radius:99px;display:inline-block;align-self:center;margin:0 2px}
+  .logo-word .lw-thin{font-weight:500}
+  .logo-word .lw-bold{font-weight:800}
+  .logo-word .lw-io{font-weight:500;opacity:.85}
 
   .nav-links{display:flex;gap:32px;align-items:center;font-size:14px;color:var(--ink-2)}
   .nav-links a{position:relative;padding:6px 0;transition:color .2s}
@@ -803,8 +805,10 @@
   .foot-col h6{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,235,221,.55);margin:0 0 18px;font-weight:500}
   .foot-col a{display:block;padding:5px 0;color:rgba(242,235,221,.78);transition:color .2s}
   .foot-col a:hover{color:#E2B894}
-  .foot-logo .mono{font-family:var(--serif);font-size:36px;color:var(--paper);font-weight:340;letter-spacing:-.02em}
-  .foot-logo .word{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,235,221,.55);margin-top:6px;display:block}
+  .foot-brand{display:flex;align-items:center;gap:12px;color:var(--paper)}
+  .foot-brand .logo-mark{height:38px}
+  .foot-brand .logo-word{font-size:23px}
+  .foot-logo .word{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(245,241,231,.55);margin-top:10px;display:block}
   .foot-blurb{margin-top:24px;max-width:34ch;line-height:1.55;color:rgba(242,235,221,.6)}
   .foot-meta{
     border-top:1px solid rgba(242,235,221,.12);padding-top:28px;
@@ -1467,10 +1471,16 @@
 <!-- ============================ NAV ============================ -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="#top" class="logo" aria-label="HomeQuest">
-      <span class="mono">Home</span>
-      <span class="dot"></span>
-      <span class="word">Quest</span>
+    <a href="#top" class="logo" aria-label="HomeQuest.io">
+      <svg class="logo-mark" viewBox="0 0 44 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect x="2.5" y="9" width="4.6" height="24" rx="0.6" fill="currentColor"/>
+        <rect x="2.5" y="18.7" width="14.2" height="4.2" rx="0.6" fill="currentColor"/>
+        <rect x="12.1" y="9" width="4.6" height="24" rx="0.6" fill="currentColor"/>
+        <path d="M22.5 21 L31 8.8 L39.5 21 V30.5 Q39.5 33.2 36.8 33.2 H25.2 Q22.5 33.2 22.5 30.5 Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="31" cy="22.6" r="3.5" stroke="currentColor" stroke-width="2.2"/>
+        <line x1="33.6" y1="25.2" x2="36.9" y2="28.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-word"><span class="lw-thin">Home</span><span class="lw-bold">Quest</span><span class="lw-io">.io</span></span>
     </a>
 
     <div class="nav-links">
@@ -2494,8 +2504,18 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-logo">
-        <span class="mono">Home</span>
-        <span class="word">Quest — Netherlands concierge</span>
+        <div class="foot-brand">
+          <svg class="logo-mark" viewBox="0 0 44 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <rect x="2.5" y="9" width="4.6" height="24" rx="0.6" fill="currentColor"/>
+            <rect x="2.5" y="18.7" width="14.2" height="4.2" rx="0.6" fill="currentColor"/>
+            <rect x="12.1" y="9" width="4.6" height="24" rx="0.6" fill="currentColor"/>
+            <path d="M22.5 21 L31 8.8 L39.5 21 V30.5 Q39.5 33.2 36.8 33.2 H25.2 Q22.5 33.2 22.5 30.5 Z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle cx="31" cy="22.6" r="3.5" stroke="currentColor" stroke-width="2.2"/>
+            <line x1="33.6" y1="25.2" x2="36.9" y2="28.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-word"><span class="lw-thin">Home</span><span class="lw-bold">Quest</span><span class="lw-io">.io</span></span>
+        </div>
+        <span class="word">Netherlands concierge</span>
         <p class="foot-blurb">A Spanish S.L. registered in Valencia, finding homes for expats and locals across Amsterdam, Rotterdam, The Hague and Utrecht. Operated by Philippe Kamoun.</p>
       </div>
       <div class="foot-col">
