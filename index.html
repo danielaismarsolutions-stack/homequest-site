@@ -1513,11 +1513,11 @@
       viewings, negotiation, contract, all handled.
     </p>
     <div class="hero-ctas reveal" data-d="2">
-      <a href="#start-rent" class="btn btn-primary btn-arrow" data-open-modal data-intent="rent">
+      <a href="/renting-form" class="btn btn-primary btn-arrow" data-open-modal data-intent="rent">
         I'm renting
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a href="#start-buy" class="btn btn-ghost btn-arrow" data-open-modal data-intent="buy">
+      <a href="/buying-form" class="btn btn-ghost btn-arrow" data-open-modal data-intent="buy">
         I'm buying
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -3114,7 +3114,14 @@
 
   // ===== Global mode (rent/buy) =====
   const VALID_MODES = ['rent','buy'];
+  const FORM_PATHS = { rent: '/renting-form', buy: '/buying-form' };
   function getMode(){ return document.body.dataset.mode === 'buy' ? 'buy' : 'rent'; }
+  function intentFromPath(){
+    const p = location.pathname.toLowerCase().replace(/\/+$/, '');
+    if (p === '/renting-form') return 'rent';
+    if (p === '/buying-form') return 'buy';
+    return null;
+  }
   function setMode(mode, opts){
     if (!VALID_MODES.includes(mode)) mode = 'rent';
     const prev = getMode();
@@ -3134,8 +3141,10 @@
     }
   }
 
-  // Init from hash on load
+  // Init from path or hash on load
   (function initMode(){
+    const fromPath = intentFromPath();
+    if (fromPath){ setMode(fromPath); return; }
     const h = (location.hash || '').toLowerCase();
     if (h.includes('buy')) setMode('buy');
     else setMode('rent');
@@ -3145,7 +3154,17 @@
   document.querySelectorAll('[data-set-mode]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      setMode(btn.dataset.setMode);
+      const mode = btn.dataset.setMode;
+      setMode(mode);
+      // Only mirror the toggle to the URL when the user is inside the modal.
+      // Inline toggles in the Process/Pricing sections shouldn't change the path.
+      const insideModal = !!btn.closest('#intakeModal');
+      if (insideModal && modal && modal.classList.contains('open')){
+        const desired = FORM_PATHS[mode];
+        if (desired && location.pathname !== desired){
+          history.replaceState(null, '', desired);
+        }
+      }
     });
   });
 
@@ -3204,8 +3223,10 @@
     if (intent === 'buy' || intent === 'rent') {
       setMode(intent);
       // Keep the URL in sync so the form has its own shareable/redirectable link.
-      const desired = '#start-' + intent;
-      if (location.hash !== desired) history.replaceState(null, '', desired);
+      const desired = FORM_PATHS[intent];
+      if (desired && location.pathname !== desired){
+        history.replaceState(null, '', desired);
+      }
     }
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
@@ -3218,6 +3239,10 @@
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden','true');
     document.body.style.overflow='';
+    // Reset the URL so a refresh doesn't auto-reopen the modal.
+    if (intentFromPath()){
+      history.replaceState(null, '', '/');
+    }
   }
   function formShowStep(n){
     const total = totalStepsNow();
@@ -3273,10 +3298,16 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
-  // Deep-link the intake modal from the URL hash so external sites
-  // (incl. 301 redirects) can target the rent or buy form independently:
-  //   #start-rent  -> opens the rent intake
-  //   #start-buy   -> opens the buy intake
+  // Deep-link the intake modal from the URL so external sites and shared
+  // links can target the rent or buy form independently. Two equivalent
+  // entry points:
+  //   /renting-form  /  /buying-form  -> canonical path (Vercel rewrites
+  //     these to index.html so the path survives in the address bar).
+  //   #start-rent    /  #start-buy    -> legacy hash, kept for back-compat.
+  (function openFromPath(){
+    const intent = intentFromPath();
+    if (intent) openModal(intent);
+  })();
   function openFromHash(){
     const h = (location.hash || '').toLowerCase();
     if (h === '#start-rent') openModal('rent');
