@@ -3268,6 +3268,14 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
+  // Auto-open the intake modal from ?form=rent or ?form=buy
+  // so external sites (incl. 301 redirects) can deep-link to each form.
+  (function autoOpenFromQuery(){
+    const params = new URLSearchParams(window.location.search);
+    const raw = (params.get('form') || params.get('intent') || '').toLowerCase();
+    if (raw === 'rent' || raw === 'buy') openModal(raw);
+  })();
+
   function collectFormData() {
     const data = { mode: getMode() };
     const inputs = form.querySelectorAll('input, select, textarea');
