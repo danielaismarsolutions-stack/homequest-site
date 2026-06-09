@@ -5,7 +5,7 @@
       "has": [
         { "type": "host", "value": "(www\\.)?homequest\\.io" }
       ],
-      "destination": "https://www.hqhousing.com/#start-rent",
+      "destination": "https://www.hqhousing.com/renting-form",
       "permanent": true
     },
     {
@@ -13,7 +13,7 @@
       "has": [
         { "type": "host", "value": "(www\\.)?homequest\\.io" }
       ],
-      "destination": "https://www.hqhousing.com/#start-buy",
+      "destination": "https://www.hqhousing.com/buying-form",
       "permanent": true
     },
     {
@@ -24,5 +24,9 @@
       "destination": "https://www.hqhousing.com/",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    { "source": "/renting-form", "destination": "/index.html" },
+    { "source": "/buying-form", "destination": "/index.html" }
   ]
 }
