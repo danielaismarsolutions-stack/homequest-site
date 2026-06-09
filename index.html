@@ -1513,11 +1513,11 @@
       viewings, negotiation, contract, all handled.
     </p>
     <div class="hero-ctas reveal" data-d="2">
-      <a href="#start" class="btn btn-primary btn-arrow" data-open-modal data-intent="rent">
+      <a href="#start-rent" class="btn btn-primary btn-arrow" data-open-modal data-intent="rent">
         I'm renting
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
-      <a href="#start" class="btn btn-ghost btn-arrow" data-open-modal data-intent="buy">
+      <a href="#start-buy" class="btn btn-ghost btn-arrow" data-open-modal data-intent="buy">
         I'm buying
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -3201,7 +3201,12 @@
   years(form.querySelector('select[name=b_dob_year]'), 2008, 1940);
 
   function openModal(intent){
-    if (intent === 'buy' || intent === 'rent') setMode(intent);
+    if (intent === 'buy' || intent === 'rent') {
+      setMode(intent);
+      // Keep the URL in sync so the form has its own shareable/redirectable link.
+      const desired = '#start-' + intent;
+      if (location.hash !== desired) history.replaceState(null, '', desired);
+    }
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
@@ -3268,13 +3273,17 @@
     if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
   });
 
-  // Auto-open the intake modal from ?form=rent or ?form=buy
-  // so external sites (incl. 301 redirects) can deep-link to each form.
-  (function autoOpenFromQuery(){
-    const params = new URLSearchParams(window.location.search);
-    const raw = (params.get('form') || params.get('intent') || '').toLowerCase();
-    if (raw === 'rent' || raw === 'buy') openModal(raw);
-  })();
+  // Deep-link the intake modal from the URL hash so external sites
+  // (incl. 301 redirects) can target the rent or buy form independently:
+  //   #start-rent  -> opens the rent intake
+  //   #start-buy   -> opens the buy intake
+  function openFromHash(){
+    const h = (location.hash || '').toLowerCase();
+    if (h === '#start-rent') openModal('rent');
+    else if (h === '#start-buy') openModal('buy');
+  }
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
 
   function collectFormData() {
     const data = { mode: getMode() };
