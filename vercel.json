@@ -1,0 +1,28 @@
+{
+  "redirects": [
+    {
+      "source": "/renting-form",
+      "has": [
+        { "type": "host", "value": "(www\\.)?homequest\\.io" }
+      ],
+      "destination": "https://www.hqhousing.com/#start-rent",
+      "permanent": true
+    },
+    {
+      "source": "/buying-form",
+      "has": [
+        { "type": "host", "value": "(www\\.)?homequest\\.io" }
+      ],
+      "destination": "https://www.hqhousing.com/#start-buy",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        { "type": "host", "value": "(www\\.)?homequest\\.io" }
+      ],
+      "destination": "https://www.hqhousing.com/",
+      "permanent": true
+    }
+  ]
+}
