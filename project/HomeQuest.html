@@ -34,6 +34,10 @@
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
+<!-- intl-tel-input: country picker + E.164 normalization for phone fields -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css" />
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
 <style>
   :root{
     --ink:#13241F;        /* deep forest near-black */
@@ -570,6 +574,22 @@
   }
   .field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
   .field textarea{min-height:140px;resize:vertical;line-height:1.5}
+  /* intl-tel-input: keep visual parity with other form fields */
+  .field .iti{width:100%;display:block}
+  .field .iti__tel-input{
+    font-family:var(--sans);font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--rule);border-radius:2px;
+    padding:13px 14px;width:100%;
+    transition:border-color .2s,background .2s,box-shadow .2s;
+  }
+  .field .iti__tel-input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(184,92,56,.18)}
+  .field .iti__selected-flag{border-radius:2px 0 0 2px;background:var(--cream-2)}
+  .field .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag,
+  .field .iti__selected-flag:focus{background:var(--bone)}
+  .field .iti__country-list{font-family:var(--sans);font-size:14px;color:var(--ink);border-radius:2px;border:1px solid var(--rule)}
+  .field .iti__country.iti__highlight{background:var(--cream-2)}
+  .field .phone-error{color:var(--accent-2);font-size:12.5px;margin-top:4px;display:none}
+  .field .phone-error.show{display:block}
   .field-row{display:grid;gap:16px;grid-template-columns:repeat(2,1fr)}
   .field-row.three{grid-template-columns:1fr 1fr 1fr}
   .field-row.dob{grid-template-columns:1fr 1.4fr 1fr}
@@ -2621,8 +2641,9 @@
 
         <div class="field">
           <label>Phone (reachable on WhatsApp)<span class="req">*</span></label>
-          <input type="tel" name="phone" required placeholder="+31 6 12 34 56 78" />
+          <input type="tel" name="phone" required placeholder="6 12 34 56 78" />
           <span class="help">We use this only to schedule the intake call. No marketing.</span>
+          <span class="phone-error" data-phone-error="phone">Please enter a valid phone number.</span>
         </div>
       </section>
 
@@ -2801,7 +2822,8 @@
         <div class="field-row">
           <div class="field">
             <label>Phone (reachable on WhatsApp)<span class="req">*</span></label>
-            <input type="tel" name="b_phone" required placeholder="+31 6 12 34 56 78" />
+            <input type="tel" name="b_phone" required placeholder="6 12 34 56 78" />
+            <span class="phone-error" data-phone-error="b_phone">Please enter a valid phone number.</span>
           </div>
           <div class="field">
             <label>Email address<span class="req">*</span></label>
@@ -3117,6 +3139,36 @@
   days(form.querySelector('select[name=b_dob_day]'));
   years(form.querySelector('select[name=b_dob_year]'), 2008, 1940);
 
+  // ===== Phone inputs: intl-tel-input with E.164 output =====
+  // Initial country auto-detected via ipapi.co (fallback NL). Submit-time
+  // validation uses iti.isValidNumber(); payload uses iti.getNumber() so the
+  // webhook always receives the number in E.164 (e.g. "+31612345678").
+  const phoneFields = [];
+  (function initPhoneFields(){
+    if (!window.intlTelInput) return; // CDN blocked — keep plain inputs as fallback
+    const utilsScript = "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js";
+    form.querySelectorAll('input[type=tel]').forEach(input => {
+      const iti = window.intlTelInput(input, {
+        initialCountry: "auto",
+        geoIpLookup: (callback) => {
+          fetch("https://ipapi.co/json/")
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(d => callback((d && d.country_code) || "nl"))
+            .catch(() => callback("nl"));
+        },
+        preferredCountries: ["nl","es","de","fr","it","gb","us"],
+        utilsScript,
+      });
+      const field = input.closest('.field');
+      const errorEl = field ? field.querySelector('.phone-error') : null;
+      const clearError = () => { if (errorEl) errorEl.classList.remove('show'); };
+      input.addEventListener('input', clearError);
+      input.addEventListener('countrychange', clearError);
+      phoneFields.push({ input, iti, errorEl });
+    });
+  })();
+  function phoneFieldFor(el){ return phoneFields.find(p => p.input === el); }
+
   function openModal(intent){
     if (intent === 'buy' || intent === 'rent') setMode(intent);
     modal.classList.add('open');
@@ -3165,6 +3217,19 @@
         }
       } else if (el.type === 'checkbox') {
         if (!el.checked) { el.focus(); return false; }
+      } else if (el.type === 'tel') {
+        const pf = phoneFieldFor(el);
+        const empty = !el.value.trim();
+        // utils.js powers isValidNumber(); if it hasn't loaded yet, fall back
+        // to the non-empty check so a flaky CDN doesn't lock users out.
+        const utilsReady = !!window.intlTelInputUtils;
+        const invalid = pf && utilsReady && !pf.iti.isValidNumber();
+        if (empty || invalid) {
+          el.focus();
+          el.animate([{borderColor:'#B85C38'},{borderColor:''}],{duration:600});
+          if (pf && pf.errorEl) pf.errorEl.classList.add('show');
+          return false;
+        }
       } else if (!el.value.trim()) {
         el.focus();
         el.animate([{borderColor:'#B85C38'},{borderColor:''}],{duration:600});
@@ -3192,6 +3257,10 @@
       if (!el.name) return;
       if (el.type === 'radio' || el.type === 'checkbox') {
         if (el.checked) data[el.name] = el.value;
+      } else if (el.type === 'tel') {
+        const pf = phoneFieldFor(el);
+        const e164 = pf && typeof pf.iti.getNumber === 'function' ? pf.iti.getNumber() : el.value;
+        if (e164) data[el.name] = e164;
       } else if (el.value) {
         data[el.name] = el.value;
       }
