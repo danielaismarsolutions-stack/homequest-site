@@ -581,13 +581,15 @@
   .field input[type=tel].iti__tel-input{
     font-family:var(--sans);font-size:15px;color:var(--ink);
     background:var(--paper);border:1px solid var(--rule);border-radius:2px;
-    padding:13px 14px !important;padding-left:72px !important;width:100%;
+    padding:13px 14px !important;padding-left:88px !important;width:100%;
     transition:border-color .2s,background .2s,box-shadow .2s;
   }
   .field input[type=tel].iti__tel-input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(184,92,56,.18)}
+  .field .iti__flag-container{width:72px}
   .field .iti__selected-flag{
     border-radius:2px 0 0 2px;background:var(--cream-2);
-    width:60px;padding:0 8px 0 10px;border-right:1px solid var(--rule);
+    width:100%;padding:0 8px 0 12px;border-right:1px solid var(--rule);
+    box-sizing:border-box;
   }
   .field .iti--allow-dropdown .iti__flag-container:hover .iti__selected-flag,
   .field .iti__selected-flag:focus{background:var(--bone)}
