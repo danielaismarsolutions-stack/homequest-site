@@ -70,13 +70,14 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
   display:flex;align-items:center;justify-content:space-between;
   padding:20px 28px;max-width:1480px;margin:0 auto;
 }
-.logo{display:flex;align-items:baseline;gap:8px}
+.logo{display:flex;align-items:center;gap:8px}
 .logo .mono{
   font-family:var(--serif);font-weight:380;font-size:26px;letter-spacing:-.02em;
   font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 1;
 }
 .logo .word{font-family:var(--sans);font-weight:450;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
 .logo .dot{width:5px;height:5px;background:var(--accent);border-radius:99px;display:inline-block;align-self:center;margin:0 2px}
+.logo-img{height:38px;width:auto;display:block}
 .nav-links{display:flex;gap:32px;align-items:center;font-size:14px;color:var(--ink-2)}
 .nav-links a{position:relative;padding:6px 0;transition:color .2s}
 .nav-links a:hover{color:var(--accent-2)}
@@ -285,6 +286,7 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .foot-logo .mono{
   font-family:var(--serif);font-weight:380;font-size:34px;color:var(--paper);letter-spacing:-.02em;
 }
+.foot-logo .logo-img{height:52px;width:auto;display:block}
 .foot-logo p{margin:14px 0 0;font-size:14px;line-height:1.6;max-width:36ch}
 .foot-col h6{
   font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.22em;
