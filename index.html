@@ -3131,6 +3131,7 @@
     const p = location.pathname.toLowerCase().replace(/\/+$/, '');
     if (p === '/renting-form') return 'rent';
     if (p === '/buying-form') return 'buy';
+    if (p === '/form') return 'open';
     return null;
   }
   function setMode(mode, opts){
@@ -3155,7 +3156,7 @@
   // Init from path or hash on load
   (function initMode(){
     const fromPath = intentFromPath();
-    if (fromPath){ setMode(fromPath); return; }
+    if (fromPath === 'rent' || fromPath === 'buy'){ setMode(fromPath); return; }
     const h = (location.hash || '').toLowerCase();
     if (h.includes('buy')) setMode('buy');
     else setMode('rent');
