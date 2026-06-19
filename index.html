@@ -3364,8 +3364,8 @@
   })();
   function openFromHash(){
     const h = (location.hash || '').toLowerCase();
-    if (h === '#start-rent') openModal('rent');
-    else if (h === '#start-buy') openModal('buy');
+    if (h === '#start-rent' || h === '#process-rent') openModal('rent');
+    else if (h === '#start-buy' || h === '#process-buy') openModal('buy');
   }
   openFromHash();
   window.addEventListener('hashchange', openFromHash);
