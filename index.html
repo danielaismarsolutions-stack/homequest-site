@@ -573,6 +573,12 @@
   .form-section .blurb{font-size:14px;color:var(--muted);margin:0 0 28px;max-width:46ch;line-height:1.5}
 
   .field{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+  /* Inputs inside a field-row should bottom-align so wrapping labels in
+     other languages (e.g. Dutch) don't push their input below the row. */
+  .field-row > .field > label{flex:0 0 auto}
+  .field-row > .field > input,
+  .field-row > .field > select,
+  .field-row > .field > textarea{margin-top:auto}
   .field label{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
   .field label .req{color:var(--accent-2);margin-left:2px}
   .field .help{font-size:12px;color:var(--muted);margin-top:-2px}
@@ -3163,8 +3169,11 @@
     if (opts && opts.updateHash && location.hash.match(/^#process(-(rent|buy))?$/)){
       history.replaceState(null, '', '#process-' + mode);
     }
-    // If form is open and mode changed, reset form to step 1
-    if (prev !== mode && modal && modal.classList.contains('open')){
+    // If form is open and mode changed, reset form to step 1.
+    // Look up the modal lazily because this function can fire on initial
+    // load before the `modal` const below has been initialised.
+    const modalEl = document.getElementById('intakeModal');
+    if (prev !== mode && modalEl && modalEl.classList.contains('open')){
       formShowStep(1);
     }
   }
@@ -3437,8 +3446,8 @@
   const FORM_I18N = {
     nl: {
       'modal.eyebrow': 'Intake · 60 seconden',
-      'modal.title': 'Vertel ons wat over <em>jezelf.</em>',
-      'modal.intro': 'Vijf korte stappen. Philippe reageert binnen vier uur op werkdagen. Er wordt niets in rekening gebracht totdat we het intakegesprek hebben gehad.',
+      'modal.title': 'Vertel ons iets over <em>jezelf.</em>',
+      'modal.intro': 'Vijf korte stappen. Philippe reageert binnen vier werkuren. Er wordt pas iets in rekening gebracht na het intakegesprek.',
 
       'modePill.rent': 'Huren',
       'modePill.buy': 'Kopen',
@@ -3457,41 +3466,41 @@
 
       // ===== RENT FORM =====
       'rent.s1.eyebrow': 'Stap 01 / Over jou',
-      'rent.s1.title': 'Wie helpen we matchen?',
-      'rent.s1.blurb': 'De basisgegevens: namen en geboortedatum. We gebruiken dit alleen voor de serviceovereenkomst.',
+      'rent.s1.title': 'Voor wie zoeken we?',
+      'rent.s1.blurb': 'De basisgegevens: naam en geboortedatum. We gebruiken dit alleen voor de serviceovereenkomst.',
       'rent.s1.firstName': 'Voornaam',
       'rent.s1.lastName': 'Achternaam',
       'rent.s1.dob': 'Geboortedatum',
-      'rent.s1.registered': 'Sta je officieel ingeschreven in Nederland?',
-      'rent.s1.notRegistered': 'Nee, ik kom vanuit het buitenland',
+      'rent.s1.registered': 'Ben je ingeschreven in Nederland?',
+      'rent.s1.notRegistered': 'Nee, ik kom uit het buitenland',
 
-      'rent.s2.eyebrow': 'Stap 02 / Waar bereiken we je',
+      'rent.s2.eyebrow': 'Stap 02 / Hoe bereiken we je',
       'rent.s2.title': 'Huidig adres & contact.',
-      'rent.s2.blurb': 'Waar je nu ook bent, ook als het tijdelijk is. We gebruiken je telefoon voor WhatsApp-planning en je e-mail voor de intake-uitnodiging.',
+      'rent.s2.blurb': 'Waar je je nu bevindt, ook als het tijdelijk is. De telefoon gebruiken we voor WhatsApp en het e-mailadres voor de intake-uitnodiging.',
       'rent.s2.country': 'Land / Regio',
       'rent.s2.city': 'Stad',
       'rent.s2.address': 'Adres',
       'rent.s2.zip': 'Postcode',
       'rent.s2.email': 'E-mailadres',
-      'rent.s2.phone': 'Telefoon (bereikbaar via WhatsApp)',
-      'rent.s2.phoneHelp': 'We gebruiken dit alleen om het intakegesprek in te plannen. Geen marketing.',
+      'rent.s2.phone': 'Telefoon (WhatsApp)',
+      'rent.s2.phoneHelp': 'Alleen om het intakegesprek in te plannen. Geen marketing.',
 
       'rent.s3.eyebrow': 'Stap 03 / Je zoekopdracht',
       'rent.s3.title': 'Wat je zoekt.',
-      'rent.s3.blurb': 'Een eerste inschatting is voldoende, we verfijnen alles tijdens het gesprek.',
+      'rent.s3.blurb': 'Een eerste inschatting is voldoende, we werken alles uit tijdens het gesprek.',
       'rent.s3.searchCity': 'In welke stad zoek je een huurwoning?',
       'rent.s3.duration': 'Hoe lang wil je huren?',
       'rent.s3.dur6mo': '6 maanden',
       'rent.s3.dur1yr': '1 jaar',
       'rent.s3.durMore': 'Langer dan 1 jaar',
-      'rent.s3.living': 'Je gaat',
-      'rent.s3.livingAlone': 'Alleen huren',
-      'rent.s3.livingCouple': 'Als koppel huren',
-      'rent.s3.livingShares': 'Met huisgenoten huren',
+      'rent.s3.living': 'Hoe ga je wonen?',
+      'rent.s3.livingAlone': 'Alleen',
+      'rent.s3.livingCouple': 'Als koppel',
+      'rent.s3.livingShares': 'Met huisgenoten',
       'rent.s3.homeType': 'Wat voor woning?',
       'rent.s3.studio': 'Studio',
-      'rent.s3.br1': '1-slaapkamerapp.',
-      'rent.s3.br2': '2-slaapkamerapp.',
+      'rent.s3.br1': '1-slaapkamer app.',
+      'rent.s3.br2': '2-slaapkamer app.',
       'rent.s3.br3plus': 'Meer dan 2 slaapkamers',
       'rent.s3.furnished': 'Gemeubileerd of ongemeubileerd?',
       'rent.s3.upholstered': 'Gestoffeerd',
@@ -3499,41 +3508,41 @@
       'rent.s3.fullyFurn': 'Gemeubileerd',
       'rent.s3.occupation': 'Beroep',
       'rent.s3.employed': 'In loondienst',
-      'rent.s3.freelancer': 'ZZP/Freelancer',
+      'rent.s3.freelancer': 'ZZP / Freelancer',
       'rent.s3.student': 'Student',
-      'rent.s3.budget': 'Maximaal maandbudget (€)',
+      'rent.s3.budget': 'Max. maandbudget (€)',
       'rent.s3.budgetHelp': 'Inclusief servicekosten, exclusief nutsvoorzieningen.',
       'rent.s3.moveIn': 'Wanneer wil je verhuizen?',
 
       'rent.s4.eyebrow': 'Stap 04 / Context',
       'rent.s4.title': 'Hoe heb je ons gevonden?',
-      'rent.s4.blurb': 'Helpt ons te begrijpen wat werkt. Er is geen verkeerd antwoord.',
+      'rent.s4.blurb': 'Helpt ons te begrijpen wat werkt. Er is geen fout antwoord.',
       'rent.s4.srcEmployee': 'Een van onze medewerkers',
       'rent.s4.srcWhatsapp': 'WhatsApp Housing-groep',
       'rent.s4.srcAd': 'Advertentie',
       'rent.s4.srcReferral': 'Vriend of familielid',
-      'rent.s4.about': 'Vertel iets over jezelf en waarom je een woning zoekt',
+      'rent.s4.about': 'Iets over jezelf en waarom je een woning zoekt',
 
       'rent.s5.eyebrow': 'Stap 05 / Laatste stap',
       'rent.s5.title': 'Bijna klaar.',
       'rent.s5.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact op met een intake-slot van 60 minuten en een kopie van de serviceovereenkomst voordat er om betaling wordt gevraagd.',
-      'rent.s5.privacy': 'Ik heb het <a href="privacy-renting.html" target="_blank">Privacybeleid</a> gelezen en geaccepteerd.<span class="req">*</span>',
-      'rent.s5.terms': 'Ik heb de <a href="terms-renting.html" target="_blank">Algemene Voorwaarden</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'rent.s5.privacy': 'Ik heb het <a href="privacy-renting.html" target="_blank">Privacybeleid</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
+      'rent.s5.terms': 'Ik heb de <a href="terms-renting.html" target="_blank">Algemene Voorwaarden</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
       'rent.s5.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
       'rent.s5.next2': 'Intakegesprek van 60 minuten via Zoom of in persoon aan de Herengracht.',
       'rent.s5.next3': 'Serviceovereenkomst getekend → onboarding betaald → shortlist binnen 5 werkdagen.',
 
       // ===== BUY FORM =====
       'buy.s1.eyebrow': 'Stap 01 / Over jou',
-      'buy.s1.title': 'Wie helpen we matchen?',
+      'buy.s1.title': 'Voor wie zoeken we?',
       'buy.s1.blurb': 'De basisgegevens. We gebruiken dit alleen voor de serviceovereenkomst.',
       'buy.s1.fullName': 'Volledige naam',
       'buy.s1.email': 'E-mailadres',
 
       'buy.s2.eyebrow': 'Stap 02 / Huidig adres',
       'buy.s2.title': 'Waar woon je nu?',
-      'buy.s2.blurb': 'Waar je nu ook bent, ook als het tijdelijk is.',
-      'buy.s2.tenure': 'Huur of bezit je momenteel?',
+      'buy.s2.blurb': 'Waar je je nu bevindt, ook als het tijdelijk is.',
+      'buy.s2.tenure': 'Huur of bezit je nu?',
       'buy.s2.renting': 'Huren',
       'buy.s2.owning': 'In bezit',
 
@@ -3546,8 +3555,8 @@
       'buy.s3.apartment': 'Appartement',
       'buy.s3.terraced': 'Rijtjeshuis',
       'buy.s3.detached': 'Vrijstaande woning',
-      'buy.s3.minBr': 'Minimaal aantal slaapkamers',
-      'buy.s3.maxBudget': 'Maximaal budget (€)',
+      'buy.s3.minBr': 'Min. slaapkamers',
+      'buy.s3.maxBudget': 'Max. budget (€)',
       'buy.s3.requirements': 'Specifieke wensen?',
       'buy.s3.timeframe': 'Binnen welke termijn wil je kopen?',
       'buy.s3.tfLt3': 'Minder dan 3 maanden',
@@ -3557,34 +3566,34 @@
 
       'buy.s4.eyebrow': 'Stap 04 / Financiële positie',
       'buy.s4.title': 'Je financiële positie.',
-      'buy.s4.blurb': 'Een paar financiële details zodat we binnen wat realistisch is voor jou zoeken. Vertrouwelijk behandeld en alleen gedeeld met Philippe.',
-      'buy.s4.mortgage': 'Heb je al hypotheekadvies ontvangen?',
+      'buy.s4.blurb': 'Een paar financiële details zodat we binnen jouw mogelijkheden zoeken. Vertrouwelijk en alleen gedeeld met Philippe.',
+      'buy.s4.mortgage': 'Heb je al hypotheekadvies gehad?',
       'buy.s4.noConnect': 'Nee, breng me graag in contact',
       'buy.s4.income': 'Bruto maandinkomen (€)',
       'buy.s4.contract': 'Type contract',
       'buy.s4.permanent': 'Vast',
       'buy.s4.temporary': 'Tijdelijk',
-      'buy.s4.savings': 'Heb je spaargeld of eigen vermogen om in te brengen?',
+      'buy.s4.savings': 'Heb je spaargeld of eigen vermogen in te brengen?',
       'buy.s4.bkr': 'Openstaande schulden of BKR-registratie?',
 
       'buy.s5.eyebrow': 'Stap 05 / Laatste stap',
       'buy.s5.title': 'Bijna klaar.',
       'buy.s5.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact met je op.',
-      'buy.s5.privacy': 'Ik heb het <a href="privacy-buying.html" target="_blank">Privacybeleid</a> gelezen en geaccepteerd.<span class="req">*</span>',
-      'buy.s5.terms': 'Ik heb de <a href="terms-buying.html" target="_blank">Algemene Voorwaarden</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'buy.s5.privacy': 'Ik heb het <a href="privacy-buying.html" target="_blank">Privacybeleid</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
+      'buy.s5.terms': 'Ik heb de <a href="terms-buying.html" target="_blank">Algemene Voorwaarden</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
       'buy.s5.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
       'buy.s5.next2': 'Intakegesprek van 60 minuten om je wensen en financiële positie af te stemmen.',
       'buy.s5.next3': 'Serviceovereenkomst getekend → onboarding betaald → off-market zoektocht begint.',
 
       'done.title': 'Bedankt. <em>Philippe neemt snel contact op.</em>',
-      'done.body': 'Je ontvangt een agenda-uitnodiging op het opgegeven e-mailadres, meestal binnen vier werkuren. Als het nu buiten kantoortijden in Nederland is, kun je een reactie verwachten zodra de werkdag begint (CET).',
-      'done.contact': 'Sneller contact nodig? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">WhatsApp Philippe direct</a> of bel +31 6 13 32 97 24.',
+      'done.body': 'Je ontvangt een agenda-uitnodiging op het opgegeven e-mailadres, meestal binnen vier werkuren. Als het nu buiten kantooruren in Nederland is, krijg je morgenochtend (CET) als eerste een reactie.',
+      'done.contact': 'Sneller contact nodig? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">Stuur Philippe een WhatsApp</a> of bel +31 6 13 32 97 24.',
 
       'foot.step': 'Stap',
       'foot.of': 'van',
       'foot.back': '← Terug',
       'foot.continue': 'Volgende',
-      'foot.submit': 'Intake versturen',
+      'foot.submit': 'Versturen',
 
       // Months for select options (rendered into the existing static <option> tags)
       'months': ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'],
