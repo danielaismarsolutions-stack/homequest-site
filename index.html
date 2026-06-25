@@ -537,6 +537,16 @@
     display:grid;place-items:center;color:var(--ink);transition:background .2s,color .2s;flex:0 0 auto;
   }
   .modal-close:hover{background:var(--ink);color:var(--paper)}
+  .modal-head-right{display:flex;align-items:center;gap:14px;flex:0 0 auto}
+  .form-lang{display:inline-flex;align-items:center;border:1px solid var(--rule);border-radius:99px;overflow:hidden;background:var(--paper)}
+  .form-lang-btn{
+    background:transparent;border:0;padding:6px 12px;font:inherit;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+    cursor:pointer;transition:background .2s,color .2s;
+  }
+  .form-lang-btn + .form-lang-btn{border-left:1px solid var(--rule)}
+  .form-lang-btn:hover{color:var(--ink)}
+  .form-lang-btn.active{background:var(--ink);color:var(--paper)}
   .modal-progress{
     height:3px;background:var(--bone);position:relative;flex:0 0 auto;
   }
@@ -2624,13 +2634,19 @@
   <aside class="modal-sheet">
     <header class="modal-head">
       <div>
-        <span class="eyebrow" style="display:block;margin-bottom:10px">Intake · 60 seconds</span>
-        <h2 id="intakeTitle">Tell us a little about <em>you.</em></h2>
-        <p>Five short steps. Philippe replies within four hours during business days. Nothing is charged until after we've had the intake call.</p>
+        <span class="eyebrow" data-i18n="modal.eyebrow" style="display:block;margin-bottom:10px">Intake · 60 seconds</span>
+        <h2 id="intakeTitle" data-i18n-html="modal.title">Tell us a little about <em>you.</em></h2>
+        <p data-i18n="modal.intro">Five short steps. Philippe replies within four hours during business days. Nothing is charged until after we've had the intake call.</p>
       </div>
-      <button class="modal-close" data-close-modal aria-label="Close">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
+      <div class="modal-head-right">
+        <div class="form-lang" role="tablist" aria-label="Form language">
+          <button type="button" class="form-lang-btn" data-set-lang="en" aria-label="English">EN</button>
+          <button type="button" class="form-lang-btn" data-set-lang="nl" aria-label="Nederlands">NL</button>
+        </div>
+        <button class="modal-close" data-close-modal aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
     </header>
 
     <div class="modal-progress"><div class="modal-progress-bar" id="progBar"></div></div>
@@ -2639,184 +2655,184 @@
 
       <div class="mode-pill-wrap" style="justify-content:flex-start;margin-bottom:28px">
         <div class="mode-pill" role="tablist" aria-label="Intake: rent or buy">
-          <button type="button" class="pill-rent" data-set-mode="rent" data-cta="toggle-form-rent" role="tab">Rent</button>
-          <button type="button" class="pill-buy" data-set-mode="buy" data-cta="toggle-form-buy" role="tab">Buy</button>
+          <button type="button" class="pill-rent" data-set-mode="rent" data-cta="toggle-form-rent" role="tab" data-i18n="modePill.rent">Rent</button>
+          <button type="button" class="pill-buy" data-set-mode="buy" data-cta="toggle-form-buy" role="tab" data-i18n="modePill.buy">Buy</button>
         </div>
       </div>
 
       <!-- ===== Step 1: About you =====  RENT FORM -->
       <section class="form-section active" data-step="1" data-mode="rent">
-        <span class="eyebrow">Step 01 / About you</span>
-        <h3>Who are we matching?</h3>
-        <p class="blurb">The basics, names and date of birth. We use this only for the service agreement.</p>
+        <span class="eyebrow" data-i18n="rent.s1.eyebrow">Step 01 / About you</span>
+        <h3 data-i18n="rent.s1.title">Who are we matching?</h3>
+        <p class="blurb" data-i18n="rent.s1.blurb">The basics, names and date of birth. We use this only for the service agreement.</p>
 
         <div class="field-row">
           <div class="field">
-            <label>First name<span class="req">*</span></label>
+            <label><span data-i18n="rent.s1.firstName">First name</span><span class="req">*</span></label>
             <input type="text" name="first_name" required placeholder="e.g. Camille" />
           </div>
           <div class="field">
-            <label>Last name<span class="req">*</span></label>
+            <label><span data-i18n="rent.s1.lastName">Last name</span><span class="req">*</span></label>
             <input type="text" name="last_name" required placeholder="e.g. Lefèvre" />
           </div>
         </div>
 
         <div class="field">
-          <label>Date of birth<span class="req">*</span></label>
+          <label><span data-i18n="rent.s1.dob">Date of birth</span><span class="req">*</span></label>
           <div class="field-row dob">
             <select name="dob_day" required>
-              <option value="">Day</option>
+              <option value="" data-i18n="common.day">Day</option>
             </select>
             <select name="dob_month" required>
-              <option value="">Month</option>
+              <option value="" data-i18n="common.month">Month</option>
               <option>January</option><option>February</option><option>March</option>
               <option>April</option><option>May</option><option>June</option>
               <option>July</option><option>August</option><option>September</option>
               <option>October</option><option>November</option><option>December</option>
             </select>
             <select name="dob_year" required>
-              <option value="">Year</option>
+              <option value="" data-i18n="common.year">Year</option>
             </select>
           </div>
         </div>
 
         <div class="field">
-          <label>Are you legally registered in the Netherlands?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s1.registered">Are you legally registered in the Netherlands?</span><span class="req">*</span></label>
           <div class="opt-grid two">
-            <label class="opt"><input type="radio" name="nl_registered" value="yes" required /><span class="dot"></span><span>Yes</span></label>
-            <label class="opt"><input type="radio" name="nl_registered" value="no" /><span class="dot"></span><span>No, arriving from abroad</span></label>
+            <label class="opt"><input type="radio" name="nl_registered" value="yes" required /><span class="dot"></span><span data-i18n="common.yes">Yes</span></label>
+            <label class="opt"><input type="radio" name="nl_registered" value="no" /><span class="dot"></span><span data-i18n="rent.s1.notRegistered">No, arriving from abroad</span></label>
           </div>
         </div>
       </section>
 
       <!-- ===== Step 2: Address & contact ===== -->
       <section class="form-section" data-step="2" data-mode="rent">
-        <span class="eyebrow">Step 02 / Where to reach you</span>
-        <h3>Current address &amp; contact.</h3>
-        <p class="blurb">Wherever you are right now, even temporarily. We'll use the phone for WhatsApp scheduling and the email for the intake invite.</p>
+        <span class="eyebrow" data-i18n="rent.s2.eyebrow">Step 02 / Where to reach you</span>
+        <h3 data-i18n="rent.s2.title">Current address &amp; contact.</h3>
+        <p class="blurb" data-i18n="rent.s2.blurb">Wherever you are right now, even temporarily. We'll use the phone for WhatsApp scheduling and the email for the intake invite.</p>
 
         <div class="field-row">
           <div class="field">
-            <label>Country / Region<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.country">Country / Region</span><span class="req">*</span></label>
             <input type="text" name="country" required placeholder="Netherlands" />
           </div>
           <div class="field">
-            <label>City<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.city">City</span><span class="req">*</span></label>
             <input type="text" name="city_current" required placeholder="Amsterdam" />
           </div>
         </div>
 
         <div class="field">
-          <label>Address<span class="req">*</span></label>
+          <label><span data-i18n="rent.s2.address">Address</span><span class="req">*</span></label>
           <input type="text" name="address" required placeholder="Street and number, line 1" />
           <input type="text" name="address2" placeholder="Apartment, suite, line 2 (optional)" style="margin-top:8px" />
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Zip / Postal code<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.zip">Zip / Postal code</span><span class="req">*</span></label>
             <input type="text" name="zip" required placeholder="1015 CB" />
           </div>
           <div class="field">
-            <label>Email<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.email">Email</span><span class="req">*</span></label>
             <input type="email" name="email" required placeholder="you@example.com" />
           </div>
         </div>
 
         <div class="field">
-          <label>Phone (reachable on WhatsApp)<span class="req">*</span></label>
+          <label><span data-i18n="rent.s2.phone">Phone (reachable on WhatsApp)</span><span class="req">*</span></label>
           <input type="tel" name="phone" required placeholder="6 12 34 56 78" />
-          <span class="help">We use this only to schedule the intake call. No marketing.</span>
-          <span class="phone-error" data-phone-error="phone">Please enter a valid phone number.</span>
+          <span class="help" data-i18n="rent.s2.phoneHelp">We use this only to schedule the intake call. No marketing.</span>
+          <span class="phone-error" data-phone-error="phone" data-i18n="common.phoneError">Please enter a valid phone number.</span>
         </div>
       </section>
 
       <!-- ===== Step 3: Your search ===== -->
       <section class="form-section" data-step="3" data-mode="rent">
-        <span class="eyebrow">Step 03 / Your search</span>
-        <h3>What you're looking for.</h3>
-        <p class="blurb">Best guesses are fine, we'll refine all of this on the call.</p>
+        <span class="eyebrow" data-i18n="rent.s3.eyebrow">Step 03 / Your search</span>
+        <h3 data-i18n="rent.s3.title">What you're looking for.</h3>
+        <p class="blurb" data-i18n="rent.s3.blurb">Best guesses are fine, we'll refine all of this on the call.</p>
 
         <div class="field">
-          <label>In which city are you looking for a rental home?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.searchCity">In which city are you looking for a rental home?</span><span class="req">*</span></label>
           <div class="opt-grid">
             <label class="opt"><input type="radio" name="search_city" value="Amsterdam" required /><span class="dot"></span><span>Amsterdam</span></label>
             <label class="opt"><input type="radio" name="search_city" value="Rotterdam" /><span class="dot"></span><span>Rotterdam</span></label>
             <label class="opt"><input type="radio" name="search_city" value="Utrecht" /><span class="dot"></span><span>Utrecht</span></label>
             <label class="opt"><input type="radio" name="search_city" value="Den Haag" /><span class="dot"></span><span>Den Haag</span></label>
-            <label class="opt"><input type="radio" name="search_city" value="Other" /><span class="dot"></span><span>Other</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>For how long do you want to rent?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.duration">For how long do you want to rent?</span><span class="req">*</span></label>
           <div class="opt-grid three">
-            <label class="opt"><input type="radio" name="duration" value="6mo" required /><span class="dot"></span><span>6 months</span></label>
-            <label class="opt"><input type="radio" name="duration" value="1yr" /><span class="dot"></span><span>1 year</span></label>
-            <label class="opt"><input type="radio" name="duration" value="more" /><span class="dot"></span><span>More than 1 year</span></label>
+            <label class="opt"><input type="radio" name="duration" value="6mo" required /><span class="dot"></span><span data-i18n="rent.s3.dur6mo">6 months</span></label>
+            <label class="opt"><input type="radio" name="duration" value="1yr" /><span class="dot"></span><span data-i18n="rent.s3.dur1yr">1 year</span></label>
+            <label class="opt"><input type="radio" name="duration" value="more" /><span class="dot"></span><span data-i18n="rent.s3.durMore">More than 1 year</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>You are looking forward to<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.living">You are looking forward to</span><span class="req">*</span></label>
           <div class="opt-grid three">
-            <label class="opt"><input type="radio" name="living" value="alone" required /><span class="dot"></span><span>Renting alone</span></label>
-            <label class="opt"><input type="radio" name="living" value="couple" /><span class="dot"></span><span>Renting as a couple</span></label>
-            <label class="opt"><input type="radio" name="living" value="shares" /><span class="dot"></span><span>Renting in shares</span></label>
+            <label class="opt"><input type="radio" name="living" value="alone" required /><span class="dot"></span><span data-i18n="rent.s3.livingAlone">Renting alone</span></label>
+            <label class="opt"><input type="radio" name="living" value="couple" /><span class="dot"></span><span data-i18n="rent.s3.livingCouple">Renting as a couple</span></label>
+            <label class="opt"><input type="radio" name="living" value="shares" /><span class="dot"></span><span data-i18n="rent.s3.livingShares">Renting in shares</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>What type of home?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.homeType">What type of home?</span><span class="req">*</span></label>
           <div class="opt-grid">
-            <label class="opt"><input type="radio" name="home_type" value="studio" required /><span class="dot"></span><span>Studio</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="1br" /><span class="dot"></span><span>1-bedroom apt.</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="2br" /><span class="dot"></span><span>2-bedroom apt.</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="3br+" /><span class="dot"></span><span>More than 2 bedrooms</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="studio" required /><span class="dot"></span><span data-i18n="rent.s3.studio">Studio</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="1br" /><span class="dot"></span><span data-i18n="rent.s3.br1">1-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="2br" /><span class="dot"></span><span data-i18n="rent.s3.br2">2-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="3br+" /><span class="dot"></span><span data-i18n="rent.s3.br3plus">More than 2 bedrooms</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Furnished or unfurnished?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.furnished">Furnished or unfurnished?</span><span class="req">*</span></label>
           <div class="opt-grid four">
-            <label class="opt"><input type="radio" name="furnished" value="upholstered" required /><span class="dot"></span><span>Upholstered</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="unfurnished" /><span class="dot"></span><span>Not furnished</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="furnished" /><span class="dot"></span><span>Furnished</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="none" /><span class="dot"></span><span>No preference</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="upholstered" required /><span class="dot"></span><span data-i18n="rent.s3.upholstered">Upholstered</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="unfurnished" /><span class="dot"></span><span data-i18n="rent.s3.unfurnished">Not furnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="furnished" /><span class="dot"></span><span data-i18n="rent.s3.fullyFurn">Furnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="none" /><span class="dot"></span><span data-i18n="common.noPref">No preference</span></label>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Your occupation<span class="req">*</span></label>
+            <label><span data-i18n="rent.s3.occupation">Your occupation</span><span class="req">*</span></label>
             <div class="opt-grid three" style="margin-top:0">
-              <label class="opt"><input type="radio" name="occupation" value="employed" required /><span class="dot"></span><span>Employed</span></label>
-              <label class="opt"><input type="radio" name="occupation" value="freelancer" /><span class="dot"></span><span>Freelancer</span></label>
-              <label class="opt"><input type="radio" name="occupation" value="student" /><span class="dot"></span><span>Student</span></label>
+              <label class="opt"><input type="radio" name="occupation" value="employed" required /><span class="dot"></span><span data-i18n="rent.s3.employed">Employed</span></label>
+              <label class="opt"><input type="radio" name="occupation" value="freelancer" /><span class="dot"></span><span data-i18n="rent.s3.freelancer">Freelancer</span></label>
+              <label class="opt"><input type="radio" name="occupation" value="student" /><span class="dot"></span><span data-i18n="rent.s3.student">Student</span></label>
             </div>
           </div>
           <div class="field">
-            <label>Maximum monthly budget (€)<span class="req">*</span></label>
+            <label><span data-i18n="rent.s3.budget">Maximum monthly budget (€)</span><span class="req">*</span></label>
             <input type="number" name="budget" required min="0" step="50" placeholder="2,500" />
-            <span class="help">Including service charges, excluding utilities.</span>
+            <span class="help" data-i18n="rent.s3.budgetHelp">Including service charges, excluding utilities.</span>
           </div>
         </div>
 
         <div class="field">
-          <label>When do you plan to move in?<span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.moveIn">When do you plan to move in?</span><span class="req">*</span></label>
           <div class="field-row dob">
             <select name="movein_day" required>
-              <option value="">Day</option>
+              <option value="" data-i18n="common.day">Day</option>
             </select>
             <select name="movein_month" required>
-              <option value="">Month</option>
+              <option value="" data-i18n="common.month">Month</option>
               <option>January</option><option>February</option><option>March</option>
               <option>April</option><option>May</option><option>June</option>
               <option>July</option><option>August</option><option>September</option>
               <option>October</option><option>November</option><option>December</option>
             </select>
             <select name="movein_year" required>
-              <option value="">Year</option>
+              <option value="" data-i18n="common.year">Year</option>
             </select>
           </div>
         </div>
@@ -2824,54 +2840,54 @@
 
       <!-- ===== Step 4: Source + about ===== -->
       <section class="form-section" data-step="4" data-mode="rent">
-        <span class="eyebrow">Step 04 / Context</span>
-        <h3>How did you find us?</h3>
-        <p class="blurb">Helps us understand what's working. No wrong answer.</p>
+        <span class="eyebrow" data-i18n="rent.s4.eyebrow">Step 04 / Context</span>
+        <h3 data-i18n="rent.s4.title">How did you find us?</h3>
+        <p class="blurb" data-i18n="rent.s4.blurb">Helps us understand what's working. No wrong answer.</p>
 
         <div class="field">
           <div class="opt-grid">
-            <label class="opt"><input type="radio" name="source" value="employee" required /><span class="dot"></span><span>One of our employees</span></label>
+            <label class="opt"><input type="radio" name="source" value="employee" required /><span class="dot"></span><span data-i18n="rent.s4.srcEmployee">One of our employees</span></label>
             <label class="opt"><input type="radio" name="source" value="instagram" /><span class="dot"></span><span>Instagram</span></label>
             <label class="opt"><input type="radio" name="source" value="facebook" /><span class="dot"></span><span>Facebook</span></label>
             <label class="opt"><input type="radio" name="source" value="google_ads" /><span class="dot"></span><span>Google Ads</span></label>
-            <label class="opt"><input type="radio" name="source" value="whatsapp" /><span class="dot"></span><span>WhatsApp Housing Group</span></label>
-            <label class="opt"><input type="radio" name="source" value="advertisement" /><span class="dot"></span><span>Advertisement</span></label>
+            <label class="opt"><input type="radio" name="source" value="whatsapp" /><span class="dot"></span><span data-i18n="rent.s4.srcWhatsapp">WhatsApp Housing Group</span></label>
+            <label class="opt"><input type="radio" name="source" value="advertisement" /><span class="dot"></span><span data-i18n="rent.s4.srcAd">Advertisement</span></label>
             <label class="opt"><input type="radio" name="source" value="kamernet" /><span class="dot"></span><span>Kamernet</span></label>
             <label class="opt"><input type="radio" name="source" value="jay" /><span class="dot"></span><span>Jay</span></label>
-            <label class="opt"><input type="radio" name="source" value="referral" /><span class="dot"></span><span>Friend or relative</span></label>
-            <label class="opt"><input type="radio" name="source" value="other" /><span class="dot"></span><span>Other</span></label>
+            <label class="opt"><input type="radio" name="source" value="referral" /><span class="dot"></span><span data-i18n="rent.s4.srcReferral">Friend or relative</span></label>
+            <label class="opt"><input type="radio" name="source" value="other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>About you and why you're interested in finding a property<span class="req">*</span></label>
+          <label><span data-i18n="rent.s4.about">About you and why you're interested in finding a property</span><span class="req">*</span></label>
           <textarea name="about" required placeholder="A few sentences on your situation, relocating, growing family, lease ending, dealbreakers, anything that matters."></textarea>
         </div>
       </section>
 
       <!-- ===== Step 5: Consent ===== -->
       <section class="form-section" data-step="5" data-mode="rent">
-        <span class="eyebrow">Step 05 / Last step</span>
-        <h3>Almost there.</h3>
-        <p class="blurb">Two boxes and you're done. We'll be in touch within four business hours with a 60-minute intake slot, and a copy of the service agreement before any payment is requested.</p>
+        <span class="eyebrow" data-i18n="rent.s5.eyebrow">Step 05 / Last step</span>
+        <h3 data-i18n="rent.s5.title">Almost there.</h3>
+        <p class="blurb" data-i18n="rent.s5.blurb">Two boxes and you're done. We'll be in touch within four business hours with a 60-minute intake slot, and a copy of the service agreement before any payment is requested.</p>
 
         <div class="consent">
           <label>
             <input type="checkbox" name="privacy" required />
-            <span>I have read and accepted the <a href="privacy-renting.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
+            <span data-i18n-html="rent.s5.privacy">I have read and accepted the <a href="privacy-renting.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
           </label>
           <label>
             <input type="checkbox" name="terms" required />
-            <span>I have read and accepted the <a href="terms-renting.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
+            <span data-i18n-html="rent.s5.terms">I have read and accepted the <a href="terms-renting.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
           </label>
         </div>
 
         <div style="margin-top:32px;padding:20px 22px;background:var(--cream-2);border:1px solid var(--rule);border-radius:2px">
-          <div class="eyebrow" style="margin-bottom:8px">What happens next</div>
+          <div class="eyebrow" data-i18n="common.whatsNext" style="margin-bottom:8px">What happens next</div>
           <ol style="margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);line-height:1.65">
-            <li>Philippe replies within 4 business hours with a calendar link.</li>
-            <li>60-minute intake call by Zoom or in-person on Herengracht.</li>
-            <li>Service agreement signed → onboarding paid → shortlist within 5 working days.</li>
+            <li data-i18n="rent.s5.next1">Philippe replies within 4 business hours with a calendar link.</li>
+            <li data-i18n="rent.s5.next2">60-minute intake call by Zoom or in-person on Herengracht.</li>
+            <li data-i18n="rent.s5.next3">Service agreement signed → onboarding paid → shortlist within 5 working days.</li>
           </ol>
         </div>
       </section>
@@ -2879,38 +2895,38 @@
       <!-- ===================== BUY FORM ===================== -->
       <!-- ===== Buy Step 1: Who are we matching? ===== -->
       <section class="form-section" data-step="1" data-mode="buy">
-        <span class="eyebrow">Step 01 / About you</span>
-        <h3>Who are we matching?</h3>
-        <p class="blurb">The basics. We use this only for the service agreement.</p>
+        <span class="eyebrow" data-i18n="buy.s1.eyebrow">Step 01 / About you</span>
+        <h3 data-i18n="buy.s1.title">Who are we matching?</h3>
+        <p class="blurb" data-i18n="buy.s1.blurb">The basics. We use this only for the service agreement.</p>
 
         <div class="field">
-          <label>Full name<span class="req">*</span></label>
+          <label><span data-i18n="buy.s1.fullName">Full name</span><span class="req">*</span></label>
           <input type="text" name="b_full_name" required placeholder="e.g. Tomás Aguirre" />
         </div>
 
         <div class="field">
-          <label>Date of birth<span class="req">*</span></label>
+          <label><span data-i18n="rent.s1.dob">Date of birth</span><span class="req">*</span></label>
           <div class="field-row dob">
-            <select name="b_dob_day" required><option value="">Day</option></select>
+            <select name="b_dob_day" required><option value="" data-i18n="common.day">Day</option></select>
             <select name="b_dob_month" required>
-              <option value="">Month</option>
+              <option value="" data-i18n="common.month">Month</option>
               <option>January</option><option>February</option><option>March</option>
               <option>April</option><option>May</option><option>June</option>
               <option>July</option><option>August</option><option>September</option>
               <option>October</option><option>November</option><option>December</option>
             </select>
-            <select name="b_dob_year" required><option value="">Year</option></select>
+            <select name="b_dob_year" required><option value="" data-i18n="common.year">Year</option></select>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Phone (reachable on WhatsApp)<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.phone">Phone (reachable on WhatsApp)</span><span class="req">*</span></label>
             <input type="tel" name="b_phone" required placeholder="6 12 34 56 78" />
-            <span class="phone-error" data-phone-error="b_phone">Please enter a valid phone number.</span>
+            <span class="phone-error" data-phone-error="b_phone" data-i18n="common.phoneError">Please enter a valid phone number.</span>
           </div>
           <div class="field">
-            <label>Email address<span class="req">*</span></label>
+            <label><span data-i18n="buy.s1.email">Email address</span><span class="req">*</span></label>
             <input type="email" name="b_email" required placeholder="you@example.com" />
           </div>
         </div>
@@ -2918,167 +2934,167 @@
 
       <!-- ===== Buy Step 2: Where you live now ===== -->
       <section class="form-section" data-step="2" data-mode="buy">
-        <span class="eyebrow">Step 02 / Current address</span>
-        <h3>Where do you live now?</h3>
-        <p class="blurb">Wherever you are right now, even temporarily.</p>
+        <span class="eyebrow" data-i18n="buy.s2.eyebrow">Step 02 / Current address</span>
+        <h3 data-i18n="buy.s2.title">Where do you live now?</h3>
+        <p class="blurb" data-i18n="buy.s2.blurb">Wherever you are right now, even temporarily.</p>
 
         <div class="field-row">
           <div class="field">
-            <label>Country / Region<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.country">Country / Region</span><span class="req">*</span></label>
             <input type="text" name="b_country" required placeholder="Netherlands" />
           </div>
           <div class="field">
-            <label>City<span class="req">*</span></label>
+            <label><span data-i18n="rent.s2.city">City</span><span class="req">*</span></label>
             <input type="text" name="b_city_current" required placeholder="Amsterdam" />
           </div>
         </div>
 
         <div class="field">
-          <label>Address<span class="req">*</span></label>
+          <label><span data-i18n="rent.s2.address">Address</span><span class="req">*</span></label>
           <input type="text" name="b_address" required placeholder="Street and number" />
         </div>
 
         <div class="field">
-          <label>Zip / Postal code<span class="req">*</span></label>
+          <label><span data-i18n="rent.s2.zip">Zip / Postal code</span><span class="req">*</span></label>
           <input type="text" name="b_zip" required placeholder="1015 CB" />
         </div>
 
         <div class="field">
-          <label>Are you currently renting or owning?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s2.tenure">Are you currently renting or owning?</span><span class="req">*</span></label>
           <div class="opt-grid two">
-            <label class="opt"><input type="radio" name="b_tenure" value="renting" required /><span class="dot"></span><span>Renting</span></label>
-            <label class="opt"><input type="radio" name="b_tenure" value="owning" /><span class="dot"></span><span>Owning</span></label>
+            <label class="opt"><input type="radio" name="b_tenure" value="renting" required /><span class="dot"></span><span data-i18n="buy.s2.renting">Renting</span></label>
+            <label class="opt"><input type="radio" name="b_tenure" value="owning" /><span class="dot"></span><span data-i18n="buy.s2.owning">Owning</span></label>
           </div>
         </div>
       </section>
 
       <!-- ===== Buy Step 3: What you're looking for ===== -->
       <section class="form-section" data-step="3" data-mode="buy">
-        <span class="eyebrow">Step 03 / The property</span>
-        <h3>What you're looking for.</h3>
-        <p class="blurb">Best guesses are fine, we'll refine all of this on the call.</p>
+        <span class="eyebrow" data-i18n="buy.s3.eyebrow">Step 03 / The property</span>
+        <h3 data-i18n="buy.s3.title">What you're looking for.</h3>
+        <p class="blurb" data-i18n="rent.s3.blurb">Best guesses are fine, we'll refine all of this on the call.</p>
 
         <div class="field">
-          <label>In which city are you looking to buy a property?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s3.searchCity">In which city are you looking to buy a property?</span><span class="req">*</span></label>
           <input type="text" name="b_search_city" required placeholder="Amsterdam, Utrecht, …" />
         </div>
 
         <div class="field">
-          <label>Any preference on the neighbourhood or region?</label>
+          <label data-i18n="buy.s3.neighbourhood">Any preference on the neighbourhood or region?</label>
           <input type="text" name="b_neighbourhood" placeholder="De Pijp, Oud-Zuid, Kralingen…" />
-          <span class="help">Optional. Leave blank if you're flexible.</span>
+          <span class="help" data-i18n="buy.s3.neighbourhoodHelp">Optional. Leave blank if you're flexible.</span>
         </div>
 
         <div class="field">
-          <label>What type of property are you interested in?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s3.propertyType">What type of property are you interested in?</span><span class="req">*</span></label>
           <div class="opt-grid three">
-            <label class="opt"><input type="radio" name="b_property_type" value="apartment" required /><span class="dot"></span><span>Apartment</span></label>
-            <label class="opt"><input type="radio" name="b_property_type" value="terraced" /><span class="dot"></span><span>Terraced house</span></label>
-            <label class="opt"><input type="radio" name="b_property_type" value="detached" /><span class="dot"></span><span>Detached house</span></label>
+            <label class="opt"><input type="radio" name="b_property_type" value="apartment" required /><span class="dot"></span><span data-i18n="buy.s3.apartment">Apartment</span></label>
+            <label class="opt"><input type="radio" name="b_property_type" value="terraced" /><span class="dot"></span><span data-i18n="buy.s3.terraced">Terraced house</span></label>
+            <label class="opt"><input type="radio" name="b_property_type" value="detached" /><span class="dot"></span><span data-i18n="buy.s3.detached">Detached house</span></label>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Minimum bedrooms<span class="req">*</span></label>
+            <label><span data-i18n="buy.s3.minBr">Minimum bedrooms</span><span class="req">*</span></label>
             <select name="b_min_bedrooms" required>
-              <option value="">Select</option>
+              <option value="" data-i18n="common.select">Select</option>
               <option>1</option><option>2</option><option>3</option>
               <option>4</option><option>5</option><option>6+</option>
             </select>
           </div>
           <div class="field">
-            <label>Maximum budget (€)<span class="req">*</span></label>
+            <label><span data-i18n="buy.s3.maxBudget">Maximum budget (€)</span><span class="req">*</span></label>
             <input type="number" name="b_max_budget" required min="0" step="10000" placeholder="650,000" />
           </div>
         </div>
 
         <div class="field">
-          <label>Specific requirements?</label>
+          <label data-i18n="buy.s3.requirements">Specific requirements?</label>
           <textarea name="b_requirements" placeholder="Garden, parking, balcony, garage, energy label, ground floor…"></textarea>
-          <span class="help">Optional.</span>
+          <span class="help" data-i18n="common.optional">Optional.</span>
         </div>
 
         <div class="field">
-          <label>In which time frame are you looking for a purchase?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s3.timeframe">In which time frame are you looking for a purchase?</span><span class="req">*</span></label>
           <div class="opt-grid">
-            <label class="opt"><input type="radio" name="b_timeframe" value="<3mo" required /><span class="dot"></span><span>Less than 3 months</span></label>
-            <label class="opt"><input type="radio" name="b_timeframe" value="3mo" /><span class="dot"></span><span>3 months</span></label>
-            <label class="opt"><input type="radio" name="b_timeframe" value="6mo" /><span class="dot"></span><span>6 months</span></label>
-            <label class="opt"><input type="radio" name="b_timeframe" value="12mo" /><span class="dot"></span><span>12 months</span></label>
-            <label class="opt"><input type="radio" name="b_timeframe" value="other" /><span class="dot"></span><span>Other</span></label>
+            <label class="opt"><input type="radio" name="b_timeframe" value="<3mo" required /><span class="dot"></span><span data-i18n="buy.s3.tfLt3">Less than 3 months</span></label>
+            <label class="opt"><input type="radio" name="b_timeframe" value="3mo" /><span class="dot"></span><span data-i18n="buy.s3.tf3">3 months</span></label>
+            <label class="opt"><input type="radio" name="b_timeframe" value="6mo" /><span class="dot"></span><span data-i18n="buy.s3.tf6">6 months</span></label>
+            <label class="opt"><input type="radio" name="b_timeframe" value="12mo" /><span class="dot"></span><span data-i18n="buy.s3.tf12">12 months</span></label>
+            <label class="opt"><input type="radio" name="b_timeframe" value="other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
           </div>
         </div>
       </section>
 
       <!-- ===== Buy Step 4: Your financial position ===== -->
       <section class="form-section" data-step="4" data-mode="buy">
-        <span class="eyebrow">Step 04 / Financial position</span>
-        <h3>Your financial position.</h3>
-        <p class="blurb">A few financial details so we search within what's realistic for you. Treated confidentially and only shared with Philippe.</p>
+        <span class="eyebrow" data-i18n="buy.s4.eyebrow">Step 04 / Financial position</span>
+        <h3 data-i18n="buy.s4.title">Your financial position.</h3>
+        <p class="blurb" data-i18n="buy.s4.blurb">A few financial details so we search within what's realistic for you. Treated confidentially and only shared with Philippe.</p>
 
         <div class="field">
-          <label>Have you already received mortgage advice?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s4.mortgage">Have you already received mortgage advice?</span><span class="req">*</span></label>
           <div class="opt-grid two">
-            <label class="opt"><input type="radio" name="b_mortgage_advice" value="yes" required /><span class="dot"></span><span>Yes</span></label>
-            <label class="opt"><input type="radio" name="b_mortgage_advice" value="no" /><span class="dot"></span><span>No, please connect me</span></label>
+            <label class="opt"><input type="radio" name="b_mortgage_advice" value="yes" required /><span class="dot"></span><span data-i18n="common.yes">Yes</span></label>
+            <label class="opt"><input type="radio" name="b_mortgage_advice" value="no" /><span class="dot"></span><span data-i18n="buy.s4.noConnect">No, please connect me</span></label>
           </div>
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label>Gross monthly income (€)<span class="req">*</span></label>
+            <label><span data-i18n="buy.s4.income">Gross monthly income (€)</span><span class="req">*</span></label>
             <input type="number" name="b_income" required min="0" step="100" placeholder="6,500" />
           </div>
           <div class="field">
-            <label>Type of contract<span class="req">*</span></label>
+            <label><span data-i18n="buy.s4.contract">Type of contract</span><span class="req">*</span></label>
             <div class="opt-grid two" style="margin-top:0">
-              <label class="opt"><input type="radio" name="b_contract" value="permanent" required /><span class="dot"></span><span>Permanent</span></label>
-              <label class="opt"><input type="radio" name="b_contract" value="temporary" /><span class="dot"></span><span>Temporary</span></label>
+              <label class="opt"><input type="radio" name="b_contract" value="permanent" required /><span class="dot"></span><span data-i18n="buy.s4.permanent">Permanent</span></label>
+              <label class="opt"><input type="radio" name="b_contract" value="temporary" /><span class="dot"></span><span data-i18n="buy.s4.temporary">Temporary</span></label>
             </div>
           </div>
         </div>
 
         <div class="field">
-          <label>Do you have savings or capital to contribute to the purchase?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s4.savings">Do you have savings or capital to contribute to the purchase?</span><span class="req">*</span></label>
           <div class="opt-grid two">
-            <label class="opt"><input type="radio" name="b_savings" value="yes" required /><span class="dot"></span><span>Yes</span></label>
-            <label class="opt"><input type="radio" name="b_savings" value="no" /><span class="dot"></span><span>No</span></label>
+            <label class="opt"><input type="radio" name="b_savings" value="yes" required /><span class="dot"></span><span data-i18n="common.yes">Yes</span></label>
+            <label class="opt"><input type="radio" name="b_savings" value="no" /><span class="dot"></span><span data-i18n="common.no">No</span></label>
           </div>
         </div>
 
         <div class="field">
-          <label>Outstanding debts or BKR (Dutch Credit Registration)?<span class="req">*</span></label>
+          <label><span data-i18n="buy.s4.bkr">Outstanding debts or BKR (Dutch Credit Registration)?</span><span class="req">*</span></label>
           <div class="opt-grid two">
-            <label class="opt"><input type="radio" name="b_bkr" value="no" required /><span class="dot"></span><span>No</span></label>
-            <label class="opt"><input type="radio" name="b_bkr" value="yes" /><span class="dot"></span><span>Yes</span></label>
+            <label class="opt"><input type="radio" name="b_bkr" value="no" required /><span class="dot"></span><span data-i18n="common.no">No</span></label>
+            <label class="opt"><input type="radio" name="b_bkr" value="yes" /><span class="dot"></span><span data-i18n="common.yes">Yes</span></label>
           </div>
         </div>
       </section>
 
       <!-- ===== Buy Step 5: Consent ===== -->
       <section class="form-section" data-step="5" data-mode="buy">
-        <span class="eyebrow">Step 05 / Last step</span>
-        <h3>Almost there.</h3>
-        <p class="blurb">Two boxes and you're done. We'll be in touch within four business hours.</p>
+        <span class="eyebrow" data-i18n="buy.s5.eyebrow">Step 05 / Last step</span>
+        <h3 data-i18n="buy.s5.title">Almost there.</h3>
+        <p class="blurb" data-i18n="buy.s5.blurb">Two boxes and you're done. We'll be in touch within four business hours.</p>
 
         <div class="consent">
           <label>
             <input type="checkbox" name="b_privacy" required />
-            <span>I have read and accepted the <a href="privacy-buying.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
+            <span data-i18n-html="buy.s5.privacy">I have read and accepted the <a href="privacy-buying.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
           </label>
           <label>
             <input type="checkbox" name="b_terms" required />
-            <span>I have read and accepted the <a href="terms-buying.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
+            <span data-i18n-html="buy.s5.terms">I have read and accepted the <a href="terms-buying.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
           </label>
         </div>
 
         <div style="margin-top:32px;padding:20px 22px;background:var(--cream-2);border:1px solid var(--rule);border-radius:2px">
-          <div class="eyebrow" style="margin-bottom:8px">What happens next</div>
+          <div class="eyebrow" data-i18n="common.whatsNext" style="margin-bottom:8px">What happens next</div>
           <ol style="margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);line-height:1.65">
-            <li>Philippe replies within 4 business hours with a calendar link.</li>
-            <li>60-minute intake call to align on your brief and financial position.</li>
-            <li>Service agreement signed → onboarding paid → off-market search begins.</li>
+            <li data-i18n="buy.s5.next1">Philippe replies within 4 business hours with a calendar link.</li>
+            <li data-i18n="buy.s5.next2">60-minute intake call to align on your brief and financial position.</li>
+            <li data-i18n="buy.s5.next3">Service agreement signed → onboarding paid → off-market search begins.</li>
           </ol>
         </div>
       </section>
@@ -3086,16 +3102,16 @@
       <!-- ===== Done ===== -->
       <section class="modal-done" id="modalDone">
         <div class="done-seal">✓</div>
-        <h2>Thank you. <em>Philippe will be in touch shortly.</em></h2>
-        <p>You'll get a calendar invite at the email you provided, usually within four business hours. If it's outside business hours in the Netherlands right now, expect a reply first thing tomorrow morning CET.</p>
-        <p style="font-size:13px;color:var(--muted)">Need to reach us sooner? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">WhatsApp Philippe directly</a> or call +31 6 13 32 97 24.</p>
+        <h2 data-i18n-html="done.title">Thank you. <em>Philippe will be in touch shortly.</em></h2>
+        <p data-i18n="done.body">You'll get a calendar invite at the email you provided, usually within four business hours. If it's outside business hours in the Netherlands right now, expect a reply first thing tomorrow morning CET.</p>
+        <p style="font-size:13px;color:var(--muted)" data-i18n-html="done.contact">Need to reach us sooner? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">WhatsApp Philippe directly</a> or call +31 6 13 32 97 24.</p>
       </section>
     </form>
 
     <footer class="modal-foot" id="modalFoot">
-      <div class="step-meta">Step <strong id="stepNow">1</strong> of <strong>5</strong></div>
+      <div class="step-meta"><span data-i18n="foot.step">Step</span> <strong id="stepNow">1</strong> <span data-i18n="foot.of">of</span> <strong>5</strong></div>
       <div style="display:flex;gap:10px;align-items:center">
-        <button type="button" class="ghost-link" id="btnBack" style="display:none">← Back</button>
+        <button type="button" class="ghost-link" id="btnBack" style="display:none" data-i18n="foot.back">← Back</button>
         <button type="button" class="btn btn-primary btn-arrow" id="btnNext">
           <span id="btnNextLabel">Continue</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -3174,7 +3190,7 @@
       if (insideModal && modal && modal.classList.contains('open')){
         const desired = FORM_PATHS[mode];
         if (desired && location.pathname !== desired){
-          history.replaceState(null, '', desired);
+          history.replaceState(null, '', desired + location.search + location.hash);
         }
       }
     });
@@ -3267,7 +3283,7 @@
       // Keep the URL in sync so the form has its own shareable/redirectable link.
       const desired = FORM_PATHS[intent];
       if (desired && location.pathname !== desired){
-        history.replaceState(null, '', desired);
+        history.replaceState(null, '', desired + location.search + location.hash);
       }
     }
     modal.classList.add('open');
@@ -3283,7 +3299,7 @@
     document.body.style.overflow='';
     // Reset the URL so a refresh doesn't auto-reopen the modal.
     if (intentFromPath()){
-      history.replaceState(null, '', '/');
+      history.replaceState(null, '', '/' + location.search + location.hash);
     }
   }
   function formShowStep(n){
@@ -3410,6 +3426,325 @@
       progBar.style.width = '100%';
     }
   });
+
+  // ============================================================
+  // ===== Form language switcher (English / Dutch) =============
+  // ============================================================
+  // Detected from URL query (?lang=nl), persisted in localStorage.
+  // Each language has its own shareable link, e.g.:
+  //   English: /renting-form           /buying-form
+  //   Dutch:   /renting-form?lang=nl   /buying-form?lang=nl
+  const FORM_I18N = {
+    nl: {
+      'modal.eyebrow': 'Intake · 60 seconden',
+      'modal.title': 'Vertel ons wat over <em>jezelf.</em>',
+      'modal.intro': 'Vijf korte stappen. Philippe reageert binnen vier uur op werkdagen. Er wordt niets in rekening gebracht totdat we het intakegesprek hebben gehad.',
+
+      'modePill.rent': 'Huren',
+      'modePill.buy': 'Kopen',
+
+      'common.yes': 'Ja',
+      'common.no': 'Nee',
+      'common.other': 'Anders',
+      'common.noPref': 'Geen voorkeur',
+      'common.day': 'Dag',
+      'common.month': 'Maand',
+      'common.year': 'Jaar',
+      'common.select': 'Selecteer',
+      'common.optional': 'Optioneel.',
+      'common.whatsNext': 'Wat gebeurt er nu',
+      'common.phoneError': 'Vul een geldig telefoonnummer in.',
+
+      // ===== RENT FORM =====
+      'rent.s1.eyebrow': 'Stap 01 / Over jou',
+      'rent.s1.title': 'Wie helpen we matchen?',
+      'rent.s1.blurb': 'De basisgegevens: namen en geboortedatum. We gebruiken dit alleen voor de serviceovereenkomst.',
+      'rent.s1.firstName': 'Voornaam',
+      'rent.s1.lastName': 'Achternaam',
+      'rent.s1.dob': 'Geboortedatum',
+      'rent.s1.registered': 'Sta je officieel ingeschreven in Nederland?',
+      'rent.s1.notRegistered': 'Nee, ik kom vanuit het buitenland',
+
+      'rent.s2.eyebrow': 'Stap 02 / Waar bereiken we je',
+      'rent.s2.title': 'Huidig adres & contact.',
+      'rent.s2.blurb': 'Waar je nu ook bent, ook als het tijdelijk is. We gebruiken je telefoon voor WhatsApp-planning en je e-mail voor de intake-uitnodiging.',
+      'rent.s2.country': 'Land / Regio',
+      'rent.s2.city': 'Stad',
+      'rent.s2.address': 'Adres',
+      'rent.s2.zip': 'Postcode',
+      'rent.s2.email': 'E-mailadres',
+      'rent.s2.phone': 'Telefoon (bereikbaar via WhatsApp)',
+      'rent.s2.phoneHelp': 'We gebruiken dit alleen om het intakegesprek in te plannen. Geen marketing.',
+
+      'rent.s3.eyebrow': 'Stap 03 / Je zoekopdracht',
+      'rent.s3.title': 'Wat je zoekt.',
+      'rent.s3.blurb': 'Een eerste inschatting is voldoende, we verfijnen alles tijdens het gesprek.',
+      'rent.s3.searchCity': 'In welke stad zoek je een huurwoning?',
+      'rent.s3.duration': 'Hoe lang wil je huren?',
+      'rent.s3.dur6mo': '6 maanden',
+      'rent.s3.dur1yr': '1 jaar',
+      'rent.s3.durMore': 'Langer dan 1 jaar',
+      'rent.s3.living': 'Je gaat',
+      'rent.s3.livingAlone': 'Alleen huren',
+      'rent.s3.livingCouple': 'Als koppel huren',
+      'rent.s3.livingShares': 'Met huisgenoten huren',
+      'rent.s3.homeType': 'Wat voor woning?',
+      'rent.s3.studio': 'Studio',
+      'rent.s3.br1': '1-slaapkamerapp.',
+      'rent.s3.br2': '2-slaapkamerapp.',
+      'rent.s3.br3plus': 'Meer dan 2 slaapkamers',
+      'rent.s3.furnished': 'Gemeubileerd of ongemeubileerd?',
+      'rent.s3.upholstered': 'Gestoffeerd',
+      'rent.s3.unfurnished': 'Ongemeubileerd',
+      'rent.s3.fullyFurn': 'Gemeubileerd',
+      'rent.s3.occupation': 'Beroep',
+      'rent.s3.employed': 'In loondienst',
+      'rent.s3.freelancer': 'ZZP/Freelancer',
+      'rent.s3.student': 'Student',
+      'rent.s3.budget': 'Maximaal maandbudget (€)',
+      'rent.s3.budgetHelp': 'Inclusief servicekosten, exclusief nutsvoorzieningen.',
+      'rent.s3.moveIn': 'Wanneer wil je verhuizen?',
+
+      'rent.s4.eyebrow': 'Stap 04 / Context',
+      'rent.s4.title': 'Hoe heb je ons gevonden?',
+      'rent.s4.blurb': 'Helpt ons te begrijpen wat werkt. Er is geen verkeerd antwoord.',
+      'rent.s4.srcEmployee': 'Een van onze medewerkers',
+      'rent.s4.srcWhatsapp': 'WhatsApp Housing-groep',
+      'rent.s4.srcAd': 'Advertentie',
+      'rent.s4.srcReferral': 'Vriend of familielid',
+      'rent.s4.about': 'Vertel iets over jezelf en waarom je een woning zoekt',
+
+      'rent.s5.eyebrow': 'Stap 05 / Laatste stap',
+      'rent.s5.title': 'Bijna klaar.',
+      'rent.s5.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact op met een intake-slot van 60 minuten en een kopie van de serviceovereenkomst voordat er om betaling wordt gevraagd.',
+      'rent.s5.privacy': 'Ik heb het <a href="privacy-renting.html" target="_blank">Privacybeleid</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'rent.s5.terms': 'Ik heb de <a href="terms-renting.html" target="_blank">Algemene Voorwaarden</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'rent.s5.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
+      'rent.s5.next2': 'Intakegesprek van 60 minuten via Zoom of in persoon aan de Herengracht.',
+      'rent.s5.next3': 'Serviceovereenkomst getekend → onboarding betaald → shortlist binnen 5 werkdagen.',
+
+      // ===== BUY FORM =====
+      'buy.s1.eyebrow': 'Stap 01 / Over jou',
+      'buy.s1.title': 'Wie helpen we matchen?',
+      'buy.s1.blurb': 'De basisgegevens. We gebruiken dit alleen voor de serviceovereenkomst.',
+      'buy.s1.fullName': 'Volledige naam',
+      'buy.s1.email': 'E-mailadres',
+
+      'buy.s2.eyebrow': 'Stap 02 / Huidig adres',
+      'buy.s2.title': 'Waar woon je nu?',
+      'buy.s2.blurb': 'Waar je nu ook bent, ook als het tijdelijk is.',
+      'buy.s2.tenure': 'Huur of bezit je momenteel?',
+      'buy.s2.renting': 'Huren',
+      'buy.s2.owning': 'In bezit',
+
+      'buy.s3.eyebrow': 'Stap 03 / De woning',
+      'buy.s3.title': 'Wat je zoekt.',
+      'buy.s3.searchCity': 'In welke stad wil je een woning kopen?',
+      'buy.s3.neighbourhood': 'Voorkeur voor wijk of regio?',
+      'buy.s3.neighbourhoodHelp': 'Optioneel. Laat leeg als je flexibel bent.',
+      'buy.s3.propertyType': 'Welk type woning zoek je?',
+      'buy.s3.apartment': 'Appartement',
+      'buy.s3.terraced': 'Rijtjeshuis',
+      'buy.s3.detached': 'Vrijstaande woning',
+      'buy.s3.minBr': 'Minimaal aantal slaapkamers',
+      'buy.s3.maxBudget': 'Maximaal budget (€)',
+      'buy.s3.requirements': 'Specifieke wensen?',
+      'buy.s3.timeframe': 'Binnen welke termijn wil je kopen?',
+      'buy.s3.tfLt3': 'Minder dan 3 maanden',
+      'buy.s3.tf3': '3 maanden',
+      'buy.s3.tf6': '6 maanden',
+      'buy.s3.tf12': '12 maanden',
+
+      'buy.s4.eyebrow': 'Stap 04 / Financiële positie',
+      'buy.s4.title': 'Je financiële positie.',
+      'buy.s4.blurb': 'Een paar financiële details zodat we binnen wat realistisch is voor jou zoeken. Vertrouwelijk behandeld en alleen gedeeld met Philippe.',
+      'buy.s4.mortgage': 'Heb je al hypotheekadvies ontvangen?',
+      'buy.s4.noConnect': 'Nee, breng me graag in contact',
+      'buy.s4.income': 'Bruto maandinkomen (€)',
+      'buy.s4.contract': 'Type contract',
+      'buy.s4.permanent': 'Vast',
+      'buy.s4.temporary': 'Tijdelijk',
+      'buy.s4.savings': 'Heb je spaargeld of eigen vermogen om in te brengen?',
+      'buy.s4.bkr': 'Openstaande schulden of BKR-registratie?',
+
+      'buy.s5.eyebrow': 'Stap 05 / Laatste stap',
+      'buy.s5.title': 'Bijna klaar.',
+      'buy.s5.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact met je op.',
+      'buy.s5.privacy': 'Ik heb het <a href="privacy-buying.html" target="_blank">Privacybeleid</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'buy.s5.terms': 'Ik heb de <a href="terms-buying.html" target="_blank">Algemene Voorwaarden</a> gelezen en geaccepteerd.<span class="req">*</span>',
+      'buy.s5.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
+      'buy.s5.next2': 'Intakegesprek van 60 minuten om je wensen en financiële positie af te stemmen.',
+      'buy.s5.next3': 'Serviceovereenkomst getekend → onboarding betaald → off-market zoektocht begint.',
+
+      'done.title': 'Bedankt. <em>Philippe neemt snel contact op.</em>',
+      'done.body': 'Je ontvangt een agenda-uitnodiging op het opgegeven e-mailadres, meestal binnen vier werkuren. Als het nu buiten kantoortijden in Nederland is, kun je een reactie verwachten zodra de werkdag begint (CET).',
+      'done.contact': 'Sneller contact nodig? <a href="https://wa.me/31613329724" style="color:var(--accent-2);text-decoration:underline">WhatsApp Philippe direct</a> of bel +31 6 13 32 97 24.',
+
+      'foot.step': 'Stap',
+      'foot.of': 'van',
+      'foot.back': '← Terug',
+      'foot.continue': 'Volgende',
+      'foot.submit': 'Intake versturen',
+
+      // Months for select options (rendered into the existing static <option> tags)
+      'months': ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'],
+
+      // Placeholders, keyed by input name
+      'placeholder': {
+        first_name: 'bijv. Camille',
+        last_name: 'bijv. Lefèvre',
+        country: 'Nederland',
+        city_current: 'Amsterdam',
+        address: 'Straat en huisnummer, regel 1',
+        address2: 'Appartement, suite, regel 2 (optioneel)',
+        zip: '1015 CB',
+        email: 'jij@voorbeeld.com',
+        phone: '6 12 34 56 78',
+        budget: '2.500',
+        about: 'Een paar zinnen over je situatie: verhuizing, gezinsuitbreiding, einde huurcontract, dealbreakers, of wat er voor jou toe doet.',
+        b_full_name: 'bijv. Tomás Aguirre',
+        b_phone: '6 12 34 56 78',
+        b_email: 'jij@voorbeeld.com',
+        b_country: 'Nederland',
+        b_city_current: 'Amsterdam',
+        b_address: 'Straat en huisnummer',
+        b_zip: '1015 CB',
+        b_search_city: 'Amsterdam, Utrecht, …',
+        b_neighbourhood: 'De Pijp, Oud-Zuid, Kralingen…',
+        b_max_budget: '650.000',
+        b_requirements: 'Tuin, parkeerplaats, balkon, garage, energielabel, begane grond…',
+        b_income: '6.500'
+      }
+    }
+  };
+
+  const VALID_LANGS = ['en','nl'];
+  const FORM_LANG_KEY = 'hqFormLang';
+
+  function getFormLang(){
+    const url = new URLSearchParams(location.search);
+    const fromUrl = (url.get('lang') || '').toLowerCase();
+    if (VALID_LANGS.includes(fromUrl)) return fromUrl;
+    try {
+      const stored = localStorage.getItem(FORM_LANG_KEY);
+      if (VALID_LANGS.includes(stored)) return stored;
+    } catch(e){}
+    return 'en';
+  }
+
+  // Snapshot of the original English text so we can restore it when switching back to EN.
+  let englishSnapshot = null;
+  function snapshotEnglish(){
+    if (englishSnapshot) return;
+    englishSnapshot = { text:new Map(), html:new Map(), placeholder:new Map() };
+    form.querySelectorAll('[data-i18n]').forEach(el => {
+      englishSnapshot.text.set(el, el.textContent);
+    });
+    form.querySelectorAll('[data-i18n-html]').forEach(el => {
+      englishSnapshot.html.set(el, el.innerHTML);
+    });
+    form.querySelectorAll('input[placeholder], textarea[placeholder]').forEach(el => {
+      englishSnapshot.placeholder.set(el, el.getAttribute('placeholder'));
+    });
+    // Modal head + footer
+    document.querySelectorAll('#intakeModal [data-i18n], #intakeModal [data-i18n-html]').forEach(el => {
+      if (el.hasAttribute('data-i18n') && !englishSnapshot.text.has(el)){
+        englishSnapshot.text.set(el, el.textContent);
+      }
+      if (el.hasAttribute('data-i18n-html') && !englishSnapshot.html.has(el)){
+        englishSnapshot.html.set(el, el.innerHTML);
+      }
+    });
+    englishSnapshot.btnNext = btnNextLabel.textContent;
+    englishSnapshot.months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  }
+
+  function applyFormLang(lang){
+    if (!VALID_LANGS.includes(lang)) lang = 'en';
+    snapshotEnglish();
+    document.documentElement.setAttribute('data-form-lang', lang);
+
+    if (lang === 'en'){
+      englishSnapshot.text.forEach((v, el) => { el.textContent = v; });
+      englishSnapshot.html.forEach((v, el) => { el.innerHTML = v; });
+      englishSnapshot.placeholder.forEach((v, el) => { if (v != null) el.setAttribute('placeholder', v); });
+      // restore month options
+      form.querySelectorAll('select[name$="_month"]').forEach(sel => {
+        const opts = sel.querySelectorAll('option');
+        for (let i = 1; i < opts.length && i <= englishSnapshot.months.length; i++){
+          opts[i].textContent = englishSnapshot.months[i-1];
+        }
+      });
+      btnNextLabel.textContent = (step === totalStepsNow()) ? 'Submit intake' : 'Continue';
+    } else {
+      const t = FORM_I18N[lang];
+      document.querySelectorAll('#intakeModal [data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k] != null) el.textContent = t[k];
+      });
+      document.querySelectorAll('#intakeModal [data-i18n-html]').forEach(el => {
+        const k = el.getAttribute('data-i18n-html');
+        if (t[k] != null) el.innerHTML = t[k];
+      });
+      // Placeholders
+      const ph = t.placeholder || {};
+      Object.entries(ph).forEach(([name, value]) => {
+        form.querySelectorAll('[name="'+name+'"]').forEach(el => el.setAttribute('placeholder', value));
+      });
+      // Month options (keep first empty option as the label)
+      if (Array.isArray(t.months)){
+        form.querySelectorAll('select[name$="_month"]').forEach(sel => {
+          const opts = sel.querySelectorAll('option');
+          for (let i = 1; i < opts.length && i <= t.months.length; i++){
+            opts[i].textContent = t.months[i-1];
+          }
+        });
+      }
+      // Footer button label
+      btnNextLabel.textContent = (step === totalStepsNow()) ? (t['foot.submit'] || 'Submit intake') : (t['foot.continue'] || 'Continue');
+    }
+
+    // Highlight the active language button
+    document.querySelectorAll('.form-lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.setLang === lang);
+    });
+
+    try { localStorage.setItem(FORM_LANG_KEY, lang); } catch(e){}
+  }
+
+  function setFormLang(lang){
+    applyFormLang(lang);
+    // Mirror to URL so the link stays shareable
+    const url = new URL(location.href);
+    if (lang === 'en') url.searchParams.delete('lang');
+    else url.searchParams.set('lang', lang);
+    history.replaceState(null, '', url.pathname + (url.search ? url.search : '') + url.hash);
+  }
+
+  // Wire the EN/NL toggle in the modal head
+  document.querySelectorAll('.form-lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setFormLang(btn.dataset.setLang));
+  });
+
+  // Re-apply the right button label whenever the step changes (Submit on last step)
+  const _origShowStep = formShowStep;
+  // No wrapping needed — formShowStep already sets btnNextLabel; we monkey-patch the label after.
+  const _setLabel = () => {
+    const lang = getFormLang();
+    if (lang === 'nl'){
+      const t = FORM_I18N.nl;
+      btnNextLabel.textContent = (step === totalStepsNow()) ? (t['foot.submit'] || 'Submit intake') : (t['foot.continue'] || 'Continue');
+      const backBtn = document.getElementById('btnBack');
+      if (backBtn) backBtn.textContent = t['foot.back'] || '← Back';
+    }
+  };
+  const _origBtnNext = btnNext.onclick;
+  btnNext.addEventListener('click', _setLabel);
+  btnBack.addEventListener('click', _setLabel);
+  document.querySelectorAll('[data-set-mode]').forEach(b => b.addEventListener('click', () => setTimeout(_setLabel, 0)));
+
+  // Apply on load
+  applyFormLang(getFormLang());
 
   // ===== Language switcher (About copy + legal pages share localStorage 'hqLang') =====
   // Only the About section is translated; all other sections stay English (interim).
