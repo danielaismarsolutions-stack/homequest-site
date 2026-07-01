@@ -36,6 +36,9 @@
   "rewrites": [
     { "source": "/renting-form", "destination": "/index.html" },
     { "source": "/buying-form", "destination": "/index.html" },
-    { "source": "/form", "destination": "/index.html" }
+    { "source": "/form", "destination": "/index.html" },
+    { "source": "/nl/renting-form", "destination": "/nl/index.html" },
+    { "source": "/nl/buying-form", "destination": "/nl/index.html" },
+    { "source": "/nl/form", "destination": "/nl/index.html" }
   ]
 }
