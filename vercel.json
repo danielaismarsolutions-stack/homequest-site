@@ -39,6 +39,9 @@
     { "source": "/form", "destination": "/index.html" },
     { "source": "/nl/renting-form", "destination": "/nl/index.html" },
     { "source": "/nl/buying-form", "destination": "/nl/index.html" },
-    { "source": "/nl/form", "destination": "/nl/index.html" }
+    { "source": "/nl/form", "destination": "/nl/index.html" },
+    { "source": "/es/renting-form", "destination": "/es/index.html" },
+    { "source": "/es/buying-form", "destination": "/es/index.html" },
+    { "source": "/es/form", "destination": "/es/index.html" }
   ]
 }
