@@ -10,6 +10,7 @@
 <link rel="canonical" href="https://www.hqhousing.com/" />
 <link rel="alternate" hreflang="en" href="https://www.hqhousing.com/" />
 <link rel="alternate" hreflang="nl" href="https://www.hqhousing.com/nl/" />
+<link rel="alternate" hreflang="es" href="https://www.hqhousing.com/es/" />
 <link rel="alternate" hreflang="x-default" href="https://www.hqhousing.com/" />
 
 <!-- Open Graph (WhatsApp, Facebook, LinkedIn, Slack…) -->
@@ -20,6 +21,7 @@
 <meta property="og:url" content="https://www.hqhousing.com/" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:locale:alternate" content="nl_NL" />
+<meta property="og:locale:alternate" content="es" />
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -1573,7 +1575,7 @@
 
     <div class="nav-right">
       <div class="lang" role="group" aria-label="Language">
-        <span class="active" aria-current="true">EN</span><span class="sep">/</span><a data-lang-link="nl" href="https://www.hqhousing.com/nl/">NL</a>
+        <span class="active" aria-current="true">EN</span><span class="sep">/</span><a data-lang-link="nl" href="https://www.hqhousing.com/nl/">NL</a><span class="sep">/</span><a data-lang-link="es" href="https://www.hqhousing.com/es/">ES</a>
       </div>
       <a href="#start" class="btn btn-primary btn-arrow" data-open-modal>
         Start your search
@@ -2668,7 +2670,7 @@
     <div class="foot-meta">
       <div>© 2026 Home Quest Housing Solutions S.L. · HQ Housing is a trading name of Home Quest Housing Solutions S.L. · Calle de Colón 24, 46004 Valencia, Spain · Governed by Dutch law · Operating across the Netherlands</div>
       <div class="foot-lang" role="group" aria-label="Language">
-        <span class="active" aria-current="true">EN</span><span class="sep">/</span><a data-lang-link="nl" href="https://www.hqhousing.com/nl/">NL</a>
+        <span class="active" aria-current="true">EN</span><span class="sep">/</span><a data-lang-link="nl" href="https://www.hqhousing.com/nl/">NL</a><span class="sep">/</span><a data-lang-link="es" href="https://www.hqhousing.com/es/">ES</a>
       </div>
     </div>
   </div>
@@ -3824,8 +3826,10 @@
     (function(){
       var base='https://www.hqhousing.com';
       var path=location.pathname.replace(/\/+$/,'') || '/';
-      var nl = /^\/nl(?=\/|$)/.test(path) ? path : ('/nl'+(path==='/'?'/':path));
-      document.querySelectorAll('[data-lang-link="nl"]').forEach(function(a){ a.setAttribute('href', base + nl); });
+      var bare = path.replace(/^\/(nl|es)(?=\/|$)/, '') || '/';
+      document.querySelectorAll('[data-lang-link="en"]').forEach(function(a){ a.setAttribute('href', base + bare); });
+      document.querySelectorAll('[data-lang-link="nl"]').forEach(function(a){ a.setAttribute('href', base + '/nl' + (bare === '/' ? '/' : bare)); });
+      document.querySelectorAll('[data-lang-link="es"]').forEach(function(a){ a.setAttribute('href', base + '/es' + (bare === '/' ? '/' : bare)); });
     })();
   })();
   btnBack.addEventListener('click', () => formShowStep(step - 1));
