@@ -2704,6 +2704,7 @@
         <div class="form-lang" role="tablist" aria-label="Form language">
           <button type="button" class="form-lang-btn" data-set-lang="en" aria-label="English">EN</button>
           <button type="button" class="form-lang-btn" data-set-lang="nl" aria-label="Nederlands">NL</button>
+          <button type="button" class="form-lang-btn" data-set-lang="es" aria-label="Español">ES</button>
         </div>
         <button class="modal-close" data-close-modal aria-label="Close">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -3687,10 +3688,193 @@
         b_requirements: 'Tuin, parkeerplaats, balkon, garage, energielabel, begane grond…',
         b_income: '6.500'
       }
+    },
+    es: {
+      'modal.eyebrow': 'Admisión · 60 segundos',
+      'modal.title': 'Cuéntanos un poco sobre <em>ti.</em>',
+      'modal.intro': 'Cinco pasos breves. Philippe responde en menos de cuatro horas en días laborables. No se cobra nada hasta después de la llamada de admisión.',
+
+      'modePill.rent': 'Alquilar',
+      'modePill.buy': 'Comprar',
+
+      'common.yes': 'Sí',
+      'common.no': 'No',
+      'common.other': 'Otro',
+      'common.noPref': 'Sin preferencia',
+      'common.day': 'Día',
+      'common.month': 'Mes',
+      'common.year': 'Año',
+      'common.select': 'Selecciona',
+      'common.optional': 'Opcional.',
+      'common.whatsNext': 'Qué pasa ahora',
+      'common.phoneError': 'Introduce un número de teléfono válido.',
+
+      // ===== RENT FORM =====
+      'rent.s1.eyebrow': 'Paso 01 / Sobre ti',
+      'rent.s1.title': '¿Para quién buscamos?',
+      'rent.s1.blurb': 'Los datos básicos: nombre y fecha de nacimiento. Solo los usamos para el contrato de servicios.',
+      'rent.s1.firstName': 'Nombre',
+      'rent.s1.lastName': 'Apellidos',
+      'rent.s1.dob': 'Fecha de nacimiento',
+      'rent.s1.registered': '¿Estás empadronado en los Países Bajos?',
+      'rent.s1.notRegistered': 'No, llego desde el extranjero',
+
+      'rent.s2.eyebrow': 'Paso 02 / Cómo contactarte',
+      'rent.s2.title': 'Dirección actual y contacto.',
+      'rent.s2.blurb': 'Donde te encuentres ahora, aunque sea temporal. Usamos el teléfono para WhatsApp y el correo para la invitación a la admisión.',
+      'rent.s2.country': 'País / Región',
+      'rent.s2.city': 'Ciudad',
+      'rent.s2.address': 'Dirección',
+      'rent.s2.zip': 'Código postal',
+      'rent.s2.email': 'Correo electrónico',
+      'rent.s2.phone': 'Teléfono (WhatsApp)',
+      'rent.s2.phoneHelp': 'Solo para concertar la llamada de admisión. Sin marketing.',
+
+      'rent.s3.eyebrow': 'Paso 03 / Tu búsqueda',
+      'rent.s3.title': 'Qué buscas.',
+      'rent.s3.blurb': 'Una primera estimación es suficiente; lo concretamos todo en la llamada.',
+      'rent.s3.searchCity': '¿En qué ciudad buscas alquiler?',
+      'rent.s3.duration': '¿Cuánto tiempo quieres alquilar?',
+      'rent.s3.dur6mo': '6 meses',
+      'rent.s3.dur1yr': '1 año',
+      'rent.s3.durMore': 'Más de 1 año',
+      'rent.s3.living': '¿Cómo vas a vivir?',
+      'rent.s3.livingAlone': 'Solo/a',
+      'rent.s3.livingCouple': 'En pareja',
+      'rent.s3.livingShares': 'Con compañeros de piso',
+      'rent.s3.homeType': '¿Qué tipo de vivienda?',
+      'rent.s3.studio': 'Estudio',
+      'rent.s3.br1': 'Piso de 1 dormitorio',
+      'rent.s3.br2': 'Piso de 2 dormitorios',
+      'rent.s3.br3plus': 'Más de 2 dormitorios',
+      'rent.s3.furnished': '¿Amueblada o sin amueblar?',
+      'rent.s3.upholstered': 'Semiamueblada',
+      'rent.s3.unfurnished': 'Sin amueblar',
+      'rent.s3.fullyFurn': 'Amueblada',
+      'rent.s3.occupation': 'Situación laboral',
+      'rent.s3.employed': 'Por cuenta ajena',
+      'rent.s3.freelancer': 'Autónomo/a / Freelance',
+      'rent.s3.student': 'Estudiante',
+      'rent.s3.budget': 'Presupuesto mensual máx. (€)',
+      'rent.s3.budgetHelp': 'Gastos de comunidad incluidos, suministros aparte.',
+      'rent.s3.moveIn': '¿Cuándo quieres mudarte?',
+
+      'rent.s4.eyebrow': 'Paso 04 / Contexto',
+      'rent.s4.title': '¿Cómo nos encontraste?',
+      'rent.s4.blurb': 'Nos ayuda a entender qué funciona. No hay respuesta incorrecta.',
+      'rent.s4.srcEmployee': 'Uno de nuestros colaboradores',
+      'rent.s4.srcWhatsapp': 'Grupo de WhatsApp Housing',
+      'rent.s4.srcAd': 'Un anuncio',
+      'rent.s4.srcReferral': 'Un amigo o familiar',
+      'rent.s4.about': 'Algo sobre ti y por qué buscas vivienda',
+
+      'rent.s5.eyebrow': 'Paso 05 / Último paso',
+      'rent.s5.title': 'Casi listo.',
+      'rent.s5.blurb': 'Dos casillas y habrás terminado. Te contactamos en menos de cuatro horas laborables con una franja de admisión de 60 minutos y una copia del contrato de servicios antes de pedirte ningún pago.',
+      'rent.s5.privacy': 'He leído y acepto la <a href="privacy-renting.html" target="_blank">Política de Privacidad</a>.<span class="req">*</span>',
+      'rent.s5.terms': 'He leído y acepto los <a href="terms-renting.html" target="_blank">Términos y Condiciones</a>.<span class="req">*</span>',
+      'rent.s5.next1': 'Philippe responde en menos de 4 horas laborables con un enlace de agenda.',
+      'rent.s5.next2': 'Llamada de admisión de 60 minutos por Zoom o en persona en la Herengracht.',
+      'rent.s5.next3': 'Contrato de servicios firmado → alta pagada → selección en 5 días laborables.',
+
+      // ===== BUY FORM =====
+      'buy.s1.eyebrow': 'Paso 01 / Sobre ti',
+      'buy.s1.title': '¿Para quién buscamos?',
+      'buy.s1.blurb': 'Los datos básicos. Solo los usamos para el contrato de servicios.',
+      'buy.s1.fullName': 'Nombre completo',
+      'buy.s1.email': 'Correo electrónico',
+
+      'buy.s2.eyebrow': 'Paso 02 / Dirección actual',
+      'buy.s2.title': '¿Dónde vives ahora?',
+      'buy.s2.blurb': 'Donde te encuentres ahora, aunque sea temporal.',
+      'buy.s2.tenure': '¿Ahora alquilas o eres propietario?',
+      'buy.s2.renting': 'Alquilo',
+      'buy.s2.owning': 'Soy propietario',
+
+      'buy.s3.eyebrow': 'Paso 03 / La vivienda',
+      'buy.s3.title': 'Qué buscas.',
+      'buy.s3.searchCity': '¿En qué ciudad quieres comprar?',
+      'buy.s3.neighbourhood': '¿Preferencia de barrio o zona?',
+      'buy.s3.neighbourhoodHelp': 'Opcional. Déjalo en blanco si eres flexible.',
+      'buy.s3.propertyType': '¿Qué tipo de vivienda buscas?',
+      'buy.s3.apartment': 'Piso',
+      'buy.s3.terraced': 'Casa adosada',
+      'buy.s3.detached': 'Casa unifamiliar',
+      'buy.s3.minBr': 'Dormitorios mín.',
+      'buy.s3.maxBudget': 'Presupuesto máx. (€)',
+      'buy.s3.requirements': '¿Requisitos concretos?',
+      'buy.s3.timeframe': '¿En qué plazo quieres comprar?',
+      'buy.s3.tfLt3': 'Menos de 3 meses',
+      'buy.s3.tf3': '3 meses',
+      'buy.s3.tf6': '6 meses',
+      'buy.s3.tf12': '12 meses',
+
+      'buy.s4.eyebrow': 'Paso 04 / Situación financiera',
+      'buy.s4.title': 'Tu situación financiera.',
+      'buy.s4.blurb': 'Unos pocos datos financieros para que busquemos dentro de tus posibilidades. Confidencial y compartido solo con Philippe.',
+      'buy.s4.mortgage': '¿Ya has recibido asesoramiento hipotecario?',
+      'buy.s4.noConnect': 'No, ponme en contacto con alguien',
+      'buy.s4.income': 'Ingresos brutos mensuales (€)',
+      'buy.s4.contract': 'Tipo de contrato',
+      'buy.s4.permanent': 'Indefinido',
+      'buy.s4.temporary': 'Temporal',
+      'buy.s4.savings': '¿Tienes ahorros o fondos propios que aportar?',
+      'buy.s4.bkr': '¿Deudas pendientes o registro en la BKR?',
+
+      'buy.s5.eyebrow': 'Paso 05 / Último paso',
+      'buy.s5.title': 'Casi listo.',
+      'buy.s5.blurb': 'Dos casillas y habrás terminado. Te contactamos en menos de cuatro horas laborables.',
+      'buy.s5.privacy': 'He leído y acepto la <a href="privacy-buying.html" target="_blank">Política de Privacidad</a>.<span class="req">*</span>',
+      'buy.s5.terms': 'He leído y acepto los <a href="terms-buying.html" target="_blank">Términos y Condiciones</a>.<span class="req">*</span>',
+      'buy.s5.next1': 'Philippe responde en menos de 4 horas laborables con un enlace de agenda.',
+      'buy.s5.next2': 'Llamada de admisión de 60 minutos para afinar tus deseos y tu situación financiera.',
+      'buy.s5.next3': 'Contrato de servicios firmado → alta pagada → empieza la búsqueda off-market.',
+
+      'done.title': 'Gracias. <em>Philippe te contactará muy pronto.</em>',
+      'done.body': 'Recibirás una invitación de agenda en el correo indicado, normalmente en menos de cuatro horas laborables. Si ahora es fuera del horario de oficina en los Países Bajos, tendrás respuesta a primera hora de la mañana (CET).',
+      'done.waLead': '¿Quieres ir más rápido? Envía un WhatsApp a Philippe ahora: con un mensaje breve puede empezar tu búsqueda hoy mismo.',
+      'done.waBtn': 'Enviar un WhatsApp a Philippe',
+      'done.contact': '¿Prefieres llamar? Llama a Philippe al +31 6 13 32 97 24.',
+
+      'foot.step': 'Paso',
+      'foot.of': 'de',
+      'foot.back': '← Atrás',
+      'foot.continue': 'Siguiente',
+      'foot.submit': 'Enviar',
+
+      // Months for select options (rendered into the existing static <option> tags)
+      'months': ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+
+      // Placeholders, keyed by input name
+      'placeholder': {
+        first_name: 'p. ej. Camille',
+        last_name: 'p. ej. Lefèvre',
+        country: 'Países Bajos',
+        city_current: 'Ámsterdam',
+        address: 'Calle y número, línea 1',
+        address2: 'Piso, puerta, línea 2 (opcional)',
+        zip: '1015 CB',
+        email: 'tu@ejemplo.com',
+        phone: '6 12 34 56 78',
+        budget: '2.500',
+        about: 'Unas frases sobre tu situación: mudanza, ampliación de la familia, fin del contrato de alquiler, líneas rojas o lo que para ti sea importante.',
+        b_full_name: 'p. ej. Tomás Aguirre',
+        b_phone: '6 12 34 56 78',
+        b_email: 'tu@ejemplo.com',
+        b_country: 'Países Bajos',
+        b_city_current: 'Ámsterdam',
+        b_address: 'Calle y número',
+        b_zip: '1015 CB',
+        b_search_city: 'Ámsterdam, Utrecht, …',
+        b_neighbourhood: 'De Pijp, Oud-Zuid, Kralingen…',
+        b_max_budget: '650.000',
+        b_requirements: 'Jardín, plaza de aparcamiento, balcón, garaje, certificado energético, planta baja…',
+        b_income: '6.500'
+      }
     }
   };
 
-  const VALID_LANGS = ['en','nl'];
+  const VALID_LANGS = ['en','nl','es'];
   const FORM_LANG_KEY = 'hqFormLang';
 
   function getFormLang(){
@@ -3803,8 +3987,8 @@
   // No wrapping needed — formShowStep already sets btnNextLabel; we monkey-patch the label after.
   const _setLabel = () => {
     const lang = getFormLang();
-    if (lang === 'nl'){
-      const t = FORM_I18N.nl;
+    const t = FORM_I18N[lang];
+    if (t){
       btnNextLabel.textContent = (step === totalStepsNow()) ? (t['foot.submit'] || 'Submit intake') : (t['foot.continue'] || 'Continue');
       const backBtn = document.getElementById('btnBack');
       if (backBtn) backBtn.textContent = t['foot.back'] || '← Back';
