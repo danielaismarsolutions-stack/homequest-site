@@ -1,0 +1,781 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "homequest-lead",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "23dd3e21-6ae2-41c2-a908-8e6a7484e275",
+      "name": "Webhook — Form Submission",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -880,
+        608
+      ],
+      "webhookId": "homequest-lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "// =============================================================================\n// HomeQuest — normalise one form submission into a flat lead object\n// =============================================================================\n// The RENT form was rebuilt in 2026:\n//   new     : language, profession, gross_income, search_area, search_city_other,\n//             ams_ring, referral_name\n//   renamed : occupation -> situation, living -> household\n//   values  : furnished is now yes / no / no_preference\n//   optional: duration, source, about may all arrive empty\n// The BUY form is unchanged; its branch below is untouched.\n\nconst data = $input.first().json.body || $input.first().json;\n\nconst mode = (data.mode || 'rent').toLowerCase();\nconst isBuy = mode === 'buy';\n\n// --- Monday.com: renting board column ids ------------------------------------\n// The new answers need new columns on the board. Create each one, then paste\n// its id here. Anything left as '' is skipped, so this node keeps working\n// (and keeps writing everything else) until you get round to it.\nconst RENT_COLUMNS = {\n  firstName:    'text_mkt1ywt2',\n  lastName:     'text_mkt1nswv',\n  dateOfBirth:  'date_mkt2h0kx',\n  situation:    'text_mkt1gra2',\n  profession:   'text_mkt1wp59',  // used to be a second copy of occupation\n  targetCity:   'text_mkt1kq6d',\n  budget:       'text_mkt1gn6w',\n  homeType:     'text_mkt181r9',\n  duration:     'text_mkwfcdh1',\n  household:    'text_mkxssyh8',\n  phone:        'text_mkt176g0',\n  email:        'text_mkt1dtwa',\n  nlRegistered: 'text_mkwfmkhq',\n  fullAddress:  'text_mkt1c9vy',\n  moveInDate:   'text_mkt17dvr',\n  furnished:    'text_mkt1q9eq',\n  source:       'text_mkt2mfqf',\n  about:        'text_mkwfzgct',\n  submittedAt:  'date_mkt1aetr',\n\n  // New columns — paste the ids once they exist on the board\n  language:     '',\n  grossIncome:  '',\n  neighbourhood:'',\n  ring:         '',\n  referralName: '',\n};\n\n// --- Option label maps -------------------------------------------------------\n// Legacy values from the old form are kept so historical replays still read well.\nconst LANGUAGES = { nl: 'Dutch (NL)', en: 'English (EN)', fr: 'French (FR)', es: 'Spanish (ES)' };\n\nconst SITUATIONS = {\n  employed: 'Employed', self_employed: 'Self-employed', student: 'Student',\n  other: 'Other', freelancer: 'Self-employed'\n};\n\nconst HOUSEHOLDS = {\n  single: 'Single', couple: 'Couple', sharing: 'Sharing',\n  alone: 'Single', shares: 'Sharing'\n};\n\n// Short codes for the sheet and the Monday board — they match the ~150 rows of\n// history already in those columns. The notification email uses the long form.\nconst HOME_TYPES = {\n  studio: 'Studio', '1br': '1br', '2br': '2br', '3br+': '3br+', house: 'House'\n};\n\nconst HOME_TYPES_LONG = {\n  studio: 'Studio', '1br': '1-bedroom apartment', '2br': '2-bedroom apartment',\n  '3br+': 'More than 2 bedrooms', house: 'House'\n};\n\nconst FURNISHED = {\n  yes: 'Furnished', no: 'Unfurnished', no_preference: 'No preference',\n  furnished: 'Furnished', unfurnished: 'Unfurnished',\n  upholstered: 'Upholstered', none: 'No preference'\n};\n\nconst RINGS = {\n  inside: 'Inside the ring (A10)', outside: 'Outside the ring',\n  no_preference: 'No preference'\n};\n\nconst REGISTERED = { yes: 'Yes', no: 'No, arriving from abroad' };\n\nconst SOURCES = {\n  chatgpt: 'ChatGPT or another AI', instagram: 'Instagram', facebook: 'Facebook',\n  tiktok: 'TikTok', google_ads: 'Google Ads', whatsapp: 'WhatsApp Housing Group',\n  advertisement: 'Advertisement', kamernet: 'Kamernet', jay: 'Jay',\n  employee: 'One of our employees', referral: 'Friend or relative', other: 'Other'\n};\n\nconst DURATIONS = {\n  '6mo': '6 months', '1yr': '1 year', 'more': 'Long term',\n  '1mo': '1 month', '3mo': '3 months', '1y': '1 year', '2y': '2 years',\n  '3y+': '3+ years', indefinite: 'Indefinite', '<3mo': 'Less than 3 months'\n};\n\n// --- Helpers -----------------------------------------------------------------\nfunction humanize(val) {\n  if (!val) return null;\n  return String(val).split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');\n}\n\n// Look a value up in a label map, falling back to a tidied version of the raw\n// value so an option we add to the form later still lands somewhere readable.\nfunction label(map, val) {\n  if (!val) return null;\n  return map[String(val)] || humanize(val);\n}\n\nfunction formatDate(d, m, y) {\n  if (!d || !m || !y) return null;\n  return d + ' ' + m + ' ' + y;\n}\n\nfunction mondayDate(d, m, y) {\n  if (!d || !m || !y) return \"\";\n\n  // Clean the year: \"1993 рік\" -> \"1993\"\n  const yearMatch = String(y).match(/\\d{4}/);\n  if (!yearMatch) return \"\";\n  const yyyy = yearMatch[0];\n\n  // The form submits English month values, but a browser-translated page (or an\n  // older submission) can send a localised name, so keep the aliases.\n  const months = {\n    // English\n    january:'01', february:'02', march:'03', april:'04', may:'05', june:'06',\n    july:'07', august:'08', september:'09', october:'10', november:'11', december:'12',\n    // Dutch\n    januari:'01', februari:'02', maart:'03', mei:'05', juni:'06', juli:'07',\n    augustus:'08', oktober:'10',\n    // Spanish\n    enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06',\n    julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12',\n    // French\n    janvier:'01', 'février':'02', fevrier:'02', mars:'03', avril:'04', mai:'05',\n    juin:'06', juillet:'07', 'août':'08', aout:'08', novembre:'11', 'décembre':'12',\n    decembre:'12',\n    // Turkish\n    ocak:'01', 'şubat':'02', mart:'03', nisan:'04', 'mayıs':'05', haziran:'06',\n    temmuz:'07', 'ağustos':'08', 'eylül':'09', ekim:'10', 'kasım':'11', 'aralık':'12',\n    // Ukrainian\n    'січень':'01', 'лютий':'02', 'березень':'03', 'квітень':'04', 'травень':'05',\n    'червень':'06', 'липень':'07', 'серпень':'08', 'вересень':'09',\n    'жовтень':'10', 'листопад':'11', 'грудень':'12'\n  };\n\n  let mm = null;\n  if (/^\\d{1,2}$/.test(String(m))) {\n    mm = String(m).padStart(2, '0');\n  } else {\n    mm = months[String(m).trim().toLowerCase()] || null;\n  }\n  if (!mm) return \"\"; // unknown month -> empty date, never junk\n\n  const dd = String(d).padStart(2, '0');\n  return { date: `${yyyy}-${mm}-${dd}` };\n}\n\nfunction euros(v, suffix) {\n  if (!v) return 'Not provided';\n  const num = parseInt(v, 10);\n  if (isNaN(num)) return String(v);\n  return '€' + num.toLocaleString('en-US') + (suffix || '');\n}\n\nfunction cleanPhone(p) {\n  if (!p) return '';\n  return String(p).replace(/\\D/g, '');\n}\n\nfunction text(v) {\n  const s = (v == null ? '' : String(v)).trim();\n  return s || null;\n}\n\nlet lead;\nlet dobObj;\n\n// Form submission date (Amsterdam time, YYYY-MM-DD for Monday date columns)\nconst now = new Date();\nconst submittedDateObj = {\n  date: now.toLocaleDateString('en-CA', { timeZone: 'Europe/Amsterdam' })\n};\n\nconst submittedAt = now.toLocaleString('en-GB', {\n  timeZone: 'Europe/Amsterdam',\n  dateStyle: 'long',\n  timeStyle: 'short'\n});\n\nif (isBuy) {\n  dobObj = mondayDate(data.b_dob_day, data.b_dob_month, data.b_dob_year);\n\n  lead = {\n    mode: 'BUY',\n    modeIcon: '🔴',\n    isBuy: true,\n\n    firstName: (data.b_full_name || 'there').split(' ')[0],\n    fullName: data.b_full_name || 'Unknown',\n    dateOfBirth: formatDate(data.b_dob_day, data.b_dob_month, data.b_dob_year) || 'Not provided',\n    language: 'Not provided',\n    nlRegistered: 'Not provided',\n    situation: 'Not provided',\n    profession: 'Not provided',\n    household: 'Not provided',\n\n    email: data.b_email || 'Not provided',\n    phone: data.b_phone || 'Not provided',\n\n    fullAddress: [data.b_address, data.b_city_current, data.b_zip, data.b_country].filter(Boolean).join(', ') || 'Not provided',\n\n    targetCity: data.b_search_city || 'Not provided',\n    neighbourhood: data.b_neighbourhood || 'Not provided',\n    ring: 'Not provided',\n    homeType: humanize(data.b_property_type) || 'Not provided',\n    homeTypeLong: humanize(data.b_property_type) || 'Not provided',\n    furnished: 'Not provided',\n    budget: euros(data.b_max_budget),\n    duration: 'Not provided',\n    moveInDate: label(DURATIONS, data.b_timeframe) || 'Not provided',\n\n    // Buy-specific\n    minBedrooms: data.b_min_bedrooms || 'Not provided',\n    mortgageAdvice: humanize(data.b_mortgage_advice) || 'Not provided',\n    income: euros(data.b_income),\n    contract: humanize(data.b_contract) || 'Not provided',\n    savings: humanize(data.b_savings) || 'Not provided',\n    debts: humanize(data.b_bkr) || 'Not provided',\n    tenure: humanize(data.b_tenure) || 'Not provided',\n    timeframe: label(DURATIONS, data.b_timeframe) || 'Not provided',\n    requirements: text(data.b_requirements),\n    about: text(data.b_requirements),\n\n    source: 'Not provided',\n    referralName: 'Not provided',\n    submittedAt\n  };\n} else {\n  dobObj = mondayDate(data.dob_day, data.dob_month, data.dob_year);\n\n  // \"Other\" city is a free-text answer on the new form.\n  const targetCity = (String(data.search_city || '').toLowerCase() === 'other')\n    ? (text(data.search_city_other) || 'Other (not specified)')\n    : (data.search_city || 'Not provided');\n\n  lead = {\n    mode: 'RENT',\n    modeIcon: '🟢',\n    isBuy: false,\n\n    firstName: data.first_name || 'there',\n    fullName: [data.first_name, data.last_name].filter(Boolean).join(' ') || 'Unknown',\n    lastName: data.last_name || '',\n    dateOfBirth: formatDate(data.dob_day, data.dob_month, data.dob_year) || 'Not provided',\n    language: label(LANGUAGES, data.language) || 'Not provided',\n    nlRegistered: label(REGISTERED, data.nl_registered) || 'Not provided',\n    situation: label(SITUATIONS, data.situation || data.occupation) || 'Not provided',\n    profession: text(data.profession) || 'Not provided',\n    household: label(HOUSEHOLDS, data.household || data.living) || 'Not provided',\n\n    email: data.email || 'Not provided',\n    phone: data.phone || 'Not provided',\n\n    fullAddress: [data.address, data.address2, data.city_current, data.zip, data.country].filter(Boolean).join(', ') || 'Not provided',\n\n    targetCity,\n    neighbourhood: text(data.search_area) || 'Not provided',\n    ring: label(RINGS, data.ams_ring) || 'Not provided',\n    homeType: label(HOME_TYPES, data.home_type) || 'Not provided',\n    homeTypeLong: label(HOME_TYPES_LONG, data.home_type) || 'Not provided',\n    furnished: label(FURNISHED, data.furnished) || 'Not provided',\n    budget: euros(data.budget, ' / month'),\n    income: euros(data.gross_income, ' / month gross'),\n    duration: label(DURATIONS, data.duration) || 'Not provided',\n    moveInDate: formatDate(data.movein_day, data.movein_month, data.movein_year) || 'Not provided',\n\n    // Buy-specific (empty for rent)\n    minBedrooms: 'Not provided',\n    mortgageAdvice: 'Not provided',\n    contract: 'Not provided',\n    savings: 'Not provided',\n    debts: 'Not provided',\n    tenure: 'Not provided',\n    timeframe: 'Not provided',\n    requirements: null,\n    about: text(data.about),\n\n    source: label(SOURCES, data.source) || 'Not provided',\n    referralName: text(data.referral_name) || 'Not provided',\n    submittedAt\n  };\n}\n\nconst phoneClean = cleanPhone(lead.phone);\nlead.whatsappLink = phoneClean ? 'https://wa.me/' + phoneClean : null;\nlead.telLink = phoneClean ? 'tel:+' + phoneClean : null;\n\n// --- Monday.com payloads -----------------------------------------------------\n// Buying board — unchanged.\nlead.mondayColumnValues = JSON.stringify({\n  \"text_mkvdq9af\": lead.fullName || \"\",\n  \"date_mkvdm4bw\": dobObj,\n  \"text_mkvdjs22\": lead.phone || \"\",\n  \"text_mkvd965b\": lead.targetCity || \"\",\n  \"text_mkvda4cf\": lead.budget || \"\",\n  \"text_mkvdgwb4\": lead.email || \"\",\n  \"text_mkvdmsas\": lead.fullAddress || \"\",\n  \"text_mkvdb5n6\": lead.neighbourhood || \"\",\n  \"text_mkvdczvk\": lead.homeType || \"\",\n  \"text_mkvd6w45\": lead.minBedrooms || \"\",\n  \"text_mkvd4c0q\": lead.mortgageAdvice || \"\",\n  \"text_mkvdtpaq\": lead.requirements || \"\",\n  \"text_mkvd15qs\": lead.income || \"\",\n  \"text_mkvd217h\": lead.contract || \"\",\n  \"text_mkvdnpgq\": lead.savings || \"\",\n  \"text_mkvd28z6\": lead.debts || \"\",\n  \"text_mkvdym30\": lead.tenure || \"\",\n  \"text_mkvdrjxf\": lead.timeframe || \"\",\n  \"date4\": submittedDateObj\n});\n\n// Renting board — driven by RENT_COLUMNS, so a column id you haven't created\n// yet is left out of the payload instead of breaking the request.\nconst rentValues = {};\nfunction setRentColumn(key, value) {\n  const columnId = RENT_COLUMNS[key];\n  if (!columnId) return;\n  rentValues[columnId] = (value === null || value === undefined) ? \"\" : value;\n}\n\nsetRentColumn('firstName',    lead.firstName);\nsetRentColumn('lastName',     lead.lastName || lead.fullName.split(' ').slice(1).join(' '));\nsetRentColumn('dateOfBirth',  dobObj);\nsetRentColumn('language',     lead.language);\nsetRentColumn('situation',    lead.situation);\nsetRentColumn('profession',   lead.profession);\nsetRentColumn('grossIncome',  lead.income);\nsetRentColumn('targetCity',   lead.targetCity);\nsetRentColumn('neighbourhood',lead.neighbourhood);\nsetRentColumn('ring',         lead.ring);\nsetRentColumn('budget',       lead.budget);\nsetRentColumn('homeType',     lead.homeType);\nsetRentColumn('duration',     lead.duration);\nsetRentColumn('household',    lead.household);\nsetRentColumn('phone',        lead.phone);\nsetRentColumn('email',        lead.email);\nsetRentColumn('nlRegistered', lead.nlRegistered);\nsetRentColumn('fullAddress',  lead.fullAddress);\nsetRentColumn('moveInDate',   lead.moveInDate);\nsetRentColumn('furnished',    lead.furnished);\nsetRentColumn('source',       lead.source);\nsetRentColumn('referralName', lead.referralName);\nsetRentColumn('about',        lead.about);\nsetRentColumn('submittedAt',  submittedDateObj);\n\nlead.mondayColumnValuesRent = JSON.stringify(rentValues);\n\nreturn [{ json: lead }];\n"
+      },
+      "id": "8fbfbe6e-a719-4f95-a50a-08bfd3aaaa6f",
+      "name": "Normalize Lead Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -496,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "Not provided",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              },
+              "id": "6862cb9f-c7d7-460a-9820-01f1e5914984"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "e0b44dbe-15db-455b-8f1b-ed635fb99a46",
+      "name": "Has valid email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        96,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Lead received\"\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "fbb76210-d566-4e64-943b-07c40abfd8d4",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        592
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1EkWaGdQgcytseTlFTf90nOJylE57TBq94lhOCGoNEo8",
+          "mode": "list",
+          "cachedResultName": "HOMEQUEST",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EkWaGdQgcytseTlFTf90nOJylE57TBq94lhOCGoNEo8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EkWaGdQgcytseTlFTf90nOJylE57TBq94lhOCGoNEo8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "NAME": "={{ $json.fullName }}",
+            "EMAIL": "={{ $json.email }}",
+            "PHONE": "={{ $json.phone }}",
+            "BUY/RENT": "={{ $json.mode }}",
+            "nlRegistered": "={{ $json.nlRegistered }}",
+            "OCCUPATION": "={{ $json.situation }}",
+            "ADDRESS": "={{ $json.fullAddress }}",
+            "TARGET-CITY": "={{ $json.targetCity }}",
+            "HOME TYPE": "={{ $json.homeType }}",
+            "FURNISHED": "={{ $json.furnished }}",
+            "BUDGET": "={{ $json.budget }}",
+            "DURATION": "={{ $json.duration }}",
+            "MOVE IN DATE": "={{ $json.moveInDate }}",
+            "SOURCE": "={{ $json.source }}",
+            "ABOUT": "={{ $json.about }}",
+            "DATE": "={{ $json.submittedAt }}",
+            "DATE OF BIRTH": "={{ $json.dateOfBirth }}",
+            "ALONE?": "={{ $json.household }}",
+            "LANGUAGE": "={{ $json.language }}",
+            "PROFESSION": "={{ $json.profession }}",
+            "GROSS INCOME": "={{ $json.income }}",
+            "AREA": "={{ $json.neighbourhood }}",
+            "RING": "={{ $json.ring }}",
+            "REFERRED BY": "={{ $json.referralName }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "NAME",
+              "displayName": "NAME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "EMAIL",
+              "displayName": "EMAIL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PHONE",
+              "displayName": "PHONE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BUY/RENT",
+              "displayName": "BUY/RENT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "nlRegistered",
+              "displayName": "nlRegistered",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OCCUPATION",
+              "displayName": "OCCUPATION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ADDRESS",
+              "displayName": "ADDRESS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "TARGET-CITY",
+              "displayName": "TARGET-CITY",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "HOME TYPE",
+              "displayName": "HOME TYPE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "FURNISHED",
+              "displayName": "FURNISHED",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "BUDGET",
+              "displayName": "BUDGET",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DURATION",
+              "displayName": "DURATION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MOVE IN DATE",
+              "displayName": "MOVE IN DATE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "SOURCE",
+              "displayName": "SOURCE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ABOUT",
+              "displayName": "ABOUT",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATE",
+              "displayName": "DATE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "DATE OF BIRTH",
+              "displayName": "DATE OF BIRTH",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ALONE?",
+              "displayName": "ALONE?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LANGUAGE",
+              "displayName": "LANGUAGE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PROFESSION",
+              "displayName": "PROFESSION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "GROSS INCOME",
+              "displayName": "GROSS INCOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AREA",
+              "displayName": "AREA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "RING",
+              "displayName": "RING",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "REFERRED BY",
+              "displayName": "REFERRED BY",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -496,
+        416
+      ],
+      "id": "3c25c7c2-975f-4b3f-8aa4-ffcc6c854da8",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Sb8qPNAvdjYa2jT8",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.isBuy }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              },
+              "id": "buy-check"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "01d6783a-5740-4a1f-996c-a20361d63bc0",
+      "name": "Buy or Rent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -272,
+        544
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "boardItem",
+        "boardId": "2127748517",
+        "groupId": "topics",
+        "name": "={{ $('Normalize Lead Data').item.json.fullName }}",
+        "additionalFields": {
+          "columnValues": "={{ $('Normalize Lead Data').item.json.mondayColumnValues }}"
+        }
+      },
+      "id": "0e26a980-9691-4691-a134-21496579eb4e",
+      "name": "Monday — Buying Forms",
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        336,
+        816
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mondayComOAuth2Api": {
+          "id": "mJF6ewyrOI4vF5jB",
+          "name": "Monday.com account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "boardItem",
+        "boardId": "2059852439",
+        "groupId": "topics",
+        "name": "={{ $('Normalize Lead Data').item.json.fullName }}",
+        "additionalFields": {
+          "columnValues": "={{ $json.mondayColumnValuesRent }}"
+        }
+      },
+      "id": "ba232d38-71fc-4126-a287-053053326e49",
+      "name": "Monday — Renting Forms",
+      "type": "n8n-nodes-base.mondayCom",
+      "typeVersion": 1,
+      "position": [
+        336,
+        1008
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "mondayComOAuth2Api": {
+          "id": "mJF6ewyrOI4vF5jB",
+          "name": "Monday.com account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Lead received\"\n}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "e8026422-f081-4b63-a675-b76353d6d6c1",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        912
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "datej6605@gmail.com,info@hqhousing.com",
+        "subject": "={{ $('Normalize Lead Data').item.json.modeIcon }} New lead — {{ $('Normalize Lead Data').item.json.fullName }} — {{ $('Normalize Lead Data').item.json.mode }} — {{ $('Normalize Lead Data').item.json.targetCity }}",
+        "message": "==<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<style>\n  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; background: #F2EBDD; margin: 0; padding: 32px 16px; color: #13241F; }\n  .container { max-width: 580px; margin: 0 auto; background: #FAF6ED; border-radius: 12px; padding: 36px; border: 1px solid rgba(19,36,31,0.08); }\n  .eyebrow { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #B85C38; margin-bottom: 8px; font-weight: 500; }\n  h1 { font-family: 'Georgia', serif; font-weight: 300; font-size: 28px; letter-spacing: -0.5px; margin: 0 0 16px 0; color: #13241F; }\n  .badge { display: inline-block; padding: 5px 14px; border-radius: 999px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin-bottom: 24px; }\n  .badge-rent { background: rgba(169,132,84,0.15); color: #A98454; }\n  .badge-buy { background: rgba(184,92,56,0.15); color: #B85C38; }\n  .section-header { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #B85C38; margin: 28px 0 4px 0; font-weight: 600; }\n  .row { display: flex; padding: 11px 0; border-bottom: 1px solid rgba(19,36,31,0.08); }\n  .row:last-child { border-bottom: none; }\n  .label { width: 150px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #6E6759; font-weight: 500; padding-top: 2px; }\n  .value { flex: 1; font-size: 14px; color: #13241F; line-height: 1.5; }\n  .value strong { color: #13241F; }\n  .about-box { margin-top: 8px; padding: 18px 20px; background: rgba(184,92,56,0.06); border-left: 3px solid #B85C38; border-radius: 4px; font-style: italic; font-size: 14px; color: #13241F; line-height: 1.6; }\n  .meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(19,36,31,0.08); font-size: 11px; color: #6E6759; line-height: 1.6; text-align: center; }\n  a { color: #B85C38; text-decoration: none; }\n</style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"eyebrow\">— New lead via hqhousing.com —</div>\n    <h1>{{ $('Normalize Lead Data').item.json.fullName }}</h1>\n\n    <div class=\"badge {{ $('Normalize Lead Data').item.json.isBuy ? 'badge-buy' : 'badge-rent' }}\">\n      {{ $('Normalize Lead Data').item.json.modeIcon }} &nbsp; Looking to {{ $('Normalize Lead Data').item.json.isBuy ? 'buy' : 'rent' }} in {{ $('Normalize Lead Data').item.json.targetCity }}\n    </div>\n\n    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin: 0 0 28px 0; width: 100%;\">\n      <tr>\n        <td style=\"padding-right: 8px;\">\n          <a href=\"mailto:{{ $('Normalize Lead Data').item.json.email }}\" style=\"display: block; padding: 14px 20px; background: #B85C38; color: #FAF6ED; text-decoration: none; border-radius: 999px; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;\">Reply by email →</a>\n        </td>\n        <td style=\"padding-left: 8px;\">\n          {{ $('Normalize Lead Data').item.json.whatsappLink ? '<a href=\"' + $('Normalize Lead Data').item.json.whatsappLink + '\" style=\"display: block; padding: 14px 20px; background: #25D366; color: #FFFFFF; text-decoration: none; border-radius: 999px; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; text-align: center; font-family: -apple-system, BlinkMacSystemFont, sans-serif;\">WhatsApp</a>' : '' }}\n        </td>\n      </tr>\n    </table>\n\n    {{ $('Normalize Lead Data').item.json.telLink ? '<a href=\"' + $('Normalize Lead Data').item.json.telLink + '\" style=\"display: block; margin-bottom: 28px; padding: 20px; background: rgba(184,92,56,0.06); border: 1px solid rgba(184,92,56,0.25); border-radius: 12px; text-align: center; text-decoration: none; color: #13241F;\"><div style=\"font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: #6E6759; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;\">📞 Tap to call (or copy the number)</div><div style=\"font-family: Georgia, serif; font-size: 24px; color: #13241F; font-weight: 400; letter-spacing: 0.5px;\">' + $('Normalize Lead Data').item.json.phone + '</div></a>' : '' }}\n\n    <div class=\"section-header\">Contact</div>\n    <div class=\"row\"><div class=\"label\">Email</div><div class=\"value\"><a href=\"mailto:{{ $('Normalize Lead Data').item.json.email }}\">{{ $('Normalize Lead Data').item.json.email }}</a></div></div>\n    <div class=\"row\"><div class=\"label\">Phone</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.phone }}</div></div>\n    <div class=\"row\"><div class=\"label\">Speaks</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.language }}</strong></div></div>\n\n    <div class=\"section-header\">Personal</div>\n    <div class=\"row\"><div class=\"label\">Date of birth</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.dateOfBirth }}</div></div>\n    <div class=\"row\"><div class=\"label\">Registered in NL</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.nlRegistered }}</strong></div></div>\n    <div class=\"row\"><div class=\"label\">Household</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.household }}</div></div>\n\n    <div class=\"section-header\">Work &amp; income</div>\n    <div class=\"row\"><div class=\"label\">Situation</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.situation }}</div></div>\n    <div class=\"row\"><div class=\"label\">Profession / studies</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.profession }}</div></div>\n    <div class=\"row\"><div class=\"label\">Gross salary</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.income }}</strong></div></div>\n    <div class=\"row\"><div class=\"label\">Max budget</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.budget }}</strong></div></div>\n\n    <div class=\"section-header\">Currently lives at</div>\n    <div class=\"row\"><div class=\"label\">Address</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.fullAddress }}</div></div>\n\n    <div class=\"section-header\">Looking for</div>\n    <div class=\"row\"><div class=\"label\">Target city</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.targetCity }}</strong></div></div>\n    {{ $('Normalize Lead Data').item.json.ring !== 'Not provided' ? '<div class=\"row\"><div class=\"label\">A10 ring</div><div class=\"value\">' + $('Normalize Lead Data').item.json.ring + '</div></div>' : '' }}\n    {{ $('Normalize Lead Data').item.json.neighbourhood !== 'Not provided' ? '<div class=\"row\"><div class=\"label\">Area</div><div class=\"value\">' + $('Normalize Lead Data').item.json.neighbourhood + '</div></div>' : '' }}\n    <div class=\"row\"><div class=\"label\">Home type</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.homeTypeLong }}</div></div>\n    <div class=\"row\"><div class=\"label\">Furnished</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.furnished }}</div></div>\n    <div class=\"row\"><div class=\"label\">Duration</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.duration }}</div></div>\n    <div class=\"row\"><div class=\"label\">Desired move-in</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.moveInDate }}</strong></div></div>\n\n    {{ $('Normalize Lead Data').item.json.about ? '<div class=\"section-header\">In their own words</div><div class=\"about-box\">' + $('Normalize Lead Data').item.json.about + '</div>' : '' }}\n\n    <div class=\"section-header\">Source</div>\n    <div class=\"row\"><div class=\"label\">How they found us</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.source }}</div></div>\n    {{ $('Normalize Lead Data').item.json.referralName !== 'Not provided' ? '<div class=\"row\"><div class=\"label\">Referred by</div><div class=\"value\"><strong>' + $('Normalize Lead Data').item.json.referralName + '</strong></div></div>' : '' }}\n\n    <div class=\"meta\">\n      Submitted {{ $('Normalize Lead Data').item.json.submittedAt }} CET\n    </div>\n  </div>\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        336
+      ],
+      "id": "2680cccf-557b-475f-a5fb-2e9c9259aea4",
+      "name": "Send a message - rent",
+      "webhookId": "686a93cc-b4d9-4638-a430-80a5d411edea",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0fC85biMIkkDqjcm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "datej6605@gmail.com,info@hqhousing.com",
+        "subject": "={{ $('Normalize Lead Data').item.json.modeIcon }} New lead — {{ $('Normalize Lead Data').item.json.fullName }} — {{ $('Normalize Lead Data').item.json.mode }} — {{ $('Normalize Lead Data').item.json.targetCity }}",
+        "message": "==<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<style>\n  body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; background: #F2EBDD; margin: 0; padding: 32px 16px; color: #13241F; }\n  .container { max-width: 580px; margin: 0 auto; background: #FAF6ED; border-radius: 12px; padding: 36px; border: 1px solid rgba(19,36,31,0.08); }\n  .eyebrow { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: #B85C38; margin-bottom: 8px; font-weight: 500; }\n  h1 { font-family: 'Georgia', serif; font-weight: 300; font-size: 28px; letter-spacing: -0.5px; margin: 0 0 16px 0; color: #13241F; }\n  .badge { display: inline-block; padding: 5px 14px; border-radius: 999px; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; font-weight: 600; margin-bottom: 24px; background: rgba(184,92,56,0.15); color: #B85C38; }\n  .section-header { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #B85C38; margin: 28px 0 4px 0; font-weight: 600; }\n  .row { display: flex; padding: 11px 0; border-bottom: 1px solid rgba(19,36,31,0.08); }\n  .row:last-child { border-bottom: none; }\n  .label { width: 150px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.6px; color: #6E6759; font-weight: 500; padding-top: 2px; }\n  .value { flex: 1; font-size: 14px; color: #13241F; line-height: 1.5; }\n  .value strong { color: #13241F; }\n  .about-box { margin-top: 8px; padding: 18px 20px; background: rgba(184,92,56,0.06); border-left: 3px solid #B85C38; border-radius: 4px; font-style: italic; font-size: 14px; color: #13241F; line-height: 1.6; }\n  .meta { margin-top: 32px; padding-top: 20px; border-top: 1px solid rgba(19,36,31,0.08); font-size: 11px; color: #6E6759; line-height: 1.6; text-align: center; }\n  a { color: #B85C38; text-decoration: none; }\n</style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"eyebrow\">— New BUY lead via hqhousing.com —</div>\n    <h1>{{ $('Normalize Lead Data').item.json.fullName }}</h1>\n\n    <div class=\"badge\">\n      {{ $('Normalize Lead Data').item.json.modeIcon }} &nbsp; Looking to buy in {{ $('Normalize Lead Data').item.json.targetCity }}\n    </div>\n\n    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"margin: 0 0 28px 0; width: 100%;\">\n      <tr>\n        <td style=\"padding-right: 8px;\">\n          <a href=\"mailto:{{ $('Normalize Lead Data').item.json.email }}\" style=\"display: block; padding: 14px 20px; background: #B85C38; color: #FAF6ED; text-decoration: none; border-radius: 999px; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;\">Reply by email →</a>\n        </td>\n        <td style=\"padding-left: 8px;\">\n          {{ $('Normalize Lead Data').item.json.whatsappLink ? '<a href=\"' + $('Normalize Lead Data').item.json.whatsappLink + '\" style=\"display: block; padding: 14px 20px; background: #25D366; color: #FFFFFF; text-decoration: none; border-radius: 999px; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; text-align: center; font-family: -apple-system, BlinkMacSystemFont, sans-serif;\">WhatsApp</a>' : '' }}\n        </td>\n      </tr>\n    </table>\n\n    {{ $('Normalize Lead Data').item.json.telLink ? '<a href=\"' + $('Normalize Lead Data').item.json.telLink + '\" style=\"display: block; margin-bottom: 28px; padding: 20px; background: rgba(184,92,56,0.06); border: 1px solid rgba(184,92,56,0.25); border-radius: 12px; text-align: center; text-decoration: none; color: #13241F;\"><div style=\"font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: #6E6759; margin-bottom: 6px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;\">📞 Tap to call (or copy the number)</div><div style=\"font-family: Georgia, serif; font-size: 24px; color: #13241F; font-weight: 400; letter-spacing: 0.5px;\">' + $('Normalize Lead Data').item.json.phone + '</div></a>' : '' }}\n\n    <div class=\"section-header\">Contact</div>\n    <div class=\"row\"><div class=\"label\">Email</div><div class=\"value\"><a href=\"mailto:{{ $('Normalize Lead Data').item.json.email }}\">{{ $('Normalize Lead Data').item.json.email }}</a></div></div>\n    <div class=\"row\"><div class=\"label\">Phone</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.phone }}</div></div>\n\n    <div class=\"section-header\">Personal</div>\n    <div class=\"row\"><div class=\"label\">Date of birth</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.dateOfBirth }}</div></div>\n    <div class=\"row\"><div class=\"label\">Current tenure</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.tenure }}</div></div>\n\n    <div class=\"section-header\">Currently lives at</div>\n    <div class=\"row\"><div class=\"label\">Address</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.fullAddress }}</div></div>\n\n    <div class=\"section-header\">Looking to buy</div>\n    <div class=\"row\"><div class=\"label\">Target city</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.targetCity }}</strong></div></div>\n    <div class=\"row\"><div class=\"label\">Property type</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.homeType }}</div></div>\n    <div class=\"row\"><div class=\"label\">Min. bedrooms</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.minBedrooms }}</div></div>\n    <div class=\"row\"><div class=\"label\">Max budget</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.budget }}</strong></div></div>\n    <div class=\"row\"><div class=\"label\">Timeframe</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.timeframe }}</div></div>\n\n    <div class=\"section-header\">Financial profile</div>\n    <div class=\"row\"><div class=\"label\">Mortgage advice</div><div class=\"value\"><strong>{{ $('Normalize Lead Data').item.json.mortgageAdvice }}</strong></div></div>\n    <div class=\"row\"><div class=\"label\">Monthly income</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.income }}</div></div>\n    <div class=\"row\"><div class=\"label\">Contract type</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.contract }}</div></div>\n    <div class=\"row\"><div class=\"label\">Savings</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.savings }}</div></div>\n    <div class=\"row\"><div class=\"label\">BKR / debts</div><div class=\"value\">{{ $('Normalize Lead Data').item.json.debts }}</div></div>\n\n    {{ $('Normalize Lead Data').item.json.requirements ? '<div class=\"section-header\">Requirements</div><div class=\"about-box\">' + $('Normalize Lead Data').item.json.requirements + '</div>' : '' }}\n\n    <div class=\"meta\">\n      Submitted {{ $('Normalize Lead Data').item.json.submittedAt }} CET\n    </div>\n  </div>\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        160
+      ],
+      "id": "472bf339-ccaf-4c5d-b881-321d5599eb90",
+      "name": "Send a message - buy",
+      "webhookId": "686a93cc-b4d9-4638-a430-80a5d411edea",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0fC85biMIkkDqjcm",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "=Your HomeQuest request — we'll be in touch shortly",
+        "message": "=<!DOCTYPE html> <html> <head> <meta charset=\"utf-8\"> <style>   body { font-family: 'Georgia', 'Times New Roman', serif; background: #F2EBDD; margin: 0; padding: 48px 16px; color: #13241F; line-height: 1.65; }   .container { max-width: 540px; margin: 0 auto; background: #FAF6ED; border-radius: 12px; padding: 48px 40px; }   .logo { font-family: 'Georgia', serif; font-style: italic; font-size: 28px; font-weight: 400; color: #13241F; letter-spacing: -0.5px; margin-bottom: 36px; }   .logo .dot { color: #B85C38; }   p { margin: 0 0 18px 0; font-size: 16px; color: #13241F; }   .wa-wrap { margin: 32px 0 8px 0; text-align: center; }   .wa-button { display: inline-block; background: #25D366; color: #FFFFFF !important; text-decoration: none; padding: 15px 30px; border-radius: 999px; font-family: -apple-system, 'Inter', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.4px; }   .wa-hint { margin-top: 12px; font-family: -apple-system, 'Inter', sans-serif; font-size: 12px; color: #6E6759; }   .signature { margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(19,36,31,0.08); font-size: 15px; }   .signature-name { font-style: italic; color: #13241F; }   .signature-role { font-family: -apple-system, 'Inter', sans-serif; font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: #6E6759; margin-top: 4px; }   .footer { margin-top: 32px; font-family: -apple-system, 'Inter', sans-serif; font-size: 11px; color: #6E6759; text-align: center; letter-spacing: 0.4px; } </style> </head> <body>   <div class=\"container\">     <div class=\"logo\">Home<span class=\"dot\">·</span>Quest</div>      <p>Hi {{ $json.firstName }},</p>      <p>Thank you for reaching out. I've received your details and will personally review them today.</p>      <p>The market in {{ $json.targetCity !== 'Not provided' ? $json.targetCity : 'the Netherlands' }} moves fast, and the best homes go quickly. The sooner we talk, the sooner I can start matching you with places that fit.</p>      <p>The fastest way to reach me is a quick message on WhatsApp — I usually reply within minutes, and it means I can get straight to work on your search:</p>      <div class=\"wa-wrap\">       <a class=\"wa-button\" href=\"https://wa.me/31613329724?text={{ encodeURIComponent('Hi Philippe, this is ' + $json.firstName + '. I just submitted my HomeQuest request for ' + ($json.targetCity !== 'Not provided' ? $json.targetCity : 'the Netherlands') + ' and I\\'d love to get started.') }}\">Message me on WhatsApp →</a>       <div class=\"wa-hint\">Tap to send — your details are already filled in</div>     </div>      <p style=\"font-size: 14px; color: #6E6759;\">If I don't hear from you first, don't worry — I'll reach out within 24 hours either way.</p>      <div class=\"signature\">       <div class=\"signature-name\">Philippe Kamoun</div>       <div class=\"signature-role\">Founder · HomeQuest</div>     </div>      <div class=\"footer\">       HomeQuest · Personal housing concierge · Netherlands     </div>   </div> </body> </html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        176
+      ],
+      "id": "43a287b8-2525-4f55-af3c-8b9c9c97cdeb",
+      "name": "Send a message2",
+      "webhookId": "34e3c08f-8e71-4aca-ac6f-45644ea4056d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0fC85biMIkkDqjcm",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook — Form Submission": {
+      "main": [
+        [
+          {
+            "node": "Normalize Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Buy or Rent?",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Has valid email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has valid email?": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        []
+      ]
+    },
+    "Buy or Rent?": {
+      "main": [
+        [
+          {
+            "node": "Send a message - buy",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Monday — Buying Forms",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message - rent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Monday — Renting Forms",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monday — Buying Forms": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Monday — Renting Forms": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message - rent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message - buy": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Webhook — Form Submission": [
+      {
+        "headers": {
+          "host": "n8n.srv1037212.hstgr.cloud",
+          "content-type": "application/json",
+          "origin": "https://www.hqhousing.com",
+          "referer": "https://www.hqhousing.com/renting-form"
+        },
+        "params": {},
+        "query": {},
+        "body": {
+          "mode": "rent",
+          "first_name": "Camille",
+          "last_name": "Lefevre",
+          "dob_day": "14",
+          "dob_month": "June",
+          "dob_year": "1994",
+          "language": "fr",
+          "nl_registered": "no",
+          "country": "France",
+          "city_current": "Lyon",
+          "address": "Rue de la Paix 12",
+          "address2": "Apt 4B",
+          "zip": "69000",
+          "email": "camille@example.com",
+          "phone": "+33612345678",
+          "situation": "self_employed",
+          "profession": "Freelance UX designer",
+          "gross_income": "5200",
+          "budget": "2400",
+          "household": "couple",
+          "search_city": "Amsterdam",
+          "ams_ring": "inside",
+          "search_area": "De Pijp",
+          "home_type": "2br",
+          "furnished": "no_preference",
+          "movein_day": "1",
+          "movein_month": "March",
+          "movein_year": "2027",
+          "duration": "1yr",
+          "source": "referral",
+          "referral_name": "Sanne de Vries",
+          "about": "Moving to Amsterdam for a new contract.",
+          "privacy": "on",
+          "terms": "on"
+        },
+        "webhookUrl": "https://n8n.srv1037212.hstgr.cloud/webhook/homequest-lead",
+        "executionMode": "production"
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "26382e750ffd1248e5547e45eb97df7ea77df76ed0580dfdc0941f8fb9bb07be"
+  }
+}
