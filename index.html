@@ -638,6 +638,8 @@
   .field label{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
   .field label .req{color:var(--accent-2);margin-left:2px}
   .field .help{font-size:12px;color:var(--muted);margin-top:-2px}
+  /* Conditional fields (revealed by an earlier answer) start collapsed. */
+  #intakeForm [hidden]{display:none !important}
   .field input[type=text],.field input[type=email],.field input[type=tel],.field input[type=number],.field select,.field textarea{
     font-family:var(--sans);font-size:15px;color:var(--ink);
     background:var(--paper);border:1px solid var(--rule);border-radius:2px;
@@ -2698,7 +2700,7 @@
       <div>
         <span class="eyebrow" data-i18n="modal.eyebrow" style="display:block;margin-bottom:10px">Intake · 60 seconds</span>
         <h2 id="intakeTitle" data-i18n-html="modal.title">Tell us a little about <em>you.</em></h2>
-        <p data-i18n="modal.intro">Five short steps. Philippe replies within four hours during business days. Nothing is charged until after we've had the intake call.</p>
+        <p data-i18n="modal.intro">A few short steps. Philippe replies within four hours during business days. Nothing is charged until after we've had the intake call.</p>
       </div>
       <div class="modal-head-right">
         <div class="form-lang" role="tablist" aria-label="Form language">
@@ -2760,6 +2762,16 @@
         </div>
 
         <div class="field">
+          <label><span data-i18n="rent.s1.language">Which language should we speak with you?</span><span class="req">*</span></label>
+          <div class="opt-grid four">
+            <label class="opt"><input type="radio" name="language" value="nl" required /><span class="dot"></span><span>Nederlands</span></label>
+            <label class="opt"><input type="radio" name="language" value="en" /><span class="dot"></span><span>English</span></label>
+            <label class="opt"><input type="radio" name="language" value="fr" /><span class="dot"></span><span>Français</span></label>
+            <label class="opt"><input type="radio" name="language" value="es" /><span class="dot"></span><span>Español</span></label>
+          </div>
+        </div>
+
+        <div class="field">
           <label><span data-i18n="rent.s1.registered">Are you legally registered in the Netherlands?</span><span class="req">*</span></label>
           <div class="opt-grid two">
             <label class="opt"><input type="radio" name="nl_registered" value="yes" required /><span class="dot"></span><span data-i18n="common.yes">Yes</span></label>
@@ -2810,69 +2822,32 @@
         </div>
       </section>
 
-      <!-- ===== Step 3: Your search ===== -->
+      <!-- ===== Step 3: Your situation ===== -->
       <section class="form-section" data-step="3" data-mode="rent">
-        <span class="eyebrow" data-i18n="rent.s3.eyebrow">Step 03 / Your search</span>
-        <h3 data-i18n="rent.s3.title">What you're looking for.</h3>
-        <p class="blurb" data-i18n="rent.s3.blurb">Best guesses are fine, we'll refine all of this on the call.</p>
+        <span class="eyebrow" data-i18n="rent.s3.eyebrow">Step 03 / Your situation</span>
+        <h3 data-i18n="rent.s3.title">Work, income and household.</h3>
+        <p class="blurb" data-i18n="rent.s3.blurb">Landlords ask for this first. It lets us shortlist only the homes you'll actually qualify for.</p>
 
         <div class="field">
-          <label><span data-i18n="rent.s3.searchCity">In which city are you looking for a rental home?</span><span class="req">*</span></label>
-          <div class="opt-grid">
-            <label class="opt"><input type="radio" name="search_city" value="Amsterdam" required /><span class="dot"></span><span>Amsterdam</span></label>
-            <label class="opt"><input type="radio" name="search_city" value="Rotterdam" /><span class="dot"></span><span>Rotterdam</span></label>
-            <label class="opt"><input type="radio" name="search_city" value="Utrecht" /><span class="dot"></span><span>Utrecht</span></label>
-            <label class="opt"><input type="radio" name="search_city" value="Den Haag" /><span class="dot"></span><span>Den Haag</span></label>
-            <label class="opt"><input type="radio" name="search_city" value="Other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label><span data-i18n="rent.s3.duration">For how long do you want to rent?</span><span class="req">*</span></label>
-          <div class="opt-grid three">
-            <label class="opt"><input type="radio" name="duration" value="6mo" required /><span class="dot"></span><span data-i18n="rent.s3.dur6mo">6 months</span></label>
-            <label class="opt"><input type="radio" name="duration" value="1yr" /><span class="dot"></span><span data-i18n="rent.s3.dur1yr">1 year</span></label>
-            <label class="opt"><input type="radio" name="duration" value="more" /><span class="dot"></span><span data-i18n="rent.s3.durMore">More than 1 year</span></label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label><span data-i18n="rent.s3.living">You are looking forward to</span><span class="req">*</span></label>
-          <div class="opt-grid three">
-            <label class="opt"><input type="radio" name="living" value="alone" required /><span class="dot"></span><span data-i18n="rent.s3.livingAlone">Renting alone</span></label>
-            <label class="opt"><input type="radio" name="living" value="couple" /><span class="dot"></span><span data-i18n="rent.s3.livingCouple">Renting as a couple</span></label>
-            <label class="opt"><input type="radio" name="living" value="shares" /><span class="dot"></span><span data-i18n="rent.s3.livingShares">Renting in shares</span></label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label><span data-i18n="rent.s3.homeType">What type of home?</span><span class="req">*</span></label>
-          <div class="opt-grid">
-            <label class="opt"><input type="radio" name="home_type" value="studio" required /><span class="dot"></span><span data-i18n="rent.s3.studio">Studio</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="1br" /><span class="dot"></span><span data-i18n="rent.s3.br1">1-bedroom apt.</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="2br" /><span class="dot"></span><span data-i18n="rent.s3.br2">2-bedroom apt.</span></label>
-            <label class="opt"><input type="radio" name="home_type" value="3br+" /><span class="dot"></span><span data-i18n="rent.s3.br3plus">More than 2 bedrooms</span></label>
-          </div>
-        </div>
-
-        <div class="field">
-          <label><span data-i18n="rent.s3.furnished">Furnished or unfurnished?</span><span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.situation">Your situation</span><span class="req">*</span></label>
           <div class="opt-grid four">
-            <label class="opt"><input type="radio" name="furnished" value="upholstered" required /><span class="dot"></span><span data-i18n="rent.s3.upholstered">Upholstered</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="unfurnished" /><span class="dot"></span><span data-i18n="rent.s3.unfurnished">Not furnished</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="furnished" /><span class="dot"></span><span data-i18n="rent.s3.fullyFurn">Furnished</span></label>
-            <label class="opt"><input type="radio" name="furnished" value="none" /><span class="dot"></span><span data-i18n="common.noPref">No preference</span></label>
+            <label class="opt"><input type="radio" name="situation" value="employed" required /><span class="dot"></span><span data-i18n="rent.s3.employed">Employed</span></label>
+            <label class="opt"><input type="radio" name="situation" value="self_employed" /><span class="dot"></span><span data-i18n="rent.s3.selfEmployed">Self-employed</span></label>
+            <label class="opt"><input type="radio" name="situation" value="student" /><span class="dot"></span><span data-i18n="rent.s3.student">Student</span></label>
+            <label class="opt"><input type="radio" name="situation" value="other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
           </div>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s3.profession">Profession or field of study</span><span class="req">*</span></label>
+          <input type="text" name="profession" required placeholder="e.g. Data analyst at ING, or MSc Economics at UvA" />
         </div>
 
         <div class="field-row">
           <div class="field">
-            <label><span data-i18n="rent.s3.occupation">Your occupation</span><span class="req">*</span></label>
-            <div class="opt-grid three" style="margin-top:0">
-              <label class="opt"><input type="radio" name="occupation" value="employed" required /><span class="dot"></span><span data-i18n="rent.s3.employed">Employed</span></label>
-              <label class="opt"><input type="radio" name="occupation" value="freelancer" /><span class="dot"></span><span data-i18n="rent.s3.freelancer">Freelancer</span></label>
-              <label class="opt"><input type="radio" name="occupation" value="student" /><span class="dot"></span><span data-i18n="rent.s3.student">Student</span></label>
-            </div>
+            <label><span data-i18n="rent.s3.income">Gross monthly salary (€)</span><span class="req">*</span></label>
+            <input type="number" name="gross_income" required min="0" step="100" placeholder="4,500" />
+            <span class="help" data-i18n="rent.s3.incomeHelp">Before tax, combined if you're a couple.</span>
           </div>
           <div class="field">
             <label><span data-i18n="rent.s3.budget">Maximum monthly budget (€)</span><span class="req">*</span></label>
@@ -2882,7 +2857,74 @@
         </div>
 
         <div class="field">
-          <label><span data-i18n="rent.s3.moveIn">When do you plan to move in?</span><span class="req">*</span></label>
+          <label><span data-i18n="rent.s3.household">Household</span><span class="req">*</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="household" value="single" required /><span class="dot"></span><span data-i18n="rent.s3.single">Single</span></label>
+            <label class="opt"><input type="radio" name="household" value="couple" /><span class="dot"></span><span data-i18n="rent.s3.couple">Couple</span></label>
+            <label class="opt"><input type="radio" name="household" value="sharing" /><span class="dot"></span><span data-i18n="rent.s3.sharing">Sharing</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Step 4: Your search ===== -->
+      <section class="form-section" data-step="4" data-mode="rent">
+        <span class="eyebrow" data-i18n="rent.s4.eyebrow">Step 04 / Your search</span>
+        <h3 data-i18n="rent.s4.title">What you're looking for.</h3>
+        <p class="blurb" data-i18n="rent.s4.blurb">Best guesses are fine, we'll refine all of this on the call.</p>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.searchCity">In which city are you looking for a rental home?</span><span class="req">*</span></label>
+          <div class="opt-grid">
+            <label class="opt"><input type="radio" name="search_city" value="Amsterdam" required /><span class="dot"></span><span>Amsterdam</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Rotterdam" /><span class="dot"></span><span>Rotterdam</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Utrecht" /><span class="dot"></span><span>Utrecht</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Den Haag" /><span class="dot"></span><span>Den Haag</span></label>
+            <label class="opt"><input type="radio" name="search_city" value="Other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-cond-on="search_city" data-cond-value="Other" hidden>
+          <label><span data-i18n="rent.s4.cityOther">Which city or area?</span><span class="req">*</span></label>
+          <input type="text" name="search_city_other" required placeholder="e.g. Haarlem, Eindhoven, Amstelveen" />
+        </div>
+
+        <div class="field" data-cond-on="search_city" data-cond-value="Amsterdam" hidden>
+          <label><span data-i18n="rent.s4.ring">Inside or outside the ring (A10)?</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="ams_ring" value="inside" /><span class="dot"></span><span data-i18n="rent.s4.ringInside">Inside the ring</span></label>
+            <label class="opt"><input type="radio" name="ams_ring" value="outside" /><span class="dot"></span><span data-i18n="rent.s4.ringOutside">Outside the ring</span></label>
+            <label class="opt"><input type="radio" name="ams_ring" value="no_preference" /><span class="dot"></span><span data-i18n="common.noPref">No preference</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.area">Preferred neighbourhood or area</span></label>
+          <input type="text" name="search_area" placeholder="De Pijp, Oud-West, close to Zuidas…" />
+          <span class="help" data-i18n="common.optional">Optional.</span>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.homeType">What type of home?</span><span class="req">*</span></label>
+          <div class="opt-grid">
+            <label class="opt"><input type="radio" name="home_type" value="studio" required /><span class="dot"></span><span data-i18n="rent.s4.studio">Studio</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="1br" /><span class="dot"></span><span data-i18n="rent.s4.br1">1-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="2br" /><span class="dot"></span><span data-i18n="rent.s4.br2">2-bedroom apt.</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="3br+" /><span class="dot"></span><span data-i18n="rent.s4.br3plus">More than 2 bedrooms</span></label>
+            <label class="opt"><input type="radio" name="home_type" value="house" /><span class="dot"></span><span data-i18n="rent.s4.house">House</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.furnished">Furnished?</span><span class="req">*</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="furnished" value="yes" required /><span class="dot"></span><span data-i18n="rent.s4.furnYes">Yes, furnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="no" /><span class="dot"></span><span data-i18n="rent.s4.furnNo">No, unfurnished</span></label>
+            <label class="opt"><input type="radio" name="furnished" value="no_preference" /><span class="dot"></span><span data-i18n="common.noPref">No preference</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.moveIn">When do you plan to move in?</span><span class="req">*</span></label>
           <div class="field-row dob">
             <select name="movein_day" required>
               <option value="" data-i18n="common.day">Day</option>
@@ -2899,58 +2941,77 @@
             </select>
           </div>
         </div>
+
+        <div class="field">
+          <label><span data-i18n="rent.s4.duration">For how long do you want to rent?</span></label>
+          <div class="opt-grid three">
+            <label class="opt"><input type="radio" name="duration" value="6mo" /><span class="dot"></span><span data-i18n="rent.s4.dur6mo">6 months</span></label>
+            <label class="opt"><input type="radio" name="duration" value="1yr" /><span class="dot"></span><span data-i18n="rent.s4.dur1yr">1 year</span></label>
+            <label class="opt"><input type="radio" name="duration" value="more" /><span class="dot"></span><span data-i18n="rent.s4.durMore">More than 1 year</span></label>
+          </div>
+          <span class="help" data-i18n="common.optional">Optional.</span>
+        </div>
       </section>
 
-      <!-- ===== Step 4: Source + about ===== -->
-      <section class="form-section" data-step="4" data-mode="rent">
-        <span class="eyebrow" data-i18n="rent.s4.eyebrow">Step 04 / Context</span>
-        <h3 data-i18n="rent.s4.title">How did you find us?</h3>
-        <p class="blurb" data-i18n="rent.s4.blurb">Helps us understand what's working. No wrong answer.</p>
+      <!-- ===== Step 5: Source + intro ===== -->
+      <section class="form-section" data-step="5" data-mode="rent">
+        <span class="eyebrow" data-i18n="rent.s5.eyebrow">Step 05 / Context</span>
+        <h3 data-i18n="rent.s5.title">How did you find us?</h3>
+        <p class="blurb" data-i18n="rent.s5.blurb">Helps us understand what's working, and lets Philippe prepare for the call. Both questions are optional.</p>
 
         <div class="field">
           <div class="opt-grid">
-            <label class="opt"><input type="radio" name="source" value="employee" required /><span class="dot"></span><span data-i18n="rent.s4.srcEmployee">One of our employees</span></label>
+            <label class="opt"><input type="radio" name="source" value="chatgpt" /><span class="dot"></span><span data-i18n="rent.s5.srcChatgpt">ChatGPT or another AI</span></label>
             <label class="opt"><input type="radio" name="source" value="instagram" /><span class="dot"></span><span>Instagram</span></label>
             <label class="opt"><input type="radio" name="source" value="facebook" /><span class="dot"></span><span>Facebook</span></label>
+            <label class="opt"><input type="radio" name="source" value="tiktok" /><span class="dot"></span><span>TikTok</span></label>
             <label class="opt"><input type="radio" name="source" value="google_ads" /><span class="dot"></span><span>Google Ads</span></label>
-            <label class="opt"><input type="radio" name="source" value="whatsapp" /><span class="dot"></span><span data-i18n="rent.s4.srcWhatsapp">WhatsApp Housing Group</span></label>
-            <label class="opt"><input type="radio" name="source" value="advertisement" /><span class="dot"></span><span data-i18n="rent.s4.srcAd">Advertisement</span></label>
+            <label class="opt"><input type="radio" name="source" value="whatsapp" /><span class="dot"></span><span data-i18n="rent.s5.srcWhatsapp">WhatsApp Housing Group</span></label>
+            <label class="opt"><input type="radio" name="source" value="advertisement" /><span class="dot"></span><span data-i18n="rent.s5.srcAd">Advertisement</span></label>
             <label class="opt"><input type="radio" name="source" value="kamernet" /><span class="dot"></span><span>Kamernet</span></label>
             <label class="opt"><input type="radio" name="source" value="jay" /><span class="dot"></span><span>Jay</span></label>
-            <label class="opt"><input type="radio" name="source" value="referral" /><span class="dot"></span><span data-i18n="rent.s4.srcReferral">Friend or relative</span></label>
+            <label class="opt"><input type="radio" name="source" value="employee" /><span class="dot"></span><span data-i18n="rent.s5.srcEmployee">One of our employees</span></label>
+            <label class="opt"><input type="radio" name="source" value="referral" /><span class="dot"></span><span data-i18n="rent.s5.srcReferral">Friend or relative</span></label>
             <label class="opt"><input type="radio" name="source" value="other" /><span class="dot"></span><span data-i18n="common.other">Other</span></label>
           </div>
         </div>
 
+        <div class="field" data-cond-on="source" data-cond-value="referral|employee" hidden>
+          <label><span data-i18n="rent.s5.refName">Who can we thank?</span></label>
+          <input type="text" name="referral_name" placeholder="Name of the person who referred you" />
+          <span class="help" data-i18n="common.optional">Optional.</span>
+        </div>
+
         <div class="field">
-          <label><span data-i18n="rent.s4.about">About you and why you're interested in finding a property</span><span class="req">*</span></label>
-          <textarea name="about" required placeholder="A few sentences on your situation, relocating, growing family, lease ending, dealbreakers, anything that matters."></textarea>
+          <label><span data-i18n="rent.s5.about">A short intro</span></label>
+          <textarea name="about" placeholder="A few sentences on your situation, relocating, growing family, lease ending, dealbreakers, anything that matters."></textarea>
+          <span class="help" data-i18n="rent.s5.aboutHelp">Optional. Two to four sentences on your situation, timing and any dealbreakers.</span>
         </div>
       </section>
 
-      <!-- ===== Step 5: Consent ===== -->
-      <section class="form-section" data-step="5" data-mode="rent">
-        <span class="eyebrow" data-i18n="rent.s5.eyebrow">Step 05 / Last step</span>
-        <h3 data-i18n="rent.s5.title">Almost there.</h3>
-        <p class="blurb" data-i18n="rent.s5.blurb">Two boxes and you're done. We'll be in touch within four business hours with a 60-minute intake slot, and a copy of the service agreement before any payment is requested.</p>
+      <!-- ===== Step 6: Consent ===== -->
+      <section class="form-section" data-step="6" data-mode="rent">
+        <span class="eyebrow" data-i18n="rent.s6.eyebrow">Step 06 / Last step</span>
+        <h3 data-i18n="rent.s6.title">Almost there.</h3>
+        <p class="blurb" data-i18n="rent.s6.blurb">Two boxes and you're done. We'll be in touch within four business hours with a 60-minute intake slot, and a copy of the service agreement before any payment is requested.</p>
 
         <div class="consent">
           <label>
             <input type="checkbox" name="privacy" required />
-            <span data-i18n-html="rent.s5.privacy">I have read and accepted the <a href="privacy-renting.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
+            <span data-i18n-html="rent.s6.privacy">I have read and accepted the <a href="privacy-renting.html" target="_blank">Privacy Policy</a>.<span class="req">*</span></span>
           </label>
           <label>
             <input type="checkbox" name="terms" required />
-            <span data-i18n-html="rent.s5.terms">I have read and accepted the <a href="terms-renting.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
+            <span data-i18n-html="rent.s6.terms">I have read and accepted the <a href="terms-renting.html" target="_blank">Terms and Conditions</a>.<span class="req">*</span></span>
           </label>
         </div>
 
         <div style="margin-top:32px;padding:20px 22px;background:var(--cream-2);border:1px solid var(--rule);border-radius:2px">
           <div class="eyebrow" data-i18n="common.whatsNext" style="margin-bottom:8px">What happens next</div>
           <ol style="margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2);line-height:1.65">
-            <li data-i18n="rent.s5.next1">Philippe replies within 4 business hours with a calendar link.</li>
-            <li data-i18n="rent.s5.next2">60-minute intake call by Zoom or in-person on Herengracht.</li>
-            <li data-i18n="rent.s5.next3">Service agreement signed → onboarding paid → shortlist within 5 working days.</li>
+            <li data-i18n="rent.s6.next1">Philippe replies within 4 business hours with a calendar link.</li>
+            <li data-i18n="rent.s6.next2">60-minute intake call by Zoom or in-person on Herengracht.</li>
+            <li data-i18n="rent.s6.next3">Service agreement signed → onboarding paid → shortlist within 5 working days.</li>
           </ol>
         </div>
       </section>
@@ -3177,7 +3238,7 @@
     </form>
 
     <footer class="modal-foot" id="modalFoot">
-      <div class="step-meta"><span data-i18n="foot.step">Step</span> <strong id="stepNow">1</strong> <span data-i18n="foot.of">of</span> <strong>5</strong></div>
+      <div class="step-meta"><span data-i18n="foot.step">Step</span> <strong id="stepNow">1</strong> <span data-i18n="foot.of">of</span> <strong id="stepTotal">5</strong></div>
       <div style="display:flex;gap:10px;align-items:center">
         <button type="button" class="ghost-link" id="btnBack" style="display:none" data-i18n="foot.back">← Back</button>
         <button type="button" class="btn btn-primary btn-arrow" id="btnNext">
@@ -3288,6 +3349,7 @@
   const form = document.getElementById('intakeForm');
   const progBar = document.getElementById('progBar');
   const stepNow = document.getElementById('stepNow');
+  const stepTotal = document.getElementById('stepTotal');
   const btnNext = document.getElementById('btnNext');
   const btnNextLabel = document.getElementById('btnNextLabel');
   const btnBack = document.getElementById('btnBack');
@@ -3383,6 +3445,8 @@
     });
     progBar.style.width = (step / total * 100) + '%';
     stepNow.textContent = step;
+    // Rent and buy have a different number of steps, so keep the total live.
+    if (stepTotal) stepTotal.textContent = total;
     btnBack.style.display = step === 1 ? 'none' : 'inline-flex';
     btnNextLabel.textContent = step === total ? 'Submit intake' : 'Continue';
     modalBody.scrollTop = 0;
@@ -3395,6 +3459,8 @@
     if (!cur) return true;
     const required = cur.querySelectorAll('[required]');
     for (const el of required) {
+      // Conditional fields only count when their trigger answer revealed them.
+      if (el.closest('[data-cond-on][hidden]')) continue;
       if (el.type === 'radio') {
         const group = form.querySelectorAll('input[name="'+el.name+'"]');
         if (![...group].some(r => r.checked)) {
@@ -3458,6 +3524,32 @@
   openFromHash();
   window.addEventListener('hashchange', openFromHash);
 
+  // ===== Conditional fields =====
+  // A wrapper marked data-cond-on="<radio name>" data-cond-value="a|b" is shown
+  // only while one of those values is selected. Hidden wrappers are cleared so
+  // stale answers never reach the webhook, and validateStep() skips them.
+  (function initConditionalFields(){
+    const boxes = form.querySelectorAll('[data-cond-on]');
+    if (!boxes.length) return;
+    function refresh(){
+      boxes.forEach(box => {
+        const wanted = (box.dataset.condValue || '').split('|');
+        const picked = form.querySelector('input[name="' + box.dataset.condOn + '"]:checked');
+        const show = !!picked && wanted.includes(picked.value);
+        if (show === !box.hidden) return;
+        box.hidden = !show;
+        if (!show) {
+          box.querySelectorAll('input, select, textarea').forEach(el => {
+            if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+            else el.value = '';
+          });
+        }
+      });
+    }
+    form.addEventListener('change', refresh);
+    refresh();
+  })();
+
   function collectFormData() {
     const data = { mode: getMode() };
     const inputs = form.querySelectorAll('input, select, textarea');
@@ -3509,7 +3601,7 @@
     nl: {
       'modal.eyebrow': 'Intake · 60 seconden',
       'modal.title': 'Vertel ons iets over <em>jezelf.</em>',
-      'modal.intro': 'Vijf korte stappen. Philippe reageert binnen vier werkuren. Er wordt pas iets in rekening gebracht na het intakegesprek.',
+      'modal.intro': 'Een paar korte stappen. Philippe reageert binnen vier werkuren. Er wordt pas iets in rekening gebracht na het intakegesprek.',
 
       'modePill.rent': 'Huren',
       'modePill.buy': 'Kopen',
@@ -3533,6 +3625,7 @@
       'rent.s1.firstName': 'Voornaam',
       'rent.s1.lastName': 'Achternaam',
       'rent.s1.dob': 'Geboortedatum',
+      'rent.s1.language': 'In welke taal spreken we je het liefst aan?',
       'rent.s1.registered': 'Ben je ingeschreven in Nederland?',
       'rent.s1.notRegistered': 'Nee, ik kom uit het buitenland',
 
@@ -3547,52 +3640,67 @@
       'rent.s2.phone': 'Telefoon (WhatsApp)',
       'rent.s2.phoneHelp': 'Alleen om het intakegesprek in te plannen. Geen marketing.',
 
-      'rent.s3.eyebrow': 'Stap 03 / Je zoekopdracht',
-      'rent.s3.title': 'Wat je zoekt.',
-      'rent.s3.blurb': 'Een eerste inschatting is voldoende, we werken alles uit tijdens het gesprek.',
-      'rent.s3.searchCity': 'In welke stad zoek je een huurwoning?',
-      'rent.s3.duration': 'Hoe lang wil je huren?',
-      'rent.s3.dur6mo': '6 maanden',
-      'rent.s3.dur1yr': '1 jaar',
-      'rent.s3.durMore': 'Langer dan 1 jaar',
-      'rent.s3.living': 'Hoe ga je wonen?',
-      'rent.s3.livingAlone': 'Alleen',
-      'rent.s3.livingCouple': 'Als koppel',
-      'rent.s3.livingShares': 'Met huisgenoten',
-      'rent.s3.homeType': 'Wat voor woning?',
-      'rent.s3.studio': 'Studio',
-      'rent.s3.br1': '1-slaapkamer app.',
-      'rent.s3.br2': '2-slaapkamer app.',
-      'rent.s3.br3plus': 'Meer dan 2 slaapkamers',
-      'rent.s3.furnished': 'Gemeubileerd of ongemeubileerd?',
-      'rent.s3.upholstered': 'Gestoffeerd',
-      'rent.s3.unfurnished': 'Ongemeubileerd',
-      'rent.s3.fullyFurn': 'Gemeubileerd',
-      'rent.s3.occupation': 'Beroep',
+      'rent.s3.eyebrow': 'Stap 03 / Jouw situatie',
+      'rent.s3.title': 'Werk, inkomen en huishouden.',
+      'rent.s3.blurb': 'Verhuurders vragen hier als eerste naar. Zo selecteren we alleen woningen waarvoor je ook echt in aanmerking komt.',
+      'rent.s3.situation': 'Jouw situatie',
       'rent.s3.employed': 'In loondienst',
-      'rent.s3.freelancer': 'ZZP / Freelancer',
+      'rent.s3.selfEmployed': 'Zelfstandig / ZZP',
       'rent.s3.student': 'Student',
+      'rent.s3.profession': 'Beroep of studierichting',
+      'rent.s3.income': 'Bruto maandinkomen (€)',
+      'rent.s3.incomeHelp': 'Vóór belasting, samen als koppel.',
       'rent.s3.budget': 'Max. maandbudget (€)',
       'rent.s3.budgetHelp': 'Inclusief servicekosten, exclusief nutsvoorzieningen.',
-      'rent.s3.moveIn': 'Wanneer wil je verhuizen?',
+      'rent.s3.household': 'Huishouden',
+      'rent.s3.single': 'Alleen',
+      'rent.s3.couple': 'Als koppel',
+      'rent.s3.sharing': 'Met huisgenoten',
 
-      'rent.s4.eyebrow': 'Stap 04 / Context',
-      'rent.s4.title': 'Hoe heb je ons gevonden?',
-      'rent.s4.blurb': 'Helpt ons te begrijpen wat werkt. Er is geen fout antwoord.',
-      'rent.s4.srcEmployee': 'Een van onze medewerkers',
-      'rent.s4.srcWhatsapp': 'WhatsApp Housing-groep',
-      'rent.s4.srcAd': 'Advertentie',
-      'rent.s4.srcReferral': 'Vriend of familielid',
-      'rent.s4.about': 'Iets over jezelf en waarom je een woning zoekt',
+      'rent.s4.eyebrow': 'Stap 04 / Je zoekopdracht',
+      'rent.s4.title': 'Wat je zoekt.',
+      'rent.s4.blurb': 'Een eerste inschatting is voldoende, we werken alles uit tijdens het gesprek.',
+      'rent.s4.searchCity': 'In welke stad zoek je een huurwoning?',
+      'rent.s4.cityOther': 'Welke stad of regio?',
+      'rent.s4.ring': 'Binnen of buiten de ring (A10)?',
+      'rent.s4.ringInside': 'Binnen de ring',
+      'rent.s4.ringOutside': 'Buiten de ring',
+      'rent.s4.area': 'Voorkeurswijk of -buurt',
+      'rent.s4.homeType': 'Wat voor woning?',
+      'rent.s4.studio': 'Studio',
+      'rent.s4.br1': '1-slaapkamer app.',
+      'rent.s4.br2': '2-slaapkamer app.',
+      'rent.s4.br3plus': 'Meer dan 2 slaapkamers',
+      'rent.s4.house': 'Huis',
+      'rent.s4.furnished': 'Gemeubileerd?',
+      'rent.s4.furnYes': 'Ja, gemeubileerd',
+      'rent.s4.furnNo': 'Nee, ongemeubileerd',
+      'rent.s4.moveIn': 'Wanneer wil je verhuizen?',
+      'rent.s4.duration': 'Hoe lang wil je huren?',
+      'rent.s4.dur6mo': '6 maanden',
+      'rent.s4.dur1yr': '1 jaar',
+      'rent.s4.durMore': 'Langer dan 1 jaar',
 
-      'rent.s5.eyebrow': 'Stap 05 / Laatste stap',
-      'rent.s5.title': 'Bijna klaar.',
-      'rent.s5.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact op met een intake-slot van 60 minuten en een kopie van de serviceovereenkomst voordat er om betaling wordt gevraagd.',
-      'rent.s5.privacy': 'Ik heb het <a href="privacy-renting.html" target="_blank">Privacybeleid</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
-      'rent.s5.terms': 'Ik heb de <a href="terms-renting.html" target="_blank">Algemene Voorwaarden</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
-      'rent.s5.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
-      'rent.s5.next2': 'Intakegesprek van 60 minuten via Zoom of in persoon aan de Herengracht.',
-      'rent.s5.next3': 'Serviceovereenkomst getekend → onboarding betaald → shortlist binnen 5 werkdagen.',
+      'rent.s5.eyebrow': 'Stap 05 / Context',
+      'rent.s5.title': 'Hoe heb je ons gevonden?',
+      'rent.s5.blurb': 'Zo weten we wat werkt en kan Philippe zich voorbereiden op het gesprek. Beide vragen zijn optioneel.',
+      'rent.s5.srcChatgpt': 'ChatGPT of een andere AI',
+      'rent.s5.srcWhatsapp': 'WhatsApp Housing-groep',
+      'rent.s5.srcAd': 'Advertentie',
+      'rent.s5.srcEmployee': 'Een van onze medewerkers',
+      'rent.s5.srcReferral': 'Vriend of familielid',
+      'rent.s5.refName': 'Wie mogen we bedanken?',
+      'rent.s5.about': 'Een korte introductie',
+      'rent.s5.aboutHelp': 'Optioneel. Twee tot vier zinnen over je situatie, timing en eventuele dealbreakers.',
+
+      'rent.s6.eyebrow': 'Stap 06 / Laatste stap',
+      'rent.s6.title': 'Bijna klaar.',
+      'rent.s6.blurb': 'Twee vinkjes en je bent klaar. We nemen binnen vier werkuren contact op met een intake-slot van 60 minuten en een kopie van de serviceovereenkomst voordat er om betaling wordt gevraagd.',
+      'rent.s6.privacy': 'Ik heb het <a href="privacy-renting.html" target="_blank">Privacybeleid</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
+      'rent.s6.terms': 'Ik heb de <a href="terms-renting.html" target="_blank">Algemene Voorwaarden</a> gelezen en ga ermee akkoord.<span class="req">*</span>',
+      'rent.s6.next1': 'Philippe reageert binnen 4 werkuren met een agenda-link.',
+      'rent.s6.next2': 'Intakegesprek van 60 minuten via Zoom of in persoon aan de Herengracht.',
+      'rent.s6.next3': 'Serviceovereenkomst getekend → onboarding betaald → shortlist binnen 5 werkdagen.',
 
       // ===== BUY FORM =====
       'buy.s1.eyebrow': 'Stap 01 / Over jou',
@@ -3675,6 +3783,11 @@
         phone: '6 12 34 56 78',
         budget: '2.500',
         about: 'Een paar zinnen over je situatie: verhuizing, gezinsuitbreiding, einde huurcontract, dealbreakers, of wat er voor jou toe doet.',
+        profession: 'bijv. Data-analist bij ING, of MSc Economie aan de UvA',
+        gross_income: '4.500',
+        search_city_other: 'bijv. Haarlem, Eindhoven, Amstelveen',
+        search_area: 'De Pijp, Oud-West, dicht bij de Zuidas…',
+        referral_name: 'Naam van degene die je heeft doorverwezen',
         b_full_name: 'bijv. Tomás Aguirre',
         b_phone: '6 12 34 56 78',
         b_email: 'jij@voorbeeld.com',
@@ -3692,7 +3805,7 @@
     es: {
       'modal.eyebrow': 'Admisión · 60 segundos',
       'modal.title': 'Cuéntanos un poco sobre <em>ti.</em>',
-      'modal.intro': 'Cinco pasos breves. Philippe responde en menos de cuatro horas en días laborables. No se cobra nada hasta después de la llamada de admisión.',
+      'modal.intro': 'Unos pocos pasos. Philippe responde en menos de cuatro horas en días laborables. No se cobra nada hasta después de la llamada de admisión.',
 
       'modePill.rent': 'Alquilar',
       'modePill.buy': 'Comprar',
@@ -3716,6 +3829,7 @@
       'rent.s1.firstName': 'Nombre',
       'rent.s1.lastName': 'Apellidos',
       'rent.s1.dob': 'Fecha de nacimiento',
+      'rent.s1.language': '¿En qué idioma prefieres que hablemos contigo?',
       'rent.s1.registered': '¿Estás empadronado en los Países Bajos?',
       'rent.s1.notRegistered': 'No, llego desde el extranjero',
 
@@ -3728,54 +3842,69 @@
       'rent.s2.zip': 'Código postal',
       'rent.s2.email': 'Correo electrónico',
       'rent.s2.phone': 'Teléfono (WhatsApp)',
-      'rent.s2.phoneHelp': 'Solo para concertar la llamada de admisión. Sin marketing.',
+      'rent.s2.phoneHelp': 'Solo para programar la llamada de admisión. Sin marketing.',
 
-      'rent.s3.eyebrow': 'Paso 03 / Tu búsqueda',
-      'rent.s3.title': 'Qué buscas.',
-      'rent.s3.blurb': 'Una primera estimación es suficiente; lo concretamos todo en la llamada.',
-      'rent.s3.searchCity': '¿En qué ciudad buscas alquiler?',
-      'rent.s3.duration': '¿Cuánto tiempo quieres alquilar?',
-      'rent.s3.dur6mo': '6 meses',
-      'rent.s3.dur1yr': '1 año',
-      'rent.s3.durMore': 'Más de 1 año',
-      'rent.s3.living': '¿Cómo vas a vivir?',
-      'rent.s3.livingAlone': 'Solo/a',
-      'rent.s3.livingCouple': 'En pareja',
-      'rent.s3.livingShares': 'Con compañeros de piso',
-      'rent.s3.homeType': '¿Qué tipo de vivienda?',
-      'rent.s3.studio': 'Estudio',
-      'rent.s3.br1': 'Piso de 1 dormitorio',
-      'rent.s3.br2': 'Piso de 2 dormitorios',
-      'rent.s3.br3plus': 'Más de 2 dormitorios',
-      'rent.s3.furnished': '¿Amueblada o sin amueblar?',
-      'rent.s3.upholstered': 'Semiamueblada',
-      'rent.s3.unfurnished': 'Sin amueblar',
-      'rent.s3.fullyFurn': 'Amueblada',
-      'rent.s3.occupation': 'Situación laboral',
+      'rent.s3.eyebrow': 'Paso 03 / Tu situación',
+      'rent.s3.title': 'Trabajo, ingresos y hogar.',
+      'rent.s3.blurb': 'Es lo primero que preguntan los propietarios. Así seleccionamos solo viviendas para las que realmente cumples los requisitos.',
+      'rent.s3.situation': 'Tu situación',
       'rent.s3.employed': 'Por cuenta ajena',
-      'rent.s3.freelancer': 'Autónomo/a / Freelance',
+      'rent.s3.selfEmployed': 'Autónomo/a',
       'rent.s3.student': 'Estudiante',
-      'rent.s3.budget': 'Presupuesto mensual máx. (€)',
-      'rent.s3.budgetHelp': 'Gastos de comunidad incluidos, suministros aparte.',
-      'rent.s3.moveIn': '¿Cuándo quieres mudarte?',
+      'rent.s3.profession': 'Profesión o estudios',
+      'rent.s3.income': 'Salario bruto mensual (€)',
+      'rent.s3.incomeHelp': 'Antes de impuestos, conjunto si sois pareja.',
+      'rent.s3.budget': 'Presupuesto mensual máximo (€)',
+      'rent.s3.budgetHelp': 'Incluye gastos de comunidad, excluye suministros.',
+      'rent.s3.household': 'Hogar',
+      'rent.s3.single': 'Solo/a',
+      'rent.s3.couple': 'En pareja',
+      'rent.s3.sharing': 'Compartiendo',
 
-      'rent.s4.eyebrow': 'Paso 04 / Contexto',
-      'rent.s4.title': '¿Cómo nos encontraste?',
-      'rent.s4.blurb': 'Nos ayuda a entender qué funciona. No hay respuesta incorrecta.',
-      'rent.s4.srcEmployee': 'Uno de nuestros colaboradores',
-      'rent.s4.srcWhatsapp': 'Grupo de WhatsApp Housing',
-      'rent.s4.srcAd': 'Un anuncio',
-      'rent.s4.srcReferral': 'Un amigo o familiar',
-      'rent.s4.about': 'Algo sobre ti y por qué buscas vivienda',
+      'rent.s4.eyebrow': 'Paso 04 / Tu búsqueda',
+      'rent.s4.title': 'Lo que buscas.',
+      'rent.s4.blurb': 'Una primera estimación es suficiente; lo concretamos todo en la llamada.',
+      'rent.s4.searchCity': '¿En qué ciudad buscas vivienda de alquiler?',
+      'rent.s4.cityOther': '¿Qué ciudad o zona?',
+      'rent.s4.ring': '¿Dentro o fuera del anillo (A10)?',
+      'rent.s4.ringInside': 'Dentro del anillo',
+      'rent.s4.ringOutside': 'Fuera del anillo',
+      'rent.s4.area': 'Barrio o zona preferida',
+      'rent.s4.homeType': '¿Qué tipo de vivienda?',
+      'rent.s4.studio': 'Estudio',
+      'rent.s4.br1': 'Apto. de 1 dormitorio',
+      'rent.s4.br2': 'Apto. de 2 dormitorios',
+      'rent.s4.br3plus': 'Más de 2 dormitorios',
+      'rent.s4.house': 'Casa',
+      'rent.s4.furnished': '¿Amueblada?',
+      'rent.s4.furnYes': 'Sí, amueblada',
+      'rent.s4.furnNo': 'No, sin amueblar',
+      'rent.s4.moveIn': '¿Cuándo quieres mudarte?',
+      'rent.s4.duration': '¿Cuánto tiempo quieres alquilar?',
+      'rent.s4.dur6mo': '6 meses',
+      'rent.s4.dur1yr': '1 año',
+      'rent.s4.durMore': 'Más de 1 año',
 
-      'rent.s5.eyebrow': 'Paso 05 / Último paso',
-      'rent.s5.title': 'Casi listo.',
-      'rent.s5.blurb': 'Dos casillas y habrás terminado. Te contactamos en menos de cuatro horas laborables con una franja de admisión de 60 minutos y una copia del contrato de servicios antes de pedirte ningún pago.',
-      'rent.s5.privacy': 'He leído y acepto la <a href="privacy-renting.html" target="_blank">Política de Privacidad</a>.<span class="req">*</span>',
-      'rent.s5.terms': 'He leído y acepto los <a href="terms-renting.html" target="_blank">Términos y Condiciones</a>.<span class="req">*</span>',
-      'rent.s5.next1': 'Philippe responde en menos de 4 horas laborables con un enlace de agenda.',
-      'rent.s5.next2': 'Llamada de admisión de 60 minutos por Zoom o en persona en la Herengracht.',
-      'rent.s5.next3': 'Contrato de servicios firmado → alta pagada → selección en 5 días laborables.',
+      'rent.s5.eyebrow': 'Paso 05 / Contexto',
+      'rent.s5.title': '¿Cómo nos encontraste?',
+      'rent.s5.blurb': 'Nos ayuda a saber qué funciona y a que Philippe prepare la llamada. Ambas preguntas son opcionales.',
+      'rent.s5.srcChatgpt': 'ChatGPT u otra IA',
+      'rent.s5.srcWhatsapp': 'Grupo de WhatsApp de vivienda',
+      'rent.s5.srcAd': 'Publicidad',
+      'rent.s5.srcEmployee': 'Uno de nuestros empleados',
+      'rent.s5.srcReferral': 'Un amigo o familiar',
+      'rent.s5.refName': '¿A quién podemos dar las gracias?',
+      'rent.s5.about': 'Una breve presentación',
+      'rent.s5.aboutHelp': 'Opcional. De dos a cuatro frases sobre tu situación, plazos y líneas rojas.',
+
+      'rent.s6.eyebrow': 'Paso 06 / Último paso',
+      'rent.s6.title': 'Ya casi está.',
+      'rent.s6.blurb': 'Dos casillas y listo. Te contactaremos en menos de cuatro horas laborables con una cita de admisión de 60 minutos y una copia del contrato de servicios antes de solicitar ningún pago.',
+      'rent.s6.privacy': 'He leído y acepto la <a href="privacy-renting.html" target="_blank">Política de Privacidad</a>.<span class="req">*</span>',
+      'rent.s6.terms': 'He leído y acepto los <a href="terms-renting.html" target="_blank">Términos y Condiciones</a>.<span class="req">*</span>',
+      'rent.s6.next1': 'Philippe responde en menos de 4 horas laborables con un enlace de calendario.',
+      'rent.s6.next2': 'Llamada de admisión de 60 minutos por Zoom o presencial en Herengracht.',
+      'rent.s6.next3': 'Contrato firmado → onboarding pagado → selección en 5 días laborables.',
 
       // ===== BUY FORM =====
       'buy.s1.eyebrow': 'Paso 01 / Sobre ti',
@@ -3858,6 +3987,11 @@
         phone: '6 12 34 56 78',
         budget: '2.500',
         about: 'Unas frases sobre tu situación: mudanza, ampliación de la familia, fin del contrato de alquiler, líneas rojas o lo que para ti sea importante.',
+        profession: 'p. ej. Analista de datos en ING, o Máster en Economía en la UvA',
+        gross_income: '4.500',
+        search_city_other: 'p. ej. Haarlem, Eindhoven, Amstelveen',
+        search_area: 'De Pijp, Oud-West, cerca de la Zuidas…',
+        referral_name: 'Nombre de quien te recomendó',
         b_full_name: 'p. ej. Tomás Aguirre',
         b_phone: '6 12 34 56 78',
         b_email: 'tu@ejemplo.com',
