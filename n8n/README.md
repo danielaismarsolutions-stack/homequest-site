@@ -33,13 +33,28 @@ an old execution or a queued submission will not break.
 
 ## Two manual steps after importing
 
-**1. Google Sheet** — add these headers to `Sheet1`, or the append node will
-fail on an unknown column:
+**1. Google Sheet** — `Sheet1` currently ends at column R (`ALONE?`). Add six
+headers in the next free cells, spelled exactly as below. The node matches on
+header text rather than position, but it fails outright on a column it cannot
+find.
 
-    LANGUAGE · PROFESSION · GROSS INCOME · AREA · RING · REFERRED BY
+| Cell | Header |
+| --- | --- |
+| S1 | `LANGUAGE` |
+| T1 | `PROFESSION` |
+| U1 | `GROSS INCOME` |
+| V1 | `AREA` |
+| W1 | `RING` |
+| X1 | `REFERRED BY` |
 
-`OCCUPATION` now receives the situation answer and `ALONE?` receives the
-household answer, so both keep their existing headers.
+The 18 existing headers stay as they are. `OCCUPATION` (F) now receives the
+situation answer and `ALONE?` (R) the household answer, so the two renamed form
+fields land in the columns they always did.
+
+Values stay consistent with the rows already in the sheet: `HOME TYPE` still
+writes `Studio` / `1br` / `2br` / `3br+` (plus the new `House`), and `DURATION`
+still writes `Long term` for the longest option. The one value that changes is
+`FURNISHED`, where the old ambiguous `None` becomes `No preference`.
 
 **2. Monday renting board** — add a column for each new answer, then paste its
 id into `RENT_COLUMNS` at the top of the **Normalize Lead Data** node:
