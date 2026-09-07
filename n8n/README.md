@@ -13,7 +13,10 @@ and everything the workflow does with it, is unchanged.
 
 | Field | Values |
 | --- | --- |
-| `language` | `nl` `en` `fr` `es` |
+| `language` | `nl` `en` `es` — not a question; it is the language the form was
+displayed in (the `/nl` or `/es` page, `?lang=`, or the EN/NL/ES toggle), so it is
+always present and never `fr`. The workflow still maps `fr` in case a French form
+is added later. |
 | `situation` | `employed` `self_employed` `student` `other` (was `occupation`) |
 | `profession` | free text |
 | `gross_income` | number, € per month, combined for a couple |
