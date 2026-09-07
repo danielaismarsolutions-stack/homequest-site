@@ -47,7 +47,12 @@ find.
 | W1 | `RING` |
 | X1 | `REFERRED BY` |
 
-The 18 existing headers stay as they are. `OCCUPATION` (F) now receives the
+The 18 existing headers stay as they are, and the new ones must go at the end
+in that order: the node stores a schema list that n8n compares against the
+header row **positionally**, so a column inserted in the middle (or listed in a
+different order in the export) fails the run with *"Column names were updated
+after the node's setup"*. If you do move a column, open the node in n8n and
+refresh the columns list rather than editing the JSON. `OCCUPATION` (F) now receives the
 situation answer and `ALONE?` (R) the household answer, so the two renamed form
 fields land in the columns they always did.
 

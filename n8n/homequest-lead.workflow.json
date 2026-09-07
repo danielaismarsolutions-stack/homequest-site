@@ -113,26 +113,26 @@
             "EMAIL": "={{ $json.email }}",
             "PHONE": "={{ $json.phone }}",
             "BUY/RENT": "={{ $json.mode }}",
-            "LANGUAGE": "={{ $json.language }}",
             "nlRegistered": "={{ $json.nlRegistered }}",
             "OCCUPATION": "={{ $json.situation }}",
-            "PROFESSION": "={{ $json.profession }}",
-            "GROSS INCOME": "={{ $json.income }}",
             "ADDRESS": "={{ $json.fullAddress }}",
             "TARGET-CITY": "={{ $json.targetCity }}",
-            "AREA": "={{ $json.neighbourhood }}",
-            "RING": "={{ $json.ring }}",
             "HOME TYPE": "={{ $json.homeType }}",
             "FURNISHED": "={{ $json.furnished }}",
             "BUDGET": "={{ $json.budget }}",
             "DURATION": "={{ $json.duration }}",
             "MOVE IN DATE": "={{ $json.moveInDate }}",
             "SOURCE": "={{ $json.source }}",
-            "REFERRED BY": "={{ $json.referralName }}",
             "ABOUT": "={{ $json.about }}",
             "DATE": "={{ $json.submittedAt }}",
             "DATE OF BIRTH": "={{ $json.dateOfBirth }}",
-            "ALONE?": "={{ $json.household }}"
+            "ALONE?": "={{ $json.household }}",
+            "LANGUAGE": "={{ $json.language }}",
+            "PROFESSION": "={{ $json.profession }}",
+            "GROSS INCOME": "={{ $json.income }}",
+            "AREA": "={{ $json.neighbourhood }}",
+            "RING": "={{ $json.ring }}",
+            "REFERRED BY": "={{ $json.referralName }}"
           },
           "matchingColumns": [],
           "schema": [
@@ -177,16 +177,6 @@
               "removed": false
             },
             {
-              "id": "LANGUAGE",
-              "displayName": "LANGUAGE",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "nlRegistered",
               "displayName": "nlRegistered",
               "required": false,
@@ -207,26 +197,6 @@
               "removed": false
             },
             {
-              "id": "PROFESSION",
-              "displayName": "PROFESSION",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "GROSS INCOME",
-              "displayName": "GROSS INCOME",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "ADDRESS",
               "displayName": "ADDRESS",
               "required": false,
@@ -239,26 +209,6 @@
             {
               "id": "TARGET-CITY",
               "displayName": "TARGET-CITY",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "AREA",
-              "displayName": "AREA",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
-              "id": "RING",
-              "displayName": "RING",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -327,16 +277,6 @@
               "removed": false
             },
             {
-              "id": "REFERRED BY",
-              "displayName": "REFERRED BY",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
-            },
-            {
               "id": "ABOUT",
               "displayName": "ABOUT",
               "required": false,
@@ -369,6 +309,66 @@
             {
               "id": "ALONE?",
               "displayName": "ALONE?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LANGUAGE",
+              "displayName": "LANGUAGE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PROFESSION",
+              "displayName": "PROFESSION",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "GROSS INCOME",
+              "displayName": "GROSS INCOME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "AREA",
+              "displayName": "AREA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "RING",
+              "displayName": "RING",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "REFERRED BY",
+              "displayName": "REFERRED BY",
               "required": false,
               "defaultMatch": false,
               "display": true,
