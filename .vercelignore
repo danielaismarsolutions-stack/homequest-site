@@ -1,0 +1,11 @@
+# Design-handoff bundle from Claude Design. Source material, not part of the site.
+project/
+chats/
+README.md
+
+# Stale duplicate of the homepage, kept for reference only.
+# /HomeQuest.html is redirected to / in vercel.json.
+HomeQuest.html
+
+# Build tooling.
+tools/

@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/HomeQuest.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/renting-form",
       "has": [
         { "type": "host", "value": "(www\\.)?homequest\\.io" }
