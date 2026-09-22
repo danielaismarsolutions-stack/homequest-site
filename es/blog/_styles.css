@@ -305,3 +305,53 @@ button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit
 .lang a:hover{color:var(--accent-2)}
 .lang .active{color:var(--accent-2);font-weight:500}
 .lang .sep{opacity:.4}
+
+/* ===== Data tables ===== */
+.article-body .table-wrap{margin:36px 0;max-width:72ch;overflow-x:auto}
+.article-body table{
+  width:100%;border-collapse:collapse;background:var(--paper);
+  border:1px solid var(--rule);border-radius:6px;overflow:hidden;
+  font-size:15px;line-height:1.55;
+}
+.article-body caption{
+  caption-side:top;text-align:left;padding:0 0 12px;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+.article-body thead th{
+  background:var(--cream-2);color:var(--ink);text-align:left;
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:14px 18px;border-bottom:1px solid var(--rule);
+}
+.article-body tbody th{
+  text-align:left;font-family:var(--serif);font-weight:380;
+  font-size:22px;letter-spacing:-.012em;color:var(--accent-2);
+  padding:16px 18px;white-space:nowrap;vertical-align:top;
+}
+.article-body tbody td{padding:16px 18px;color:var(--ink);vertical-align:top}
+.article-body tbody tr + tr th,
+.article-body tbody tr + tr td{border-top:1px solid var(--rule-light)}
+.article-body table strong{color:var(--ink)}
+@media (max-width:640px){
+  .article-body table{font-size:14px}
+  .article-body thead th{padding:12px 14px}
+  .article-body tbody th{font-size:19px;padding:14px;white-space:normal}
+  .article-body tbody td{padding:14px}
+}
+
+/* ===== Official sources ===== */
+.article-body .sources{
+  background:var(--paper);border:1px solid var(--rule);
+  padding:28px 32px;border-radius:6px;margin:48px 0 0;max-width:68ch;
+}
+.article-body .sources h2{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 16px;padding:0;border:0;
+}
+.article-body .sources ul{margin:0;padding-left:20px}
+.article-body .sources li{margin:0 0 10px;font-size:15px;line-height:1.55}
+.article-body .sources li:last-child{margin-bottom:0}
+.article-body .sources a{color:var(--accent-2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.article-body .sources a:hover{color:var(--ink)}
+.article-body .sources .note{margin:16px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55}
