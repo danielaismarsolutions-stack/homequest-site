@@ -30,7 +30,8 @@ EN_MONTHS = ["January", "February", "March", "April", "May", "June",
              "July", "August", "September", "October", "November", "December"]
 
 # Which dictionary each page's static markup should be written in.
-PAGES = {"index.html": None, "nl/index.html": "nl", "es/index.html": "es"}
+PAGES = {"index.html": None, "nl/index.html": "nl", "es/index.html": "es",
+         "it/index.html": "it"}
 
 SNAPSHOT_START = "  // Snapshot of the original English text so we can restore it when switching back to EN.\n"
 APPLY_END = "      btnNextLabel.textContent = (step === totalStepsNow()) ? (t['foot.submit'] || 'Submit intake') : (t['foot.continue'] || 'Continue');\n    }\n"

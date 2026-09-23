@@ -36,6 +36,11 @@ CREDITS = [
         "· Regida por el Derecho neerlandés · Presente en todos los Países Bajos "
         '· Sitio por <a href="https://smartflow-labs.com" target="_blank" rel="noopener">SmartFlow Labs</a></div>',
     ),
+    (
+        "· Soggetta al diritto olandese · Presente in tutti i Paesi Bassi</div>",
+        "· Soggetta al diritto olandese · Presente in tutti i Paesi Bassi "
+        '· Sito di <a href="https://smartflow-labs.com" target="_blank" rel="noopener">SmartFlow Labs</a></div>',
+    ),
 ]
 
 
