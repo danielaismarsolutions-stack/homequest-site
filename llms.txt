@@ -25,8 +25,10 @@ Buying:
 - Purchase agreement review, appraiser and VvE document coordination
 - Notary coordination, final inspection, and attendance at signing and key handover
 
-Client languages: English, Dutch, French and Spanish. Support covers the 30% ruling,
-BSN, residence permits and related paperwork.
+Client languages: English, Dutch, French and Spanish. The website and the intake
+form are also published in Italian, but the service itself is not delivered in
+Italian. Support covers the 30% ruling, BSN, residence permits and related
+paperwork.
 
 ## Areas served
 
@@ -69,9 +71,11 @@ Buying:
 - English home: https://www.hqhousing.com/
 - Dutch home: https://www.hqhousing.com/nl/
 - Spanish home: https://www.hqhousing.com/es/
+- Italian home: https://www.hqhousing.com/it/
 - English journal: https://www.hqhousing.com/blog/
 - Dutch journal: https://www.hqhousing.com/nl/blog/
 - Spanish blog: https://www.hqhousing.com/es/blog/
+- Italian blog: https://www.hqhousing.com/it/blog/
 
 ## Articles
 
@@ -79,6 +83,13 @@ Buying:
 - Buying an apartment in the Netherlands for the first time: https://www.hqhousing.com/blog/buying-apartment-netherlands-first-time.html
 - What a buying agent (aankoopmakelaar) in the Netherlands actually does: https://www.hqhousing.com/blog/buying-agent-netherlands.html
 - Student housing in Amsterdam, Type A vs Type B contracts: https://www.hqhousing.com/blog/student-housing-amsterdam-contracts.html
+
+## Articles, Italian
+
+- L'imposta di trasferimento in Olanda nel 2026, chi paga 0%, 2% o 8%: https://www.hqhousing.com/it/blog/imposta-trasferimento-olanda-2026.html
+- Comprare casa in Olanda per la prima volta: https://www.hqhousing.com/it/blog/comprare-casa-olanda-prima-volta.html
+- Cosa fa davvero un agente immobiliare per l'acquirente (aankoopmakelaar) in Olanda: https://www.hqhousing.com/it/blog/agente-immobiliare-acquirente-olanda.html
+- Alloggi per studenti ad Amsterdam, contratti Tipo A e Tipo B: https://www.hqhousing.com/it/blog/alloggi-studenti-amsterdam-contratti.html
 
 ## Terms
 

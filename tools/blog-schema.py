@@ -35,11 +35,12 @@ LANGS = {
     "": ("Home", f"{SITE}/", f"{SITE}/blog/"),
     "nl/": ("Home", f"{SITE}/nl/", f"{SITE}/nl/blog/"),
     "es/": ("Inicio", f"{SITE}/es/", f"{SITE}/es/blog/"),
+    "it/": ("Home", f"{SITE}/it/", f"{SITE}/it/blog/"),
 }
 
 
 def lang_prefix(path):
-    for p in ("nl/", "es/"):
+    for p in ("nl/", "es/", "it/"):
         if path.startswith(p):
             return p
     return ""
