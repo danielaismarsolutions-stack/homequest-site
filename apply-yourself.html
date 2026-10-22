@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- Favicons / browser tab + Google search icon -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/icon-180.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#13241F" />
+<!-- Not indexed until launch: remove this line and add the page to sitemap.xml then. -->
+<meta name="robots" content="noindex" />
+<title>Apply Yourself: Rental Dossier Check for the Netherlands · HQ Housing</title>
+<meta name="description" content="Upload your documents, get them checked by HQ Housing within 2 working days and receive one complete rental dossier PDF for Dutch letting agents." />
+
+<link rel="canonical" href="https://www.hqhousing.com/apply-yourself" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="HQ Housing" />
+<meta property="og:image" content="https://www.hqhousing.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="HQ Housing" />
+<meta name="twitter:image" content="https://www.hqhousing.com/og-image.png" />
+<meta property="og:title" content="Apply Yourself: Rental Dossier Check for the Netherlands · HQ Housing" />
+<meta property="og:description" content="Upload your documents, get them checked by HQ Housing within 2 working days and receive one complete rental dossier PDF for Dutch letting agents." />
+<meta property="og:url" content="https://www.hqhousing.com/apply-yourself" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Apply Yourself: Rental Dossier Check for the Netherlands · HQ Housing" />
+<meta name="twitter:description" content="Upload your documents, get them checked by HQ Housing within 2 working days and receive one complete rental dossier PDF for Dutch letting agents." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Inter:wght@300;400;450;500;600&display=swap" rel="stylesheet" />
+<!-- Shared tokens, nav, buttons, footer and reveal animation -->
+<link rel="stylesheet" href="/blog/_styles.css" />
+<style>
+  /* Page sections. Rules copied from the homepage (index.html): section
+     scaffolding, pricing block, how it works and FAQ. */
+  section{position:relative}
+  .sec{padding:120px 0}
+  .sec-title{
+    font-family:var(--serif);font-weight:330;
+    font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(40px,5vw,72px);letter-spacing:-.025em;line-height:1;margin:0;
+  }
+
+  /* ===== Hero ===== */
+  .ay-hero .lede{font-size:20px;line-height:1.5;color:var(--muted);max-width:60ch;margin:0}
+  .ay-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:40px}
+
+  /* ===== Heading left, text right ===== */
+  .ay-split{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+  .ay-split p{font-size:19px;line-height:1.6;color:var(--ink-2);margin:0 0 20px;max-width:60ch}
+  .ay-split p:last-child{margin-bottom:0}
+  .ay-split a{color:var(--accent-2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  .ay-split a:hover{color:var(--accent)}
+  .ay-not{background:var(--paper);border-top:1px solid var(--rule)}
+
+  /* ===== The two options (homepage pricing block) ===== */
+  .price-section{background:var(--ink);color:var(--paper);overflow:hidden}
+  .price-section::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(900px 500px at 80% 10%, rgba(184,92,56,.18), transparent 60%),
+      radial-gradient(700px 400px at 10% 90%, rgba(169,132,84,.10), transparent 60%);
+    pointer-events:none;
+  }
+  .price-section .wrap{position:relative;z-index:1}
+  .price-section .sec-title{color:var(--paper);margin-bottom:64px}
+  .ay-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+  .ay-card{
+    display:flex;flex-direction:column;gap:24px;
+    padding:44px 40px 40px;
+    border:1px solid rgba(242,235,221,.18);border-radius:2px;
+    background:rgba(242,235,221,.03);
+    scroll-margin-top:110px;
+  }
+  .ay-card.main{background:rgba(226,184,148,.05);border-color:rgba(226,184,148,.35)}
+  .ay-card h3{
+    font-family:var(--serif);font-weight:330;font-variation-settings:"opsz" 144,"SOFT" 50;
+    font-size:clamp(30px,3vw,40px);letter-spacing:-.02em;line-height:1.05;margin:0;color:var(--paper);
+  }
+  .ay-price{margin:0;font-size:14px;color:rgba(242,235,221,.7)}
+  .ay-price .amount{
+    font-family:var(--serif);font-weight:330;font-size:46px;letter-spacing:-.022em;
+    line-height:1;color:#E2B894;font-variation-settings:"opsz" 144;
+  }
+  .ay-list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(242,235,221,.12)}
+  .ay-list li{
+    display:grid;grid-template-columns:18px 1fr;gap:12px;
+    padding:14px 0;border-bottom:1px solid rgba(242,235,221,.12);
+    font-size:15px;line-height:1.55;color:rgba(242,235,221,.82);
+  }
+  .ay-list li::before{content:"";width:6px;height:6px;border-radius:99px;background:#E2B894;margin-top:9px}
+  /* Coming soon notice, styled like the homepage "No cure, no pay" pact box */
+  .ay-soon{
+    margin:auto 0 0;padding:24px 28px;
+    border:1px solid rgba(226,184,148,.35);background:rgba(226,184,148,.06);border-radius:2px;
+    font-size:14.5px;line-height:1.55;color:rgba(242,235,221,.78);
+  }
+  .ay-soon strong{
+    display:block;margin-bottom:6px;
+    font-family:var(--serif);font-weight:380;font-size:22px;letter-spacing:-.012em;color:var(--paper);
+  }
+  .ay-soon a{color:#E2B894;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  .ay-soon a:hover{color:var(--paper)}
+
+  /* ===== How it works ===== */
+  .ay-how .sec-title{margin-bottom:56px}
+  .how-grid{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+  .how-step{
+    display:grid;grid-template-columns:140px 1fr;gap:56px;align-items:start;
+    padding:42px 0;border-bottom:1px solid var(--rule-light);
+    position:relative;transition:background .35s ease;
+  }
+  .how-step:hover{background:rgba(184,92,56,.025)}
+  .how-step:last-child{border-bottom:0}
+  .how-num{
+    font-family:var(--serif);font-style:italic;font-weight:300;
+    font-size:88px;letter-spacing:-.03em;line-height:.85;color:var(--accent-2);
+    font-variation-settings:"opsz" 144,"WONK" 1;
+  }
+  .how-step h3{
+    font-family:var(--serif);font-weight:380;font-size:30px;letter-spacing:-.014em;
+    margin:0 0 14px;line-height:1.1;
+  }
+  .how-step p{margin:0;font-size:16px;color:var(--ink-2);line-height:1.6;max-width:62ch}
+
+  /* ===== FAQ ===== */
+  .faq-section{background:var(--cream-2);border-top:1px solid var(--rule)}
+  .faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+  .faq-aside{position:sticky;top:120px}
+  .faq-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+  details.faq{border-bottom:1px solid var(--rule);padding:24px 0}
+  details.faq summary{
+    list-style:none;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:24px;
+    font-family:var(--serif);font-weight:380;font-size:24px;letter-spacing:-.012em;line-height:1.25;
+    color:var(--ink);
+  }
+  details.faq summary::-webkit-details-marker{display:none}
+  details.faq summary:hover{color:var(--accent-2)}
+  .faq-mark{
+    flex:0 0 auto;width:36px;height:36px;border-radius:99px;border:1px solid var(--rule);
+    display:grid;place-items:center;color:var(--ink);transition:transform .35s, background .25s, color .25s;
+    margin-top:2px;
+  }
+  details[open] .faq-mark{background:var(--ink);color:var(--paper);transform:rotate(45deg)}
+  .faq-mark svg{width:14px;height:14px}
+  .faq-body{font-size:16px;color:var(--ink-2);line-height:1.6;max-width:62ch;margin-top:16px}
+  .faq-body a{color:var(--accent-2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+  .faq-body a:hover{color:var(--accent)}
+
+  @media (max-width:980px){
+    /* Nav, as on the homepage */
+    .nav-inner{padding:14px 18px;gap:12px}
+    .logo-img{height:30px}
+    .nav-right{gap:10px}
+
+    .sec{padding:80px 0}
+    .ay-split{grid-template-columns:1fr;gap:28px}
+    .ay-cards{grid-template-columns:1fr}
+    .faq-grid{grid-template-columns:1fr;gap:40px}
+    .faq-aside{position:static}
+  }
+  @media (max-width:780px){
+    .how-step{grid-template-columns:80px 1fr;gap:24px;padding:32px 0}
+    .how-num{font-size:54px}
+  }
+  @media (max-width:560px){
+    .ay-card{padding:32px 24px 28px}
+    .ay-price .amount{font-size:38px}
+    .ay-soon{padding:20px 22px}
+    details.faq summary{font-size:20px}
+    .nav-right .btn{padding:10px 14px;font-size:13px}
+  }
+</style>
+<!-- Tracking pixel, fires webhook on every page load for visibility -->
+<img src="https://n8n.srv1037212.hstgr.cloud/webhook/homequest-tracking?source=apply-yourself&v=1"
+     width="1" height="1" alt=""
+     style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"
+     aria-hidden="true"
+     loading="eager"
+     referrerpolicy="no-referrer-when-downgrade" />
+
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
+<!-- Vercel Speed Insights -->
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="HQ Housing">
+      <img src="/hq-logo.png" alt="HQ Housing" class="logo-img" />
+    </a>
+
+    <div class="nav-links">
+      <a href="/#process">Process</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#about">About Philippe</a>
+      <a href="/#stories">Stories</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/blog/">Journal</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="/#start" class="btn btn-primary btn-arrow">
+        Start your search
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<header class="article-hero ay-hero">
+  <div class="wrap reveal">
+    <h1 class="article-title">Apply for rentals yourself, with a dossier that is <em>complete</em></h1>
+    <p class="lede">
+      Most rental applications in the Netherlands fail on paperwork: a missing payslip, an old bank
+      statement, no guarantor when one is needed. Apply Yourself gets your documents right before you
+      apply, so letting agents see a complete, well-ordered file.
+    </p>
+    <div class="ay-ctas">
+      <a href="#dossier" class="btn btn-primary btn-arrow">
+        Get the checked dossier
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#templates" class="btn btn-ghost btn-arrow">
+        Templates only
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ WHO IT IS FOR ============================ -->
+<section class="sec">
+  <div class="wrap ay-split reveal">
+    <h2 class="sec-title">Who it is for</h2>
+    <div>
+      <p>
+        For expats and locals who search for a rental on their own, on Funda, Pararius or directly with
+        agents, and want their application to be complete the first time. You do the searching and the
+        viewings. We make sure your paperwork is ready.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE TWO OPTIONS ============================ -->
+<!-- Sales are closed until launch: each card shows a "Coming soon" notice
+     where the consent checkbox and the buy button will go. -->
+<section class="sec price-section" id="options">
+  <div class="wrap">
+    <h2 class="sec-title reveal">The two options</h2>
+
+    <div class="ay-cards">
+      <article class="ay-card main reveal" id="dossier">
+        <h3>Checked rental dossier</h3>
+        <p class="ay-price"><span class="amount">EUR 149</span>, VAT included</p>
+        <ul class="ay-list">
+          <li>A document checklist for your situation: employed, couple, self-employed, student with a guarantor or incoming expat</li>
+          <li>Upload everything securely as PDF or JPG</li>
+          <li>A person at HQ Housing reviews your documents within 2 working days</li>
+          <li>Clear feedback on what is missing or what a landlord is likely to reject</li>
+          <li>One combined PDF in a fixed order, ready to send to letting agents</li>
+          <li>A standard application email for each property you apply for</li>
+          <li>Cancel within 14 days for a full refund if you have not sent your documents for review</li>
+        </ul>
+        <p class="ay-soon"><strong>Coming soon.</strong> Questions in the meantime? Write to <a href="mailto:info@hqhousing.com">info@hqhousing.com</a>.</p>
+      </article>
+
+      <article class="ay-card reveal" id="templates">
+        <h3>Application templates pack</h3>
+        <p class="ay-price"><span class="amount">EUR 50</span>, VAT included</p>
+        <ul class="ay-list">
+          <li>Application letter templates</li>
+          <li>How to write a viewing request</li>
+          <li>How to make a rental proposal</li>
+          <li>A quick check of the documents you need</li>
+          <li>Instant download after payment</li>
+          <li>Want a review later? Upgrade to the checked dossier for EUR 99</li>
+        </ul>
+        <p class="ay-soon"><strong>Coming soon.</strong> Questions in the meantime? Write to <a href="mailto:info@hqhousing.com">info@hqhousing.com</a>.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HOW IT WORKS ============================ -->
+<section class="sec ay-how">
+  <div class="wrap">
+    <h2 class="sec-title reveal">How it works</h2>
+    <div class="how-grid">
+      <article class="how-step reveal">
+        <div class="how-num">01</div>
+        <div>
+          <h3>Choose and pay.</h3>
+          <p>You get an email with a sign-in link, no password needed.</p>
+        </div>
+      </article>
+      <article class="how-step reveal">
+        <div class="how-num">02</div>
+        <div>
+          <h3>Pick your profile and upload.</h3>
+          <p>Your checklist shows exactly which documents you need.</p>
+        </div>
+      </article>
+      <article class="how-step reveal">
+        <div class="how-num">03</div>
+        <div>
+          <h3>We check your file.</h3>
+          <p>Within 2 working days you get feedback or a ready dossier.</p>
+        </div>
+      </article>
+      <article class="how-step reveal">
+        <div class="how-num">04</div>
+        <div>
+          <h3>Apply.</h3>
+          <p>Download your dossier PDF and send a standard application email from your own address for each property you want.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT IT IS NOT ============================ -->
+<section class="sec ay-not">
+  <div class="wrap ay-split reveal">
+    <h2 class="sec-title">What Apply Yourself is not</h2>
+    <div>
+      <p>
+        Apply Yourself is a document check. We do not search for properties, arrange viewings or contact
+        landlords for you, and we cannot guarantee that a landlord accepts your application. We check that
+        your documents are complete and consistent; we do not verify that they are authentic or approve you
+        as a tenant.
+      </p>
+      <p>Looking for someone to handle the whole search for you? <a href="/">See our full rental service</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section class="sec faq-section">
+  <div class="wrap">
+    <div class="faq-grid">
+      <aside class="faq-aside reveal">
+        <h2 class="sec-title">FAQ</h2>
+      </aside>
+
+      <div class="faq-list reveal">
+        <details class="faq" open>
+          <summary>
+            <span>Which documents will I need?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            It depends on your situation. Typically: ID or passport, proof of income such as payslips or an
+            employment contract, recent bank statements, and a landlord reference or a guarantor. After you pay
+            you choose your profile and see the exact list.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>How fast is the review?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            Within 2 working days of sending your documents for review.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Who checks my documents?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            A person at HQ Housing, not software.
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Can I cancel?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            Checked dossier: yes, within 14 days of payment for a full refund, as long as you have not sent
+            your documents for review. Templates pack: no, because you get access straight away.
+            <a href="https://apply.hqhousing.com/legal/withdrawal">Cancellation details</a>
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>What happens to my documents?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            They are stored in the EU and only you and the HQ Housing reviewers can open them. We delete them
+            3 months after your dossier is delivered, and we email you a week before so you can download your
+            dossier. If you never finish your file, we delete your documents 6 months after payment, again with
+            an email a week before. <a href="https://apply.hqhousing.com/legal/privacy">Privacy policy</a>
+          </div>
+        </details>
+        <details class="faq">
+          <summary>
+            <span>Is it available in other languages?</span>
+            <span class="faq-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="faq-body">
+            Apply Yourself is in English for now.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <img src="/hq-logo-light.png" alt="HQ Housing" class="logo-img" />
+        <p>A personal housing concierge serving the entire Netherlands. Curated shortlists, viewings, negotiation and contract, handled by one person.</p>
+      </div>
+      <div class="foot-col">
+        <h6>Site</h6>
+        <a href="/#process">Process</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#about">About Philippe</a>
+        <a href="/#stories">Stories</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/blog/">Journal</a>
+      </div>
+      <div class="foot-col">
+        <h6>Contact</h6>
+        <a href="mailto:info@hqhousing.com">info@hqhousing.com</a>
+        <a href="tel:+31613329724">+31 6 13 32 97 24</a>
+        <a href="/#start">Start your search</a>
+      </div>
+    </div>
+    <div class="foot-meta">
+      <div>© 2026 Home Quest Housing Solutions S.L. · HQ Housing is a trading name of Home Quest Housing Solutions S.L. · Calle de Colón 24, 46004 Valencia, Spain · Governed by Dutch law · Operating across the Netherlands · Site by <a href="https://smartflow-labs.com" target="_blank" rel="noopener">SmartFlow Labs</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('in')), {threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
